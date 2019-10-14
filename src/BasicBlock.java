@@ -1,10 +1,12 @@
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class BasicBlock {
+public class BasicBlock extends Node {
     private AnchorPane block;
     private TextField solution;
     private TextField possibilities;
@@ -23,30 +25,31 @@ public class BasicBlock {
 
     private void setBlock() {
         block = new AnchorPane();
-        block.setPrefWidth(this.size);
-        block.setPrefHeight(this.size);
+        block.setStyle("-fx-border-color: green; -fx-border-width: 1px 1px 1px 1px");
+        int verticalGrid = size/5;
+        int fontSize =  size/10;
 
         formula = new TextField();
         formula.setLayoutY(0);
-        formula.setPrefHeight(size / 5);
-        formula.setPrefWidth(this.size);
-        formula.setFont(Font.font("System", FontWeight.findByName("bold"),12 * this.size / 100));
+        formula.setPrefHeight((verticalGrid) * 2);
+        formula.setPrefWidth(size);
+        formula.setFont(Font.font("System", FontWeight.findByName("bold"),2 * fontSize));
 
         solution = new TextField();
-        solution.setLayoutY(this.size / 5);
-        solution.setPrefHeight(this.size / 5 * 4);
-        solution.setPrefWidth(this.size);
-        solution.setPromptText("Solution");
-        solution.setFont(Font.font("System", FontWeight.findByName("bold"), 32 * this.size / 100));
+        solution.setLayoutY((verticalGrid) * 2);
+        solution.setPrefHeight((verticalGrid) * 3);
+        solution.setPrefWidth(size);
+        solution.setPromptText("S");
+        solution.setFont(Font.font("System", FontWeight.findByName("bold"), 5 * fontSize));
         solution.setAlignment(Pos.CENTER);
         solution.setStyle("-fx-text-fill: green");
 
         possibilities = new TextField();
-        possibilities.setLayoutY(this.size / 5 );
-        possibilities.setPrefHeight(this.size / 5 * 4);
-        possibilities.setPrefWidth(this.size);
-        possibilities.setPromptText("Suggestion");
-        possibilities.setFont(Font.font("System", 12 * this.size / 100));
+        possibilities.setLayoutY((verticalGrid) * 2 );
+        possibilities.setPrefHeight((verticalGrid) * 3);
+        possibilities.setPrefWidth(size);
+        possibilities.setPromptText("P");
+        possibilities.setFont(Font.font("System", 3 * fontSize));
 
         block.getChildren().addAll(formula, solution, possibilities);
         resetVisibilities();
@@ -68,12 +71,12 @@ public class BasicBlock {
         }
     }
     private void resetSelected(){
-        if (selected){
-
-        }
-        else{
-
-        }
+//        if (selected){
+//
+//        }
+//        else{
+//
+//        }
     }
     public void setFormula(String formula){
         this.formula.setText(formula);
@@ -91,7 +94,7 @@ public class BasicBlock {
         this.selected = selected;
         resetSelected();
     }
-    public AnchorPane getBlock() {
+    AnchorPane getBlock() {
         return this.block;
     }
 

@@ -1,26 +1,25 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private int size = 100;
+    private int size = 400;
+    private int maxNumber = 1;
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) {
         primaryStage.setTitle("Hello World");
-        BasicBlock puzzleBlock1 = new BasicBlock(size);
-        puzzleBlock1.setSolution("19");
-        puzzleBlock1.setPossibilities("88");
-        puzzleBlock1.setFormula("135X");
-
-
-
-        GridPane gridPane = new GridPane();
-        gridPane.addRow(0, puzzleBlock1.getBlock());
-
-        primaryStage.setScene(new Scene(gridPane, 400, 400));
+        PuzzleFrame puzzleFrame = new PuzzleFrame(maxNumber, size, 1);
+        ScrollPane root = new ScrollPane();
+        root.setContent(puzzleFrame.getFrame());
+        primaryStage.setScene(new Scene(root));
+//        primaryStage.setFullScreen(true);
         primaryStage.show();
+
+
     }
 
 
