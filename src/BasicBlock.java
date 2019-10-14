@@ -1,18 +1,25 @@
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderWidths;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class BasicBlock {
+class BasicBlock {
     private AnchorPane block;
-    private TextField solution;
-    private TextField possibilities;
-    private TextField formula;
+    private Label solution;
+    private Label possibilities;
+    private Label formula;
     private int size = 100;
     private boolean selected = false;
+    private static String backgroundSelected = "-fx-background-color: lavender;";
+    private static String backgroundNotSelected = "-fx-background-color: white;";
+    private static String blockBorderSelected = "-fx-border-color: red; -fx-border-width: 3px";
+    private static String blockBorderNotSelected = "-fx-border-color: green; -fx-border-width: 1px";
+    private static String fontFamily = "System";
+    private static String solutionFalse = "-fx-text-fill: red";
+    private static String solutionTrue = "-fx-text-fill: green";
+
+
 
     BasicBlock() {
         setBlock();
@@ -25,29 +32,31 @@ public class BasicBlock {
 
     private void setBlock() {
         block = new AnchorPane();
-        block.setStyle("-fx-border-color: green; -fx-border-width: 1px 1px 1px 1px");
+        block.setStyle(backgroundNotSelected + blockBorderNotSelected);
         int verticalGrid = size/5;
         int fontSize =  size/10;
 
-        formula = new TextField();
+        formula = new Label();
         formula.setLayoutY(0);
+        formula.setLayoutX(4);
         formula.setPrefHeight((verticalGrid) * 2);
         formula.setPrefWidth(size);
-        formula.setFont(Font.font("System",2 * fontSize));
+        formula.setFont(Font.font(fontFamily,2 * fontSize));
 
-        solution = new TextField();
+        solution = new Label();
         solution.setLayoutY((verticalGrid) * 2);
+        solution.setLayoutX(4);
         solution.setPrefHeight((verticalGrid) * 3);
         solution.setPrefWidth(size);
-        solution.setFont(Font.font("System", FontWeight.findByName("bold"), 2 * fontSize));
+        solution.setFont(Font.font(fontFamily, FontWeight.BOLD, 2 * fontSize));
         solution.setAlignment(Pos.CENTER);
-        solution.setStyle("-fx-text-fill: green");
 
-        possibilities = new TextField();
+        possibilities = new Label();
         possibilities.setLayoutY((verticalGrid) * 2 );
+        possibilities.setLayoutX(4);
         possibilities.setPrefHeight((verticalGrid) * 3);
         possibilities.setPrefWidth(size);
-        possibilities.setFont(Font.font("System", fontSize));
+        possibilities.setFont(Font.font(fontFamily, fontSize));
 
         block.getChildren().addAll(formula, solution, possibilities);
         resetVisibilities();
@@ -69,12 +78,16 @@ public class BasicBlock {
         }
     }
     private void resetSelected(){
-//        if (selected){
-//
-//        }
-//        else{
-//
-//        }
+        if (selected){
+            block.setStyle(backgroundSelected + blockBorderSelected);
+            solution.setStyle(backgroundSelected);
+            possibilities.setStyle(backgroundSelected);
+        }
+        else{
+            block.setStyle(backgroundNotSelected + blockBorderNotSelected);
+            solution.setStyle(backgroundNotSelected);
+            possibilities.setStyle(backgroundNotSelected);
+        }
     }
     void setFormula(String formula){
         this.formula.setText(formula);
@@ -91,6 +104,14 @@ public class BasicBlock {
     void setSelected(boolean selected){
         this.selected = selected;
         resetSelected();
+    }
+    void setSolution(boolean correct){
+        if (correct){
+            solution.setStyle(solutionTrue);
+        }
+        else {
+            solution.setStyle(solutionFalse);
+        }
     }
     AnchorPane getBlock() {
         return this.block;
