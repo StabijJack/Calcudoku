@@ -33,14 +33,13 @@ public class BasicBlock {
         formula.setLayoutY(0);
         formula.setPrefHeight((verticalGrid) * 2);
         formula.setPrefWidth(size);
-        formula.setFont(Font.font("System", FontWeight.findByName("bold"),2 * fontSize));
+        formula.setFont(Font.font("System",2 * fontSize));
 
         solution = new TextField();
         solution.setLayoutY((verticalGrid) * 2);
         solution.setPrefHeight((verticalGrid) * 3);
         solution.setPrefWidth(size);
-        solution.setPromptText("S");
-        solution.setFont(Font.font("System", FontWeight.findByName("bold"), 5 * fontSize));
+        solution.setFont(Font.font("System", FontWeight.findByName("bold"), 2 * fontSize));
         solution.setAlignment(Pos.CENTER);
         solution.setStyle("-fx-text-fill: green");
 
@@ -48,8 +47,7 @@ public class BasicBlock {
         possibilities.setLayoutY((verticalGrid) * 2 );
         possibilities.setPrefHeight((verticalGrid) * 3);
         possibilities.setPrefWidth(size);
-        possibilities.setPromptText("P");
-        possibilities.setFont(Font.font("System", 3 * fontSize));
+        possibilities.setFont(Font.font("System", fontSize));
 
         block.getChildren().addAll(formula, solution, possibilities);
         resetVisibilities();
@@ -78,19 +76,19 @@ public class BasicBlock {
 //
 //        }
     }
-    public void setFormula(String formula){
+    void setFormula(String formula){
         this.formula.setText(formula);
         resetVisibilities();
     }
-    public void setSolution(String solution){
+    void setSolution(String solution){
         this.solution.setText(solution);
         resetVisibilities();
     }
-    public void setPossibilities(String possibilities){
+    void setPossibilities(String possibilities){
         this.possibilities.setText(possibilities);
         resetVisibilities();
     }
-    public void setSelected(boolean selected){
+    void setSelected(boolean selected){
         this.selected = selected;
         resetSelected();
     }

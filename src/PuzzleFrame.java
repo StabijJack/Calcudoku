@@ -4,7 +4,7 @@ import javafx.scene.layout.GridPane;
 class PuzzleFrame {
     private int maxNumber;
     private int startNumber;
-    private BasicBlock puzzleBlock[][];
+    private BasicBlock[][] puzzleBlock;
     private int maxBlockNumber;
 
 
@@ -20,6 +20,11 @@ class PuzzleFrame {
                 puzzleBlock[x][y] = new BasicBlock(size);
             }
         }
+
+        puzzleBlock[0][0].setSolution("1");
+        puzzleBlock[1][1].setPossibilities("1,2,3,4");
+        puzzleBlock[0][0].setFormula("135X");
+
     }
     GridPane getFrame(){
         GridPane puzzleFrame = new GridPane();
