@@ -6,7 +6,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class BasicBlock extends Node {
+public class BasicBlock {
     private AnchorPane block;
     private TextField solution;
     private TextField possibilities;
