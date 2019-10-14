@@ -14,7 +14,7 @@ class BasicBlock {
     private static String backgroundSelected = "-fx-background-color: lavender;";
     private static String backgroundNotSelected = "-fx-background-color: white;";
     private static String blockBorderSelected = "-fx-border-color: red; -fx-border-width: 3px";
-    private static String blockBorderNotSelected = "-fx-border-color: green; -fx-border-width: 1px";
+    private static String blockBorderNotSelected = "-fx-border-color: green; -fx-border-width: 3px";
     private static String fontFamily = "System";
     private static String solutionFalse = "-fx-text-fill: red";
     private static String solutionTrue = "-fx-text-fill: green";

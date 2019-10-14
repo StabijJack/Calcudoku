@@ -1,25 +1,18 @@
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Main extends Application {
 
     private PuzzleFrame puzzleFrame;
     private static KeyCombination switchMode;
-    private static List<KeyCode> cursorKeys;
+    private static ArrayList<KeyCode> cursorKeys;
 
     @Override
     public void start(Stage primaryStage) {
