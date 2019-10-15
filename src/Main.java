@@ -1,11 +1,10 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.*;
 import javafx.stage.Stage;
+
 import java.util.ArrayList;
 
 public class Main extends Application {
@@ -17,7 +16,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         ScrollPane root = new ScrollPane();
-        int size = 200;
+        int size = 100;
         int maxNumber = 2;
         int startNumber = 0;
         puzzleFrame = new PuzzleFrame(maxNumber, size, startNumber);
@@ -27,6 +26,9 @@ public class Main extends Application {
             if (switchMode.match(event)) manageMode(primaryStage);
             KeyCode keyCode = event.getCode();
             if (cursorKeys.contains(keyCode)) puzzleFrame.manageCursorKeys(keyCode);
+        });
+        root.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->{
+            puzzleFrame.manageMouse(event.getX(),event.getY());
         });
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

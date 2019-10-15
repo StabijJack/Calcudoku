@@ -9,7 +9,7 @@ class BasicBlock {
     private Label solution;
     private Label possibilities;
     private Label formula;
-    private int size = 100;
+    private int size;
     private boolean selected = false;
     private static String backgroundSelected = "-fx-background-color: lavender;";
     private static String backgroundNotSelected = "-fx-background-color: white;";
@@ -22,6 +22,7 @@ class BasicBlock {
 
 
     BasicBlock() {
+        this.size = 100;
         setBlock();
     }
 

@@ -1,3 +1,4 @@
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 
@@ -5,6 +6,7 @@ class PuzzleFrame {
     private int maxNumber;
     private int startNumber;
     private BasicBlock[][] puzzleBlock;
+    private GridPane puzzleFrame;
     private int numberOfBlocks;
     private int maxIndex;
     private int currentRow = 0;
@@ -13,9 +15,10 @@ class PuzzleFrame {
     PuzzleFrame(int maxNumber, int size){
         this(maxNumber,size, 1);
     }
-    PuzzleFrame(int maxNumber, int size,int startNumber){
+    PuzzleFrame(int maxNumber, int size, int startNumber){
 
         this.startNumber = startNumber;
+        this.maxNumber = maxNumber;
         this.numberOfBlocks = maxNumber + 1 - startNumber;
         this.maxIndex = numberOfBlocks -1;
         puzzleBlock = new BasicBlock[this.numberOfBlocks][this.numberOfBlocks];
@@ -27,7 +30,7 @@ class PuzzleFrame {
         puzzleBlock[currentColumn][currentRow].setSelected(true);
     }
     GridPane getFrame(){
-        GridPane puzzleFrame = new GridPane();
+        puzzleFrame = new GridPane();
         for (int x = 0; x < this.numberOfBlocks; x++) {
             for (int y = 0; y < this.numberOfBlocks; y++) {
                 puzzleFrame.add(puzzleBlock[x][y].getBlock() , x, y);
@@ -68,4 +71,22 @@ class PuzzleFrame {
         puzzleBlock[currentColumn][currentRow].setSelected(true);
 
     }
+    void manageMouse(double mouseX, double mouseY){
+        puzzleBlock[currentColumn][currentRow].setSelected(false);
+        for (currentColumn = 0; currentColumn <= maxIndex ; currentColumn++) {
+            if (mouseX < puzzleBlock[currentColumn][0].getBlock().getLayoutX() + puzzleBlock[0][currentRow].getBlock().getWidth()){
+                break;
+            }
+        }
+        for (currentRow = 0; currentRow <= maxIndex ; currentRow++) {
+            if (mouseY < puzzleBlock[0][currentRow].getBlock().getLayoutY() + puzzleBlock[0][currentRow].getBlock().getHeight()){
+                break;
+            }
+        }
+        puzzleBlock[currentColumn][currentRow].setSelected(true);
+
+
+    }
+
+
 }
