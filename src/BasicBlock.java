@@ -118,4 +118,26 @@ class BasicBlock {
         return this.block;
     }
 
+    String getSolution() {
+        return this.solution.getText();
+    }
+
+    void addPossibilities(String possibility) {
+        if (possibilities.getText().isBlank()){
+            possibilities.setText(possibility);
+        }
+        else{
+            possibilities.setText(possibilities.getText() + ", " + possibility);
+        }
+        resetVisibilities();
+    }
+
+    void delLastPossibility() {
+        if (possibilities.getText().contains(",")){
+            possibilities.setText(possibilities.getText().substring(0,possibilities.getText().lastIndexOf(",")));
+        }
+        else{
+            possibilities.setText("");
+        }
+    }
 }

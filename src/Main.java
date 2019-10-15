@@ -1,6 +1,5 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
@@ -10,8 +9,7 @@ import java.util.ArrayList;
 public class Main extends Application {
 
     private PuzzleFrame puzzleFrame;
-    private static KeyCombination switchMode;
-    private static ArrayList<KeyCode> cursorKeys;
+    private static KeyCombination switchMode = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
 
     @Override
     public void start(Stage primaryStage) {
@@ -25,7 +23,15 @@ public class Main extends Application {
         root.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             if (switchMode.match(event)) manageMode(primaryStage);
             KeyCode keyCode = event.getCode();
-            if (cursorKeys.contains(keyCode)) puzzleFrame.manageCursorKeys(keyCode);
+            if (keyCode.isNavigationKey()) puzzleFrame.manageCursorKeys(keyCode);
+            if (puzzleFrame.isPlayMode()){
+                if (keyCode.isDigitKey()) puzzleFrame.manageDigits(keyCode, event.isAltDown());
+                if (keyCode.isLetterKey()) puzzleFrame.manageLetters(keyCode, event.isAltDown());
+                if (keyCode == KeyCode.DELETE || keyCode == KeyCode.BACK_SPACE || keyCode == KeyCode.SPACE){
+                    puzzleFrame.manageClearBlock(keyCode);
+
+                }
+            }
         });
         root.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->{
             puzzleFrame.manageMouse(event.getX(),event.getY());
@@ -42,16 +48,6 @@ public class Main extends Application {
         }
     }
     public static void main(String[] args) {
-        switchMode = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
-        cursorKeys = new ArrayList<>();
-        cursorKeys.add(KeyCode.DOWN);
-        cursorKeys.add(KeyCode.UP);
-        cursorKeys.add(KeyCode.LEFT);
-        cursorKeys.add(KeyCode.RIGHT);
-        cursorKeys.add(KeyCode.HOME);
-        cursorKeys.add(KeyCode.END);
-        cursorKeys.add(KeyCode.PAGE_DOWN);
-        cursorKeys.add(KeyCode.PAGE_UP);
 
         launch(args);
     }

@@ -87,6 +87,39 @@ class PuzzleFrame {
 
 
     }
+    void manageDigits(KeyCode keyCode, boolean altDown) {
+        int c = keyCode.getCode();
+        if(c > 57) c -= 48;
+        if (altDown){
+            puzzleBlock[currentColumn][currentRow].addPossibilities( String.valueOf((char) c));
+        }
+        else{
+            puzzleBlock[currentColumn][currentRow].setSolution( String.valueOf((char) c));
+        }
+    }
 
+    void manageLetters(KeyCode keyCode, boolean altDown) {
+        int c = keyCode.getCode();
+        c -= 55;
+        if (altDown){
+            puzzleBlock[currentColumn][currentRow].addPossibilities( String.valueOf((char) c));
+        }
+        else{
+            puzzleBlock[currentColumn][currentRow].setSolution(String.valueOf((c)));
+        }
+    }
 
+    void manageClearBlock(KeyCode keyCode) {
+        if (puzzleBlock[currentColumn][currentRow].getSolution().isBlank()){
+            if (keyCode == KeyCode.BACK_SPACE){
+                puzzleBlock[currentColumn][currentRow].delLastPossibility();
+            }
+            else{
+                puzzleBlock[currentColumn][currentRow].setPossibilities("");
+            }
+        }
+        else{
+            puzzleBlock[currentColumn][currentRow].setSolution("");
+        }
+    }
 }
