@@ -10,7 +10,7 @@ class PuzzleFrame {
     private int numberOfBlocks;
     private int maxIndex;
     private int currentRow = 0;
-    private int currentColumn = 1;
+    private int currentColumn = 0;
     private boolean playMode;
     PuzzleFrame(int maxNumber, int size){
         this(maxNumber,size, 1);
@@ -38,12 +38,12 @@ class PuzzleFrame {
         }
         return puzzleFrame;
     }
+    void setPlayMode(boolean playMode) {
+        this.playMode = playMode;
+    }
     boolean isPlayMode() {
 
         return playMode;
-    }
-    void setPlayMode(boolean playMode) {
-        this.playMode = playMode;
     }
     void manageCursorKeys(KeyCode keyCode){
         puzzleBlock[currentColumn][currentRow].setSelected(false);
@@ -90,25 +90,24 @@ class PuzzleFrame {
     void manageDigits(KeyCode keyCode, boolean altDown) {
         int c = keyCode.getCode();
         if(c > 57) c -= 48;
+        c -= 48;
         if (altDown){
-            puzzleBlock[currentColumn][currentRow].addPossibilities( String.valueOf((char) c));
+            if (checkPossibility(c)) puzzleBlock[currentColumn][currentRow].addPossibilities( String.valueOf(c));
         }
         else{
-            puzzleBlock[currentColumn][currentRow].setSolution( String.valueOf((char) c));
+            if (checkSolution(c)) puzzleBlock[currentColumn][currentRow].setSolution( String.valueOf(c));
         }
     }
-
     void manageLetters(KeyCode keyCode, boolean altDown) {
         int c = keyCode.getCode();
         c -= 55;
         if (altDown){
-            puzzleBlock[currentColumn][currentRow].addPossibilities( String.valueOf((char) c));
+            if (checkPossibility(c)) puzzleBlock[currentColumn][currentRow].addPossibilities( String.valueOf(c));
         }
         else{
-            puzzleBlock[currentColumn][currentRow].setSolution(String.valueOf((c)));
+            if (checkSolution(c)) puzzleBlock[currentColumn][currentRow].setSolution( String.valueOf(c));
         }
     }
-
     void manageClearBlock(KeyCode keyCode) {
         if (puzzleBlock[currentColumn][currentRow].getSolution().isBlank()){
             if (keyCode == KeyCode.BACK_SPACE){
@@ -121,5 +120,34 @@ class PuzzleFrame {
         else{
             puzzleBlock[currentColumn][currentRow].setSolution("");
         }
+    }
+    void manageFormulaDigits(KeyCode keyCode) {
+        int c = keyCode.getCode();
+        if(c > 57) c -= 48;
+        c -= 48;
+        puzzleBlock[currentColumn][currentRow].addToFormula(String.valueOf(c));
+    }
+    void manageFormulaLetters(KeyCode keyCode) {
+        char c = ' ';
+        switch (keyCode){
+            case ADD:
+                c = '+';break;
+            case SUBTRACT:
+                c = '-';break;
+            case MULTIPLY:
+                c ='x';break;
+            case DIVIDE:
+                c = ':';break;
+        }
+        puzzleBlock[currentColumn][currentRow].addToFormula(" " + c);
+    }
+    void manageFormulaClearBlock(KeyCode keyCode) {
+            puzzleBlock[currentColumn][currentRow].delFormula();
+    }
+    private boolean checkSolution(int solution){
+        return solution <= maxNumber && solution >= startNumber;
+    }
+    private boolean checkPossibility(int possibility){
+        return possibility <= maxNumber && possibility >= startNumber;
     }
 }

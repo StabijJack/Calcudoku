@@ -19,18 +19,17 @@ class BasicBlock {
     private static String solutionFalse = "-fx-text-fill: red";
     private static String solutionTrue = "-fx-text-fill: green";
 
-
-
     BasicBlock() {
         this.size = 100;
         setBlock();
     }
-
     BasicBlock(int size) {
         this.size = size;
         setBlock();
     }
-
+    AnchorPane getBlock() {
+        return this.block;
+    }
     private void setBlock() {
         block = new AnchorPane();
         block.setStyle(backgroundNotSelected + blockBorderNotSelected);
@@ -90,21 +89,13 @@ class BasicBlock {
             possibilities.setStyle(backgroundNotSelected);
         }
     }
-    void setFormula(String formula){
-        this.formula.setText(formula);
-        resetVisibilities();
+    void setSelected(boolean selected){
+        this.selected = selected;
+        resetSelected();
     }
     void setSolution(String solution){
         this.solution.setText(solution);
         resetVisibilities();
-    }
-    void setPossibilities(String possibilities){
-        this.possibilities.setText(possibilities);
-        resetVisibilities();
-    }
-    void setSelected(boolean selected){
-        this.selected = selected;
-        resetSelected();
     }
     void setSolution(boolean correct){
         if (correct){
@@ -114,14 +105,13 @@ class BasicBlock {
             solution.setStyle(solutionFalse);
         }
     }
-    AnchorPane getBlock() {
-        return this.block;
-    }
-
     String getSolution() {
         return this.solution.getText();
     }
-
+    void setPossibilities(String possibilities){
+        this.possibilities.setText(possibilities);
+        resetVisibilities();
+    }
     void addPossibilities(String possibility) {
         if (possibilities.getText().isBlank()){
             possibilities.setText(possibility);
@@ -131,13 +121,21 @@ class BasicBlock {
         }
         resetVisibilities();
     }
-
     void delLastPossibility() {
         if (possibilities.getText().contains(",")){
             possibilities.setText(possibilities.getText().substring(0,possibilities.getText().lastIndexOf(",")));
         }
         else{
             possibilities.setText("");
+            resetVisibilities();
         }
+    }
+    void addToFormula(String character){
+        this.formula.setText(this.formula.getText() + character);
+        resetVisibilities();
+    }
+    void delFormula() {
+        this.formula.setText("");
+        resetVisibilities();
     }
 }
