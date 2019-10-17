@@ -1,26 +1,23 @@
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
+import org.jetbrains.annotations.NotNull;
 
 class PuzzleFrame {
-    private int maxNumber;
-    private int startNumber;
-    private BasicBlock[][] puzzleBlock;
-    private GridPane puzzleFrame;
-    private int numberOfBlocks;
-    private int maxIndex;
+    private final int maxNumber;
+    private final int startNumber;
+    private final BasicBlock[][] puzzleBlock;
+    private final int numberOfBlocks;
+    private final int maxIndex;
     private int currentRow = 0;
     private int currentColumn = 0;
     private boolean playMode;
-    PuzzleFrame(int maxNumber, int size){
-        this(maxNumber,size, 1);
-    }
-    PuzzleFrame(int maxNumber, int size, int startNumber){
+
+    PuzzleFrame(int maxNumber, int size, int startNumber) {
 
         this.startNumber = startNumber;
         this.maxNumber = maxNumber;
         this.numberOfBlocks = maxNumber + 1 - startNumber;
-        this.maxIndex = numberOfBlocks -1;
+        this.maxIndex = numberOfBlocks - 1;
         puzzleBlock = new BasicBlock[this.numberOfBlocks][this.numberOfBlocks];
         for (int x = 0; x < this.numberOfBlocks; x++) {
             for (int y = 0; y < this.numberOfBlocks; y++) {
@@ -29,41 +26,53 @@ class PuzzleFrame {
         }
         puzzleBlock[currentColumn][currentRow].setSelected(true);
     }
-    GridPane getFrame(){
-        puzzleFrame = new GridPane();
+
+    GridPane getFrame() {
+        GridPane puzzleFrame = new GridPane();
         for (int x = 0; x < this.numberOfBlocks; x++) {
             for (int y = 0; y < this.numberOfBlocks; y++) {
-                puzzleFrame.add(puzzleBlock[x][y].getBlock() , x, y);
+                puzzleFrame.add(puzzleBlock[x][y].getBlock(), x, y);
             }
         }
         return puzzleFrame;
     }
-    void setPlayMode(boolean playMode) {
-        this.playMode = playMode;
-    }
+
     boolean isPlayMode() {
 
         return playMode;
     }
-    void manageCursorKeys(KeyCode keyCode){
+
+    void setPlayMode(boolean playMode) {
+        this.playMode = playMode;
+    }
+
+    void manageCursorKeys(KeyCode keyCode) {
         puzzleBlock[currentColumn][currentRow].setSelected(false);
-        switch (keyCode){
+        switch (keyCode) {
             case DOWN:
-                ++currentRow;break;
+                ++currentRow;
+                break;
             case UP:
-                --currentRow;break;
+                --currentRow;
+                break;
             case RIGHT:
-                ++currentColumn;break;
+                ++currentColumn;
+                break;
             case LEFT:
-                --currentColumn;break;
+                --currentColumn;
+                break;
             case HOME:
-                currentColumn = 0;break;
+                currentColumn = 0;
+                break;
             case END:
-                currentColumn = maxIndex;break;
+                currentColumn = maxIndex;
+                break;
             case PAGE_UP:
-                currentRow = 0;break;
+                currentRow = 0;
+                break;
             case PAGE_DOWN:
-                currentRow = maxIndex;break;
+                currentRow = maxIndex;
+                break;
         }
 
         currentRow = (currentRow + numberOfBlocks) % numberOfBlocks;
@@ -71,15 +80,16 @@ class PuzzleFrame {
         puzzleBlock[currentColumn][currentRow].setSelected(true);
 
     }
-    void manageMouse(double mouseX, double mouseY){
+
+    void manageMouse(double mouseX, double mouseY) {
         puzzleBlock[currentColumn][currentRow].setSelected(false);
-        for (currentColumn = 0; currentColumn <= maxIndex ; currentColumn++) {
-            if (mouseX < puzzleBlock[currentColumn][0].getBlock().getLayoutX() + puzzleBlock[0][currentRow].getBlock().getWidth()){
+        for (currentColumn = 0; currentColumn <= maxIndex; currentColumn++) {
+            if (mouseX < puzzleBlock[currentColumn][0].getBlock().getLayoutX() + puzzleBlock[0][currentRow].getBlock().getWidth()) {
                 break;
             }
         }
-        for (currentRow = 0; currentRow <= maxIndex ; currentRow++) {
-            if (mouseY < puzzleBlock[0][currentRow].getBlock().getLayoutY() + puzzleBlock[0][currentRow].getBlock().getHeight()){
+        for (currentRow = 0; currentRow <= maxIndex; currentRow++) {
+            if (mouseY < puzzleBlock[0][currentRow].getBlock().getLayoutY() + puzzleBlock[0][currentRow].getBlock().getHeight()) {
                 break;
             }
         }
@@ -87,67 +97,75 @@ class PuzzleFrame {
 
 
     }
+
     void manageDigits(KeyCode keyCode, boolean altDown) {
         int c = keyCode.getCode();
-        if(c > 57) c -= 48;
+        if (c > 57) c -= 48;
         c -= 48;
-        if (altDown){
-            if (checkPossibility(c)) puzzleBlock[currentColumn][currentRow].addPossibilities( String.valueOf(c));
-        }
-        else{
-            if (checkSolution(c)) puzzleBlock[currentColumn][currentRow].setSolution( String.valueOf(c));
+        if (altDown) {
+            if (checkPossibility(c)) puzzleBlock[currentColumn][currentRow].addPossibilities(String.valueOf(c));
+        } else {
+            if (checkSolution(c)) puzzleBlock[currentColumn][currentRow].setSolution(String.valueOf(c));
         }
     }
+
     void manageLetters(KeyCode keyCode, boolean altDown) {
         int c = keyCode.getCode();
         c -= 55;
-        if (altDown){
-            if (checkPossibility(c)) puzzleBlock[currentColumn][currentRow].addPossibilities( String.valueOf(c));
-        }
-        else{
-            if (checkSolution(c)) puzzleBlock[currentColumn][currentRow].setSolution( String.valueOf(c));
+        if (altDown) {
+            if (checkPossibility(c)) puzzleBlock[currentColumn][currentRow].addPossibilities(String.valueOf(c));
+        } else {
+            if (checkSolution(c)) puzzleBlock[currentColumn][currentRow].setSolution(String.valueOf(c));
         }
     }
+
     void manageClearBlock(KeyCode keyCode) {
-        if (puzzleBlock[currentColumn][currentRow].getSolution().isBlank()){
-            if (keyCode == KeyCode.BACK_SPACE){
+        if (puzzleBlock[currentColumn][currentRow].getSolution().isBlank()) {
+            if (keyCode == KeyCode.BACK_SPACE) {
                 puzzleBlock[currentColumn][currentRow].delLastPossibility();
+            } else {
+                puzzleBlock[currentColumn][currentRow].clearPossibilities();
             }
-            else{
-                puzzleBlock[currentColumn][currentRow].setPossibilities("");
-            }
-        }
-        else{
+        } else {
             puzzleBlock[currentColumn][currentRow].setSolution("");
         }
     }
-    void manageFormulaDigits(KeyCode keyCode) {
+
+    void manageFormulaDigits(@NotNull KeyCode keyCode) {
         int c = keyCode.getCode();
-        if(c > 57) c -= 48;
+        if (c > 57) c -= 48;
         c -= 48;
         puzzleBlock[currentColumn][currentRow].addToFormula(String.valueOf(c));
     }
+
     void manageFormulaLetters(KeyCode keyCode) {
         char c = ' ';
-        switch (keyCode){
+        switch (keyCode) {
             case ADD:
-                c = '+';break;
+                c = '+';
+                break;
             case SUBTRACT:
-                c = '-';break;
+                c = '-';
+                break;
             case MULTIPLY:
-                c ='x';break;
+                c = 'x';
+                break;
             case DIVIDE:
-                c = ':';break;
+                c = ':';
+                break;
         }
         puzzleBlock[currentColumn][currentRow].addToFormula(" " + c);
     }
-    void manageFormulaClearBlock(KeyCode keyCode) {
-            puzzleBlock[currentColumn][currentRow].delFormula();
+
+    void manageFormulaClearBlock() {
+        puzzleBlock[currentColumn][currentRow].clearFormula();
     }
-    private boolean checkSolution(int solution){
+
+    private boolean checkSolution(int solution) {
         return solution <= maxNumber && solution >= startNumber;
     }
-    private boolean checkPossibility(int possibility){
+
+    private boolean checkPossibility(int possibility) {
         return possibility <= maxNumber && possibility >= startNumber;
     }
 }

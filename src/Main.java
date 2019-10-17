@@ -4,12 +4,15 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-
 public class Main extends Application {
 
+    private static final KeyCombination switchMode = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
     private PuzzleFrame puzzleFrame;
-    private static KeyCombination switchMode = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+
+    public static void main(String[] args) {
+
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -23,37 +26,31 @@ public class Main extends Application {
         root.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             if (switchMode.match(event)) {
                 manageMode(primaryStage);
-            }
-            else {
+            } else {
                 KeyCode keyCode = event.getCode();
                 if (keyCode.isNavigationKey()) {
                     puzzleFrame.manageCursorKeys(keyCode);
-                }
-                else {
+                } else {
                     if (puzzleFrame.isPlayMode()) {
                         if (keyCode.isDigitKey()) puzzleFrame.manageDigits(keyCode, event.isAltDown());
                         else if (keyCode.isLetterKey()) puzzleFrame.manageLetters(keyCode, event.isAltDown());
-                        else if (keyCode == KeyCode.DELETE || keyCode == KeyCode.BACK_SPACE || keyCode == KeyCode.SPACE) puzzleFrame.manageClearBlock(keyCode);
-                    }
-                    else{
+                        else if ((keyCode == KeyCode.DELETE) || (keyCode == KeyCode.BACK_SPACE) || (keyCode == KeyCode.SPACE))
+                            puzzleFrame.manageClearBlock(keyCode);
+                    } else {
                         if (keyCode.isDigitKey()) puzzleFrame.manageFormulaDigits(keyCode);
-                        else if (keyCode == KeyCode.DELETE || keyCode == KeyCode.BACK_SPACE || keyCode == KeyCode.SPACE) puzzleFrame.manageFormulaClearBlock(keyCode);
-                        else if (keyCode == KeyCode.ADD || keyCode == KeyCode.SUBTRACT || keyCode == KeyCode.MULTIPLY || keyCode == KeyCode.DIVIDE) puzzleFrame.manageFormulaLetters(keyCode);
-
+                        else if ((keyCode == KeyCode.DELETE) || (keyCode == KeyCode.BACK_SPACE) || (keyCode == KeyCode.SPACE))
+                            puzzleFrame.manageFormulaClearBlock();
+                        else if ((keyCode == KeyCode.ADD) || (keyCode == KeyCode.SUBTRACT) || (keyCode == KeyCode.MULTIPLY) || (keyCode == KeyCode.DIVIDE))
+                            puzzleFrame.manageFormulaLetters(keyCode);
                     }
                 }
 
             }
         });
         root.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->
-            puzzleFrame.manageMouse(event.getX(), event.getY()));
+                puzzleFrame.manageMouse(event.getX(), event.getY()));
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-
-        launch(args);
     }
 
     private void manageMode(Stage primaryStage) {
