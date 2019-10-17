@@ -3,6 +3,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.*;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 
 public class Main extends Application {
 
@@ -15,7 +16,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(@NotNull Stage primaryStage) {
         ScrollPane root = new ScrollPane();
         int size = 100;
         int maxNumber = 3;
@@ -53,7 +54,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private void manageMode(Stage primaryStage) {
+    private void manageMode(@NotNull Stage primaryStage) {
         puzzleFrame.setPlayMode(!puzzleFrame.isPlayMode());
         if (puzzleFrame.isPlayMode()) {
             primaryStage.setTitle("Calcudoku in Play Mode");

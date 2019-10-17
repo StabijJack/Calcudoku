@@ -1,16 +1,19 @@
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 class PuzzleFrame {
     private final int maxNumber;
     private final int startNumber;
+    @NotNull
     private final BasicBlock[][] puzzleBlock;
     private final int numberOfBlocks;
     private final int maxIndex;
     private int currentRow = 0;
     private int currentColumn = 0;
     private boolean playMode;
+    private int solution;
 
     PuzzleFrame(int maxNumber, int size, int startNumber) {
 
@@ -27,7 +30,7 @@ class PuzzleFrame {
         puzzleBlock[currentColumn][currentRow].setSelected(true);
     }
 
-    GridPane getFrame() {
+    @NotNull GridPane getFrame() {
         GridPane puzzleFrame = new GridPane();
         for (int x = 0; x < this.numberOfBlocks; x++) {
             for (int y = 0; y < this.numberOfBlocks; y++) {
@@ -46,7 +49,7 @@ class PuzzleFrame {
         this.playMode = playMode;
     }
 
-    void manageCursorKeys(KeyCode keyCode) {
+    void manageCursorKeys(@NotNull KeyCode keyCode) {
         puzzleBlock[currentColumn][currentRow].setSelected(false);
         switch (keyCode) {
             case DOWN:
@@ -98,7 +101,7 @@ class PuzzleFrame {
 
     }
 
-    void manageDigits(KeyCode keyCode, boolean altDown) {
+    void manageDigits(@NotNull KeyCode keyCode, boolean altDown) {
         int c = keyCode.getCode();
         if (c > 57) c -= 48;
         c -= 48;
@@ -109,7 +112,7 @@ class PuzzleFrame {
         }
     }
 
-    void manageLetters(KeyCode keyCode, boolean altDown) {
+    void manageLetters(@NotNull KeyCode keyCode, boolean altDown) {
         int c = keyCode.getCode();
         c -= 55;
         if (altDown) {
@@ -138,7 +141,7 @@ class PuzzleFrame {
         puzzleBlock[currentColumn][currentRow].addToFormula(String.valueOf(c));
     }
 
-    void manageFormulaLetters(KeyCode keyCode) {
+    void manageFormulaLetters(@NotNull KeyCode keyCode) {
         char c = ' ';
         switch (keyCode) {
             case ADD:
@@ -161,10 +164,13 @@ class PuzzleFrame {
         puzzleBlock[currentColumn][currentRow].clearFormula();
     }
 
+    @Contract(pure = true)
     private boolean checkSolution(int solution) {
+        this.solution = solution;
         return solution <= maxNumber && solution >= startNumber;
     }
 
+    @Contract(pure = true)
     private boolean checkPossibility(int possibility) {
         return possibility <= maxNumber && possibility >= startNumber;
     }
