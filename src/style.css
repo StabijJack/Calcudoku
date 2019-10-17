@@ -1,0 +1,26 @@
+.root{
+    -fx-background: white;
+    -fx-font-family: "Courier New";
+}
+.block{
+    -fx-border-color: green;
+}
+.solution{
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+.possibilities{
+    -fx-wrap-text: true;
+}
+.formula{
+    -fx-font-weight: bold;
+}
+#labelSelected
+{
+    -fx-background-color: lavender;
+}
+#blockSelected
+{
+    -fx-background-color: lavender;
+    -fx-border-color: red; 
+}

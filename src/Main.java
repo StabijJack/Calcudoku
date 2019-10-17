@@ -17,14 +17,14 @@ public class Main extends Application {
 
     @Override
     public void start(@NotNull Stage primaryStage) {
-        ScrollPane root = new ScrollPane();
-        int size = 100;
-        int maxNumber = 3;
+        ScrollPane scrollPane = new ScrollPane();
+        int size = 45;
+        int maxNumber = 19;
         int startNumber = 1;
         puzzleFrame = new PuzzleFrame(maxNumber, size, startNumber);
         manageMode(primaryStage);
-        root.setContent(puzzleFrame.getFrame());
-        root.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
+        scrollPane.setContent(puzzleFrame.getFrame());
+        scrollPane.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             if (switchMode.match(event)) {
                 manageMode(primaryStage);
             } else {
@@ -48,9 +48,11 @@ public class Main extends Application {
 
             }
         });
-        root.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->
+        scrollPane.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->
                 puzzleFrame.manageMouse(event.getX(), event.getY()));
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(scrollPane,800,800);
+        scene.getStylesheets().add("style.css");
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
