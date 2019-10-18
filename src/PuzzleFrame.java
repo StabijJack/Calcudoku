@@ -4,6 +4,8 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 class PuzzleFrame {
+    private enum operators  {A, S, M, D }
+
     private final int maxNumber;
     private final int startNumber;
     @NotNull
@@ -17,7 +19,7 @@ class PuzzleFrame {
     private final Integer[][] solution;
     private final boolean[][][] possibilities;
     private final Integer[][] numberFormula;
-    private final char[][] operatorFormula;
+    private final operators[][] operatorFormula;
 
 
     PuzzleFrame(int maxNumber, int size, int startNumber) {
@@ -28,7 +30,7 @@ class PuzzleFrame {
         this.solution = new Integer [numberOfBlocks][numberOfBlocks];
         this.possibilities = new boolean[numberOfBlocks][numberOfBlocks][maxNumber];
         this.numberFormula = new Integer[numberOfBlocks][numberOfBlocks];
-        this.operatorFormula = new char[numberOfBlocks][numberOfBlocks];
+        this.operatorFormula = new operators[numberOfBlocks][numberOfBlocks];
 
         puzzleBlock = new BasicBlock[this.numberOfBlocks][this.numberOfBlocks];
         for (int x = 0; x < this.numberOfBlocks; x++) {
@@ -165,28 +167,26 @@ class PuzzleFrame {
     }
 
     void manageFormulaLetters(@NotNull KeyCode keyCode) {
-        char c = ' ';
         switch (keyCode) {
             case ADD:
-                c = '+';
+                operatorFormula[currentColumn][currentRow] = operators.A;
                 break;
             case SUBTRACT:
-                c = '-';
+                operatorFormula[currentColumn][currentRow] = operators.S;
                 break;
             case MULTIPLY:
-                c = 'x';
+                operatorFormula[currentColumn][currentRow] = operators.M;
                 break;
             case DIVIDE:
-                c = ':';
+                operatorFormula[currentColumn][currentRow] = operators.D;
                 break;
         }
-        operatorFormula[currentColumn][currentRow] = c;
         puzzleBlock[currentColumn][currentRow].setFormula(numberFormula[currentColumn][currentRow].toString() + operatorFormula[currentColumn][currentRow]);
     }
 
     void manageFormulaClearBlock() {
         numberFormula[currentColumn][currentRow] = null;
-        operatorFormula[currentColumn][currentRow]= ' ';
+        operatorFormula[currentColumn][currentRow] = null;
         puzzleBlock[currentColumn][currentRow].setFormula("");
     }
 
