@@ -5,6 +5,7 @@ import javafx.scene.input.*;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
+
 public class Main extends Application {
 
     private static final KeyCombination switchMode = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
@@ -18,9 +19,9 @@ public class Main extends Application {
     @Override
     public void start(@NotNull Stage primaryStage) {
         ScrollPane scrollPane = new ScrollPane();
-        int size = 45;
-        int maxNumber = 19;
-        int startNumber = 1;
+        int size = 60;
+        int maxNumber = 7;
+        int startNumber = 0;
         puzzleFrame = new PuzzleFrame(maxNumber, size, startNumber);
         manageMode(primaryStage);
         scrollPane.setContent(puzzleFrame.getFrame());
@@ -33,10 +34,9 @@ public class Main extends Application {
                     puzzleFrame.manageCursorKeys(keyCode);
                 } else {
                     if (puzzleFrame.isPlayMode()) {
-                        if (keyCode.isDigitKey()) puzzleFrame.manageDigits(keyCode, event.isAltDown());
-                        else if (keyCode.isLetterKey()) puzzleFrame.manageLetters(keyCode, event.isAltDown());
+                        if (keyCode.isDigitKey()||keyCode.isLetterKey()) puzzleFrame.manageInputBlock(keyCode, event.isShiftDown());
                         else if ((keyCode == KeyCode.DELETE) || (keyCode == KeyCode.BACK_SPACE) || (keyCode == KeyCode.SPACE))
-                            puzzleFrame.manageClearBlock(keyCode);
+                            puzzleFrame.manageClearBlock();
                     } else {
                         if (keyCode.isDigitKey()) puzzleFrame.manageFormulaDigits(keyCode);
                         else if ((keyCode == KeyCode.DELETE) || (keyCode == KeyCode.BACK_SPACE) || (keyCode == KeyCode.SPACE))
@@ -45,12 +45,11 @@ public class Main extends Application {
                             puzzleFrame.manageFormulaLetters(keyCode);
                     }
                 }
-
             }
         });
         scrollPane.addEventHandler(MouseEvent.MOUSE_CLICKED, event ->
                 puzzleFrame.manageMouse(event.getX(), event.getY()));
-        Scene scene = new Scene(scrollPane,800,800);
+        Scene scene = new Scene(scrollPane);
         scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);
         primaryStage.show();

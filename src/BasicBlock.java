@@ -1,8 +1,6 @@
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 class BasicBlock {
     private final int size;
@@ -84,45 +82,18 @@ class BasicBlock {
         resetSelected();
     }
 
-    String getSolution() {
-        return this.solution.getText();
-    }
-
     void setSolution(String solution) {
         this.solution.setText(solution);
         resetVisibilities();
     }
 
-    void clearPossibilities() {
-        this.possibilities.setText("");
+    void setPossibilities(String s) {
+        possibilities.setText(s);
         resetVisibilities();
     }
 
-    void addPossibilities(String possibility) {
-        if (possibilities.getText().isBlank()) {
-            possibilities.setText(possibility);
-        } else {
-            possibilities.setText(possibilities.getText() + ", " + possibility);
-        }
-        resetVisibilities();
-    }
-
-    void delLastPossibility() {
-        if (possibilities.getText().contains(",")) {
-            possibilities.setText(possibilities.getText().substring(0, possibilities.getText().lastIndexOf(",")));
-        } else {
-            possibilities.setText("");
-            resetVisibilities();
-        }
-    }
-
-    void addToFormula(String character) {
-        this.formula.setText(this.formula.getText() + character);
-        resetVisibilities();
-    }
-
-    void clearFormula() {
-        this.formula.setText("");
+    void setFormula(String s) {
+        this.formula.setText(s);
         resetVisibilities();
     }
 }
