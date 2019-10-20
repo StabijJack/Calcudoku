@@ -12,9 +12,11 @@
 .possibilities{
     -fx-wrap-text: true;
 }
+
 .formula{
     -fx-font-weight: bold;
 }
+/* set to solution possibilities and formula of block when block is selected */
 #labelSelected
 {
     -fx-background-color: lavender;
