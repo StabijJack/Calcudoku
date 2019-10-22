@@ -87,6 +87,11 @@ class BasicBlock {
         resetVisibilities();
     }
 
+    void SetSolutionError(Boolean error){
+        if (error) solution.getStyleClass().add("solution-error");
+        else        solution.getStyleClass().removeAll("solution-error");
+    }
+
     void setPossibilities(String s) {
         possibilities.setText(s);
         resetVisibilities();

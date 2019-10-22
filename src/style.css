@@ -8,7 +8,11 @@
 .solution{
     -fx-font-weight: bold;
     -fx-alignment: CENTER;
+    -fx-text-fill: green;
 }
+.solution-error{
+    -fx-text-fill: red
+    }
 .possibilities{
     -fx-wrap-text: true;
 }
