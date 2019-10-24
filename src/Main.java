@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class Main extends Application {
 
     private static final KeyCombination switchMode = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
-    private PuzzleGridPane puzzleGridPane;
+    private PuzzleUserView puzzleUserView;
 
     public static void main(String[] args) {
 
@@ -22,18 +22,17 @@ public class Main extends Application {
         int size = 60;
         int maxNumber = 7;
         int startNumber = 0;
-        puzzleGridPane = new PuzzleGridPane(maxNumber, size, startNumber);
-        scrollPane.setContent(puzzleGridPane.getFrame());
+        puzzleUserView = new PuzzleUserView(maxNumber, size, startNumber);
+        scrollPane.setContent(puzzleUserView.getFrame());
         scrollPane.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             if (switchMode.match(event)) {
-                puzzleGridPane.togglePlayMode();
+                puzzleUserView.togglePlayMode();
                 managePlayMode(primaryStage);
-            }
-            else {
-                puzzleGridPane.manageKeyEvent(event);
+            } else {
+                puzzleUserView.manageKeyEvent(event);
             }
         });
-        scrollPane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> puzzleGridPane.manageMouseEvent(event));
+        scrollPane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> puzzleUserView.manageMouseEvent(event));
         Scene scene = new Scene(scrollPane);
         scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);
@@ -42,7 +41,7 @@ public class Main extends Application {
     }
 
     private void managePlayMode(@NotNull Stage primaryStage) {
-        if (puzzleGridPane.isPlayMode()) {
+        if (puzzleUserView.isPlayMode()) {
             primaryStage.setTitle("Calcudoku in Play Mode");
         } else {
             primaryStage.setTitle("Calcudoku in Create Mode");

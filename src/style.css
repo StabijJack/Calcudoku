@@ -28,6 +28,5 @@
 }
 #blockSelected
 {
-    -fx-border-color: red;
     -fx-background-color: lavender;
 }

@@ -19,4 +19,7 @@ class BlockPosition {
         if (Math.abs(this.column - blockPosition.column) <= 1 & this.row == blockPosition.row) return true;
         return Math.abs(this.row - blockPosition.row) <= 1 & this.column == blockPosition.column;
     }
+    boolean isEqual(BlockPosition blockPosition){
+        return column == blockPosition.column & row == blockPosition.row;
+    }
 }
