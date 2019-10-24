@@ -16,14 +16,14 @@ class PuzzleGridPane extends PuzzleData {
 
     PuzzleGridPane(int maxNumber, int size, int startNumber) {
         super(maxNumber, startNumber);
-        puzzleBlock = new BasicBlock[this.numberOfBlocks][this.numberOfBlocks];
-        for (int column = 0; column < this.numberOfBlocks; column++) {
-            for (int row = 0; row < this.numberOfBlocks; row++) {
+        puzzleBlock = new BasicBlock[numberOfBlocks][numberOfBlocks];
+        for (int column = 0; column < numberOfBlocks; column++) {
+            for (int row = 0; row < numberOfBlocks; row++) {
                 puzzleBlock[column][row] = new BasicBlock(size);
             }
         }
         puzzleBlock[currentColumn][currentRow].setSelected(true);
-        this.playMode = true;
+        playMode = true;
     }
 
     @NotNull GridPane getFrame() {
@@ -32,8 +32,8 @@ class PuzzleGridPane extends PuzzleData {
         TextField t = new TextField();
         puzzleFrame.add(t, 0, numberOfBlocks + 1, numberOfBlocks, 1);
 //        to get Initial KeyEvent within GridPane
-        for (int column = 0; column < this.numberOfBlocks; column++) {
-            for (int row = 0; row < this.numberOfBlocks; row++) {
+        for (int column = 0; column < numberOfBlocks; column++) {
+            for (int row = 0; row < numberOfBlocks; row++) {
                 puzzleFrame.add(puzzleBlock[column][row].getBlock(), column, row);
             }
         }
@@ -46,7 +46,7 @@ class PuzzleGridPane extends PuzzleData {
     }
 
     void togglePlayMode() {
-        this.playMode = !this.playMode;
+        playMode = !playMode;
     }
 
     void manageKeyEvent(KeyEvent event) {
@@ -187,7 +187,7 @@ class PuzzleGridPane extends PuzzleData {
         formulaOwner = getFormulaOwner(new BlockPosition(currentColumn, currentRow));
         if (formulaOwner == null) {
             formulaOwner = getFormulaOwner(mousePoint);
-            if (formulaOwner == null){
+            if (formulaOwner == null) {
                 puzzleBlock[currentColumn][currentRow].setSelected(false);
                 currentColumn = mousePoint.getColumn();
                 currentRow = mousePoint.getRow();
@@ -195,21 +195,19 @@ class PuzzleGridPane extends PuzzleData {
                 return;
             }
         }
-        if (addFormulaMember(formulaOwner.getColumn(), formulaOwner.getRow(), mousePoint)){
-            puzzleBlock[mousePoint.getColumn()][mousePoint.getRow()].setFormula("gelukt");
-//                 pas scherm aan
-                buildBorder(formulaOwner);
-        }
-        else{
-            puzzleBlock[mousePoint.getColumn()][mousePoint.getRow()].setFormula("niet gelukt");
+        if (addFormulaMember(formulaOwner.getColumn(), formulaOwner.getRow(), mousePoint)) {
+            puzzleBlock[mousePoint.getColumn()][mousePoint.getRow()].setFormula("oke");
+//                 change screen properties
+            buildFormulaBorder(formulaOwner);
+        } else {
+            puzzleBlock[mousePoint.getColumn()][mousePoint.getRow()].setFormula("not oke");
         }
 
 
     }
 
-    private void buildBorder(BlockPosition formulaOwner) {
+    private void buildFormulaBorder(BlockPosition formulaOwner) {
         HashSet formulaMembers = getFormulaMembers(formulaOwner);
-        formulaMembers.clear();
 
     }
 

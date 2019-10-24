@@ -1,5 +1,8 @@
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 class BasicBlock {
@@ -9,6 +12,10 @@ class BasicBlock {
     private Label possibilities;
     private Label formula;
     private boolean selected = false;
+    private boolean formulaBorderTop = false;
+    private boolean formulaBorderRight = false;
+    private boolean formulaBorderBottom = false;
+    private boolean formulaBorderLeft = false;
 
     BasicBlock(int size) {
         this.size = size;
@@ -16,7 +23,7 @@ class BasicBlock {
     }
 
     AnchorPane getBlock() {
-        return this.block;
+        return block;
     }
 
     private void setBlock() {
@@ -77,13 +84,13 @@ class BasicBlock {
         }
     }
 
-    void setSelected(boolean selected) {
-        this.selected = selected;
+    void setSelected(boolean select) {
+        selected = select;
         resetSelected();
     }
 
-    void setSolution(String solution) {
-        this.solution.setText(solution);
+    void setSolution(String s) {
+        solution.setText(s);
         resetVisibilities();
     }
 
@@ -92,13 +99,68 @@ class BasicBlock {
         else        solution.getStyleClass().removeAll("solution-error");
     }
 
-    void setPossibilities(String s) {
-        possibilities.setText(s);
+    void setPossibilities(String possibility) {
+        possibilities.setText(possibility);
         resetVisibilities();
     }
 
     void setFormula(String s) {
-        this.formula.setText(s);
+        formula.setText(s);
         resetVisibilities();
+    }
+
+    public void setFormulaBorderTop() {
+        formulaBorderTop = true;
+    }
+
+    public void setFormulaBorderRight() {
+        formulaBorderRight = true;
+    }
+
+    public void setFormulaBorderBottom() {
+        formulaBorderBottom = true;
+    }
+
+    public void setFormulaBorderLeft() {
+        formulaBorderLeft = true;
+    }
+    public void resetFormulaBorders(){
+        formulaBorderTop = false;
+        formulaBorderRight = false;
+        formulaBorderBottom = false;
+        formulaBorderLeft = false;
+    }
+
+    void setBlockTopBorderColor(Color color){
+        BorderStroke bs = block.getBorder().getStrokes().get(0);
+        block.setBorder(new Border (new BorderStroke(
+                color, bs.getRightStroke(), bs.getBottomStroke(),bs.getLeftStroke(),
+//                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(),bs.getLeftStroke(),
+                bs.getTopStyle(),bs.getRightStyle(),bs.getBottomStyle(),bs.getLeftStyle(),
+                bs.getRadii(),bs.getWidths(),bs.getInsets())));
+    }
+    void setBlockRightBorderColor(Color color){
+        BorderStroke bs = block.getBorder().getStrokes().get(0);
+        block.setBorder(new Border (new BorderStroke(
+                bs.getTopStroke(), color, bs.getBottomStroke(),bs.getLeftStroke(),
+//                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(),bs.getLeftStroke(),
+                bs.getTopStyle(),bs.getRightStyle(),bs.getBottomStyle(),bs.getLeftStyle(),
+                bs.getRadii(),bs.getWidths(),bs.getInsets())));
+    }
+    void setBlockBottomBorderColor(Color color){
+        BorderStroke bs = block.getBorder().getStrokes().get(0);
+        block.setBorder(new Border (new BorderStroke(
+                bs.getTopStroke(), bs.getRightStroke(), color,bs.getLeftStroke(),
+//                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(),bs.getLeftStroke(),
+                bs.getTopStyle(),bs.getRightStyle(),bs.getBottomStyle(),bs.getLeftStyle(),
+                bs.getRadii(),bs.getWidths(),bs.getInsets())));
+    }
+    void setBlockBottomLeftColor(Color color){
+        BorderStroke bs = block.getBorder().getStrokes().get(0);
+        block.setBorder(new Border (new BorderStroke(
+                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(), color,
+//                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(),bs.getLeftStroke(),
+                bs.getTopStyle(),bs.getRightStyle(),bs.getBottomStyle(),bs.getLeftStyle(),
+                bs.getRadii(),bs.getWidths(),bs.getInsets())));
     }
 }

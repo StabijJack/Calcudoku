@@ -1,7 +1,8 @@
 import org.jetbrains.annotations.Contract;
 import java.util.HashSet;
 
-public class PuzzleData {
+@SuppressWarnings("unchecked")
+class PuzzleData {
     enum operators  {NONE ,ADD, SUBTRACT, MULTIPLY, DIVIDE }
 
     private final int maxNumber;
@@ -27,7 +28,7 @@ public class PuzzleData {
         for (int i = 0; i <numberOfBlocks; i++)
             for (int j = 0; j < numberOfBlocks; j++){
                 this.operatorFormula[i][j] = operators.NONE;
-                this.formulaMembers[i][j] = new HashSet<BlockPosition>();
+                this.formulaMembers[i][j] = new HashSet<>();
             }
     }
     boolean togglePossibility(int column, int row, int value){
