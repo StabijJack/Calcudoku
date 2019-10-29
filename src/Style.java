@@ -10,7 +10,7 @@ class Style {
 
     private static final double rows = 5;
     private static final double fontScale = 10;
-    private static final double formulaScale = 2;
+    private static final double formulaScale = 3;
     private static final double solutionScale = 6;
     private static final double possibilitiesScale = 1.5;
 

@@ -1,5 +1,6 @@
 import org.jetbrains.annotations.Contract;
 
+
 class PuzzleData {
     final int numberOfBlocks;
     private final PuzzleBlockData[][] puzzleBlockData;
@@ -89,5 +90,7 @@ class PuzzleData {
             return new BlockPosition(column,row);
         }
         return getParent(column,row);
+    }
+    void exportData(){
     }
 }
