@@ -84,40 +84,10 @@ class PuzzleData {
         return puzzleBlockData[column][row].getParent();
     }
 
-//    BlockPosition getFormulaOwner(BlockPosition point){
-//        for (int column = 0; column < numberOfBlocks; column++) {
-//            for (int row = 0; row < numberOfBlocks; row++) {
-//                for (BlockPosition member : formulaMembers[column][row]) {
-//                    if (point.areNeighbors(member)){
-//                        return new BlockPosition(column,row);
-//                    }
-//                }
-//            }
-//        }
-//        return null;
-//    }
-//
-//    boolean addFormulaMember(int column, int row, BlockPosition point){
-//        if (formulaMembers[column][row].size() == 0 & numberFormula[column][row] != null) {
-//            formulaMembers[column][row].add(point);
-//            return true;
-//        }
-//        else{
-//            boolean areNeighbors = false;
-//            for (BlockPosition member : formulaMembers[column][row]) {
-//                if (areNeighbors || point.areNeighbors(member)){
-//                    areNeighbors = true;
-//                }
-//            }
-//            if (areNeighbors) {
-//                formulaMembers[column][row].add(point);
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    HashSet getFormulaMembers(BlockPosition formulaOwner){
-//        return formulaMembers[formulaOwner.getColumn()][formulaOwner.getRow()];
-//    }
+    BlockPosition getFormulaParent(int column, int row){
+        if (getFormulaNumber(column,row) != null){
+            return new BlockPosition(column,row);
+        }
+        return getParent(column,row);
+    }
 }

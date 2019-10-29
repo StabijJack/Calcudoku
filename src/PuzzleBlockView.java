@@ -1,60 +1,57 @@
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Font;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 class PuzzleBlockView {
-    private final int size;
+    private BorderPane blockSelectBorder;
     private AnchorPane block;
     private Label solution;
     private Label possibilities;
     private Label formula;
     private boolean selected = false;
-//    private boolean formulaBorderTop = false;
-//    private boolean formulaBorderRight = false;
-//    private boolean formulaBorderBottom = false;
-//    private boolean formulaBorderLeft = false;
 
-    PuzzleBlockView(int size) {
-        this.size = size;
+    PuzzleBlockView() {
         setBlock();
     }
 
-    AnchorPane getBlock() {
-        return block;
+    Pane getBlock() {
+        return blockSelectBorder;
     }
 
     private void setBlock() {
-        block = new AnchorPane();
-        block.getStyleClass().add("block");
-        block.setId("block");
-        int verticalGrid = size / 5;
-        int fontSize = size / 10;
 
         formula = new Label();
         formula.setLayoutY(0);
-        formula.setLayoutX(4);
-        formula.setPrefHeight((verticalGrid) * 2);
-        formula.setPrefWidth(size);
-        formula.setFont(Font.font(fontSize * 2));
-        formula.getStyleClass().add("formula");
+        formula.setLayoutX(Style.blockSelectedBorderWidth);
+        formula.setPrefHeight((Style.blockRowHeight) * 2);
+        formula.setPrefWidth(Style.blockSize);
+        formula.setFont(Style.formulaFont);
+        formula.setUnderline(Style.formulaUnderline);
 
         solution = new Label();
-        solution.setLayoutY((verticalGrid) * 2);
-        solution.setLayoutX(4);
-        solution.setPrefHeight((verticalGrid) * 3);
-        solution.setPrefWidth(size);
-        solution.setFont(Font.font(fontSize * 6));
-        solution.getStyleClass().add("solution");
+        solution.setLayoutY((Style.blockRowHeight) * 2);
+        solution.setLayoutX(Style.blockSelectedBorderWidth);
+        solution.setPrefHeight((Style.blockRowHeight) * 3);
+        solution.setPrefWidth(Style.blockSize);
+        solution.setFont(Style.solutionFont);
+        solution.setAlignment(Style.solutionAlignment);
 
         possibilities = new Label();
-        possibilities.setLayoutY((verticalGrid) * 2);
-        possibilities.setLayoutX(4);
-        possibilities.setPrefHeight((verticalGrid) * 3);
-        possibilities.setPrefWidth(size);
-        possibilities.setFont(Font.font(fontSize * 2));
-        possibilities.getStyleClass().add("possibilities");
+        possibilities.setLayoutY((Style.blockRowHeight) * 2);
+        possibilities.setLayoutX(Style.blockSelectedBorderWidth);
+        possibilities.setPrefHeight((Style.blockRowHeight) * 3);
+        possibilities.setPrefWidth(Style.blockSize);
+        possibilities.setFont(Style.possibilitiesFont);
+        possibilities.setWrapText(Style.possibilitiesTextWrap);
 
+        block = new AnchorPane();
+        block.setBorder(Style.blockBorder);
         block.getChildren().addAll(formula, solution, possibilities);
+
+        blockSelectBorder = new BorderPane(block);
+        blockSelectBorder.setBorder(Style.blockNotSelectedBorder);
+        blockSelectBorder.setBackground(Style.blockNotSelectedBackground);
+
         resetVisibilities();
     }
 
@@ -75,9 +72,11 @@ class PuzzleBlockView {
 
     private void resetSelected() {
         if (selected) {
-            block.setId("blockSelected");
+            blockSelectBorder.setBackground(Style.blockSelectedBackground);
+            blockSelectBorder.setBorder(Style.blockSelectedBorder);
         } else {
-            block.setId("");
+            blockSelectBorder.setBackground(Style.blockNotSelectedBackground);
+            blockSelectBorder.setBorder(Style.blockNotSelectedBorder);
         }
     }
 
@@ -95,8 +94,9 @@ class PuzzleBlockView {
     }
 
     void SetSolutionError(Boolean error) {
-        if (error) solution.getStyleClass().add("solution-error");
-        else solution.getStyleClass().removeAll("solution-error");
+        if (error)
+            solution.setTextFill(Style.solutionErrorFontColor);
+        else solution.setTextFill(Style.solutionFontColor);
     }
 
     void setPossibilities(String possibility) {
@@ -109,62 +109,39 @@ class PuzzleBlockView {
         resetVisibilities();
     }
 
-//    public void setFormulaBorderTop() {
-//        formulaBorderTop = true;
-//    }
-//
-//    public void setFormulaBorderRight() {
-//        formulaBorderRight = true;
-//    }
-//
-//    public void setFormulaBorderBottom() {
-//        formulaBorderBottom = true;
-//    }
-//
-//    public void setFormulaBorderLeft() {
-//        formulaBorderLeft = true;
-//    }
-//
-//    void resetFormulaBorders() {
-//        formulaBorderTop = false;
-//        formulaBorderRight = false;
-//        formulaBorderBottom = false;
-//        formulaBorderLeft = false;
-//    }
-//
-//    void setBlockTopBorderColor(Color color) {
-//        BorderStroke bs = block.getBorder().getStrokes().get(0);
-//        block.setBorder(new Border(new BorderStroke(
-//                color, bs.getRightStroke(), bs.getBottomStroke(), bs.getLeftStroke(),
-////                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(),bs.getLeftStroke(),
-//                bs.getTopStyle(), bs.getRightStyle(), bs.getBottomStyle(), bs.getLeftStyle(),
-//                bs.getRadii(), bs.getWidths(), bs.getInsets())));
-//    }
-//
-//    void setBlockRightBorderColor(Color color) {
-//        BorderStroke bs = block.getBorder().getStrokes().get(0);
-//        block.setBorder(new Border(new BorderStroke(
-//                bs.getTopStroke(), color, bs.getBottomStroke(), bs.getLeftStroke(),
-////                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(),bs.getLeftStroke(),
-//                bs.getTopStyle(), bs.getRightStyle(), bs.getBottomStyle(), bs.getLeftStyle(),
-//                bs.getRadii(), bs.getWidths(), bs.getInsets())));
-//    }
-//
-//    void setBlockBottomBorderColor(Color color) {
-//        BorderStroke bs = block.getBorder().getStrokes().get(0);
-//        block.setBorder(new Border(new BorderStroke(
-//                bs.getTopStroke(), bs.getRightStroke(), color, bs.getLeftStroke(),
-////                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(),bs.getLeftStroke(),
-//                bs.getTopStyle(), bs.getRightStyle(), bs.getBottomStyle(), bs.getLeftStyle(),
-//                bs.getRadii(), bs.getWidths(), bs.getInsets())));
-//    }
-//
-//    void setBlockBottomLeftColor(Color color) {
-//        BorderStroke bs = block.getBorder().getStrokes().get(0);
-//        block.setBorder(new Border(new BorderStroke(
-//                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(), color,
-////                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(),bs.getLeftStroke(),
-//                bs.getTopStyle(), bs.getRightStyle(), bs.getBottomStyle(), bs.getLeftStyle(),
-//                bs.getRadii(), bs.getWidths(), bs.getInsets())));
-//    }
+    void setBlockTopBorderColor(Color color) {
+        BorderStroke bs = block.getBorder().getStrokes().get(0);
+        block.setBorder(new Border(new BorderStroke(
+                color, bs.getRightStroke(), bs.getBottomStroke(), bs.getLeftStroke(),
+//                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(),bs.getLeftStroke(),
+                bs.getTopStyle(), bs.getRightStyle(), bs.getBottomStyle(), bs.getLeftStyle(),
+                bs.getRadii(), bs.getWidths(), bs.getInsets())));
+    }
+
+    void setBlockRightBorderColor(Color color) {
+        BorderStroke bs = block.getBorder().getStrokes().get(0);
+        block.setBorder(new Border(new BorderStroke(
+                bs.getTopStroke(), color, bs.getBottomStroke(), bs.getLeftStroke(),
+//                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(),bs.getLeftStroke(),
+                bs.getTopStyle(), bs.getRightStyle(), bs.getBottomStyle(), bs.getLeftStyle(),
+                bs.getRadii(), bs.getWidths(), bs.getInsets())));
+    }
+
+    void setBlockBottomBorderColor(Color color) {
+        BorderStroke bs = block.getBorder().getStrokes().get(0);
+        block.setBorder(new Border(new BorderStroke(
+                bs.getTopStroke(), bs.getRightStroke(), color, bs.getLeftStroke(),
+//                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(),bs.getLeftStroke(),
+                bs.getTopStyle(), bs.getRightStyle(), bs.getBottomStyle(), bs.getLeftStyle(),
+                bs.getRadii(), bs.getWidths(), bs.getInsets())));
+    }
+
+    void setBlockLeftBorderColor(Color color) {
+        BorderStroke bs = block.getBorder().getStrokes().get(0);
+        block.setBorder(new Border(new BorderStroke(
+                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(), color,
+//                bs.getTopStroke(), bs.getRightStroke(), bs.getBottomStroke(),bs.getLeftStroke(),
+                bs.getTopStyle(), bs.getRightStyle(), bs.getBottomStyle(), bs.getLeftStyle(),
+                bs.getRadii(), bs.getWidths(), bs.getInsets())));
+    }
 }

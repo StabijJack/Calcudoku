@@ -18,11 +18,12 @@ public class Main extends Application {
 
     @Override
     public void start(@NotNull Stage primaryStage) {
+
         ScrollPane scrollPane = new ScrollPane();
-        int size = 60;
+        new Style(60);
         int maxNumber = 7;
         int startNumber = 0;
-        puzzleUserView = new PuzzleUserView(maxNumber, size, startNumber);
+        puzzleUserView = new PuzzleUserView(maxNumber, startNumber);
         scrollPane.setContent(puzzleUserView.getFrame());
         scrollPane.addEventHandler(KeyEvent.KEY_RELEASED, event -> {
             if (switchMode.match(event)) {
@@ -34,7 +35,6 @@ public class Main extends Application {
         });
         scrollPane.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> puzzleUserView.manageMouseEvent(event));
         Scene scene = new Scene(scrollPane);
-        scene.getStylesheets().add("style.css");
         primaryStage.setScene(scene);
         managePlayMode(primaryStage);
         primaryStage.show();
