@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
 public class Main extends Application {
 
     private static final KeyCombination switchMode = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+    private static final KeyCombination savePuzzle = new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN);
+    private static final KeyCombination loadPuzzle = new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN);
     private PuzzleUserView puzzleUserView;
 
     public static void main(String[] args) {
@@ -29,6 +31,10 @@ public class Main extends Application {
             if (switchMode.match(event)) {
                 puzzleUserView.togglePlayMode();
                 managePlayMode(primaryStage);
+            } else if (savePuzzle.match(event)) {
+                    puzzleUserView.manageSavePuzzle();
+            } else if (loadPuzzle.match(event)) {
+                    puzzleUserView.manageLoadPuzzle();
             } else {
                 puzzleUserView.manageKeyEvent(event);
             }

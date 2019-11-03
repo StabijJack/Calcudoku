@@ -1,0 +1,859 @@
+{
+  "numberOfBlocks": 8,
+  "puzzleBlockData": [
+    [
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "solution": 1,
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      }
+    ],
+    [
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "solution": 2,
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "solution": 2,
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      }
+    ],
+    [
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaNumber": 11,
+        "formulaOperator": "SUBTRACT"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      }
+    ],
+    [
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      }
+    ],
+    [
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      }
+    ],
+    [
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      }
+    ],
+    [
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      }
+    ],
+    [
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      }
+    ]
+  ],
+  "maxNumber": 7,
+  "startNumber": 0
+}
