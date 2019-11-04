@@ -1,7 +1,11 @@
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 class BlockPosition {
     private final int column;
     private final int row;
 
+    @Contract(pure = true)
     public BlockPosition(int column, int row) {
         this.column = column;
         this.row = row;
@@ -15,11 +19,11 @@ class BlockPosition {
         return row;
     }
 
-    public boolean areNeighbors(BlockPosition blockPosition){
+    public boolean areNeighbors(@NotNull BlockPosition blockPosition){
         if (Math.abs(this.column - blockPosition.column) <= 1 & this.row == blockPosition.row) return true;
         return Math.abs(this.row - blockPosition.row) <= 1 & this.column == blockPosition.column;
     }
-    boolean isEqual(BlockPosition blockPosition){
+    boolean isEqual(@NotNull BlockPosition blockPosition){
         return column == blockPosition.column & row == blockPosition.row;
     }
 }

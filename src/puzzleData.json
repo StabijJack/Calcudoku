@@ -120,7 +120,7 @@
           false,
           false
         ],
-        "solution": 2,
+        "solution": 1,
         "formulaOperator": "NONE"
       },
       {
@@ -140,10 +140,10 @@
       {
         "possibilities": [
           false,
-          true,
-          true,
-          true,
-          true,
+          false,
+          false,
+          false,
+          false,
           false,
           false,
           false
@@ -162,6 +162,117 @@
           false
         ],
         "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      }
+    ],
+    [
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "formulaOperator": "NONE"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaNumber": 115,
+        "formulaOperator": "ADD"
+      },
+      {
+        "possibilities": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "formulaOperator": "NONE",
+        "parent": {
+          "column": 2,
+          "row": 2
+        }
       },
       {
         "possibilities": [
@@ -254,20 +365,6 @@
           false,
           false
         ],
-        "formulaNumber": 11,
-        "formulaOperator": "SUBTRACT"
-      },
-      {
-        "possibilities": [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
         "formulaOperator": "NONE"
       },
       {
@@ -281,100 +378,11 @@
           false,
           false
         ],
-        "formulaOperator": "NONE"
-      },
-      {
-        "possibilities": [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        "formulaOperator": "NONE"
-      },
-      {
-        "possibilities": [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        "formulaOperator": "NONE"
-      },
-      {
-        "possibilities": [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        "formulaOperator": "NONE"
-      }
-    ],
-    [
-      {
-        "possibilities": [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        "formulaOperator": "NONE"
-      },
-      {
-        "possibilities": [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        "formulaOperator": "NONE"
-      },
-      {
-        "possibilities": [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        "formulaOperator": "NONE"
-      },
-      {
-        "possibilities": [
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false
-        ],
-        "formulaOperator": "NONE"
+        "formulaOperator": "NONE",
+        "parent": {
+          "column": 2,
+          "row": 2
+        }
       },
       {
         "possibilities": [

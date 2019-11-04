@@ -144,4 +144,8 @@ class PuzzleBlockView {
                 bs.getTopStyle(), bs.getRightStyle(), bs.getBottomStyle(), bs.getLeftStyle(),
                 bs.getRadii(), bs.getWidths(), bs.getInsets())));
     }
+
+    public String getPossibilities() {
+        return possibilities.getText();
+    }
 }

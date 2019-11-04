@@ -3,9 +3,11 @@ import com.google.gson.GsonBuilder;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.FileReader;
@@ -21,6 +23,8 @@ class PuzzleUserView {
     private int currentColumn = 0;
     private BlockPosition currentBlockPosition = new BlockPosition(currentColumn, currentRow);
     private boolean playMode;
+    private final TextField communicationTextField = new TextField();
+
 
 
     PuzzleUserView(int maxNumber, int startNumber) {
@@ -31,14 +35,13 @@ class PuzzleUserView {
                 puzzleBlockView[column][row] = new PuzzleBlockView();
             }
         }
-        puzzleBlockView[currentColumn][currentRow].setSelected(true);
+        puzzleBlockView[0][0].setSelected(true);
         playMode = true;
     }
 
     @NotNull GridPane getFrame() {
         GridPane puzzleFrame = new GridPane();
-        TextField t = new TextField();
-        puzzleFrame.add(t, 0, puzzleData.numberOfBlocks + 1, puzzleData.numberOfBlocks, 1);
+        puzzleFrame.add(communicationTextField, 0, puzzleData.numberOfBlocks + 1, puzzleData.numberOfBlocks, 1);
         for (int column = 0; column < puzzleData.numberOfBlocks; column++) {
             for (int row = 0; row < puzzleData.numberOfBlocks; row++) {
                 puzzleFrame.add(puzzleBlockView[column][row].getBlock(), column, row);
@@ -123,11 +126,7 @@ class PuzzleUserView {
         }
         if (shiftDown) {
             if (puzzleData.togglePossibility(currentColumn, currentRow, value)) {
-                StringBuilder s = new StringBuilder();
-                for (int possibility = 0; possibility < puzzleData.numberOfBlocks; possibility++) {
-                    if (puzzleData.getPossibility(currentColumn, currentRow, possibility)) s.append(" ").append(possibility);
-                }
-                puzzleBlockView[currentColumn][currentRow].setPossibilities(s.toString());
+                setPossibilities(currentColumn,currentRow);
             }
         } else {
             if (puzzleData.setSolution(currentColumn, currentRow, value)) {
@@ -139,13 +138,13 @@ class PuzzleUserView {
 
     private void manageClearBlock() {
         if (puzzleData.getSolution(currentColumn,currentRow) == null) {
-            for (int value = 0; value < puzzleData.numberOfBlocks; value++) {
+            for (int value = puzzleData.startNumber; value <= puzzleData.maxNumber; value++) {
                 puzzleData.resetPossibility(currentColumn, currentRow, value);
-                puzzleBlockView[currentColumn][currentRow].setPossibilities("");
+                setPossibilities(currentColumn, currentRow);
             }
         } else {
             puzzleData.setSolution(currentColumn,currentRow, null);
-            puzzleBlockView[currentColumn][currentRow].setSolution(null);
+            setSolution(currentColumn,currentRow);
             checkSolutionUniqueOnColumnAndRow();
         }
     }
@@ -155,7 +154,7 @@ class PuzzleUserView {
         if (value > 57) value -= 48;
         value -= 48;
         puzzleData.setFormulaNumber(currentColumn, currentRow, value);
-        puzzleBlockView[currentColumn][currentRow].setFormula(puzzleData.getFormulaNumber(currentColumn,currentRow) + puzzleData.getFormulaOperator(currentColumn,currentRow));
+        setFormula(currentColumn,currentRow);
         setFormulaBorders();
     }
 
@@ -174,22 +173,27 @@ class PuzzleUserView {
                 puzzleData.setFormulaOperator(currentColumn, currentRow, operators.DIVIDE);
                 break;
         }
-        puzzleBlockView[currentColumn][currentRow].setFormula(puzzleData.getFormulaNumber(currentColumn,currentRow) + puzzleData.getFormulaOperator(currentColumn,currentRow));
+        setFormula(currentColumn,currentRow);
     }
 
     private void manageFormulaClearBlock() {
         puzzleData.setFormulaNumber(currentColumn, currentRow, null);
         puzzleData.setFormulaOperator(currentColumn, currentRow, operators.NONE);
-        if (puzzleData.getFormulaNumber(currentColumn,currentRow) != null)
-            puzzleBlockView[currentColumn][currentRow].setFormula(puzzleData.getFormulaNumber(currentColumn,currentRow) + puzzleData.getFormulaOperator(currentColumn,currentRow));
-        else
-            puzzleBlockView[currentColumn][currentRow].setFormula("");
+        setFormula(currentColumn,currentRow);
     }
 
-    void manageMouseEvent(MouseEvent event) {
-        BlockPosition mousePoint = getMousePosition(event);
-        if (event.isShiftDown()) manageMouseFormulaSelect(mousePoint);
-        else manageMouseMoveSelect(mousePoint);
+    void manageMouseEvent(MouseEvent mouseEvent) {
+        BlockPosition mousePoint = getMousePosition(mouseEvent);
+        if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+            if(mouseEvent.getClickCount() == 2){
+                communicationTextField.setText(puzzleBlockView[mousePoint.getColumn()][mousePoint.getRow()].getPossibilities());
+            }
+            else {
+                if (mouseEvent.isShiftDown())
+                    manageMouseFormulaSelect(mousePoint);
+                else manageMouseMoveSelect(mousePoint);
+            }
+        }
     }
 
     private void manageMouseFormulaSelect(@NotNull BlockPosition mousePosition) {
@@ -224,6 +228,8 @@ class PuzzleUserView {
         puzzleBlockView[currentColumn][currentRow].setSelected(true);
     }
 
+    @NotNull
+    @Contract("_ -> new")
     private BlockPosition getMousePosition(MouseEvent m) {
         int column;
         int row;
@@ -238,6 +244,57 @@ class PuzzleUserView {
         if(column >= puzzleData.numberOfBlocks) column = puzzleData.numberOfBlocks - 1;
         return new BlockPosition(column, row);
 
+    }
+
+    void manageSavePuzzle(){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter("src/puzzleData.json")) {
+            gson.toJson(puzzleData, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    void manageLoadPuzzle(){
+        Gson gson = new Gson();
+        try (Reader reader = new FileReader("src/PuzzleData.json")) {
+            puzzleData = gson.fromJson(reader, PuzzleData.class);
+            setPuzzleDataOnView();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setPuzzleDataOnView() {
+        for (int column = 0; column < puzzleData.numberOfBlocks; column++) {
+            for (int row = 0; row < puzzleData.numberOfBlocks; row++) {
+                setFormula(column,row);
+                setPossibilities(column,row);
+                setSolution(column,row);
+            }
+        }
+        setFormulaBorders();
+        checkSolutionUniqueOnColumnAndRow();
+        puzzleBlockView[currentColumn][currentRow].setSelected(false);
+        puzzleBlockView[0][0].setSelected(true);
+    }
+
+    private void setFormula(int column, int row) {
+        if (puzzleData.getFormulaNumber(column,row) != null)
+            puzzleBlockView[column][row].setFormula(puzzleData.getFormulaNumber(column,row) + puzzleData.getFormulaOperator(column,row));
+        else
+            puzzleBlockView[column][row].setFormula("");
+    }
+
+    private void setPossibilities(int column, int row) {
+        StringBuilder s = new StringBuilder();
+        for (int possibility = puzzleData.startNumber; possibility <= puzzleData.maxNumber; possibility++) {
+            if (puzzleData.getPossibility(column, row, possibility))
+                s.append(" ").append(possibility);
+        }
+        puzzleBlockView[column][row].setPossibilities(s.toString());
+    }
+    private void setSolution(int column, int row){
+        puzzleBlockView[column][row].setSolution(puzzleData.getSolution(column, row));
     }
 
     private void checkSolutionUniqueOnColumnAndRow() {
@@ -280,7 +337,7 @@ class PuzzleUserView {
         Color r = Style.blockBorderColor;
         BlockPosition p1, p2;
         for (int column = 0; column < puzzleData.numberOfBlocks; column++) {
-                puzzleBlockView[column][0].setBlockTopBorderColor(r);
+            puzzleBlockView[column][0].setBlockTopBorderColor(r);
             if (puzzleData.getFormulaParent(column,0)!= null){
                 puzzleBlockView[column][0].setBlockTopBorderColor(c);
             }
@@ -359,45 +416,6 @@ class PuzzleUserView {
                 puzzleBlockView[puzzleData.numberOfBlocks-1][row].setBlockRightBorderColor(c);
             }
         }
-    }
-    void manageSavePuzzle(){
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter("src/puzzleData.json")) {
-            gson.toJson(puzzleData, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    void manageLoadPuzzle(){
-        Gson gson = new Gson();
-        try (Reader reader = new FileReader("src/PuzzleData.json")) {
-            puzzleData = gson.fromJson(reader, PuzzleData.class);
-            setPuzzleDataOnView();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setPuzzleDataOnView() {
-        for (int column = 0; column < puzzleData.numberOfBlocks; column++) {
-            for (int row = 0; row < puzzleData.numberOfBlocks; row++) {
-                if (puzzleData.getFormulaNumber(column,row) != null)
-                    puzzleBlockView[column][row].setFormula(puzzleData.getFormulaNumber(column,row) + puzzleData.getFormulaOperator(column,row));
-                else
-                    puzzleBlockView[column][row].setFormula("");
-                puzzleBlockView[column][row].setSolution(puzzleData.getSolution(column, row));
-                StringBuilder s = new StringBuilder();
-                for (int possibility = 0; possibility < puzzleData.numberOfBlocks; possibility++) {
-                    if (puzzleData.getPossibility(column, row, possibility))
-                        s.append(" ").append(possibility);
-                }
-                puzzleBlockView[column][row].setPossibilities(s.toString());
-            }
-        }
-        setFormulaBorders();
-        checkSolutionUniqueOnColumnAndRow();
-        puzzleBlockView[currentColumn][currentRow].setSelected(false);
-        puzzleBlockView[0][0].setSelected(true);
     }
 
 }

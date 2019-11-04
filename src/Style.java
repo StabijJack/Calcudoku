@@ -12,7 +12,7 @@ class Style {
     private static final double fontScale = 10;
     private static final double formulaScale = 3;
     private static final double solutionScale = 6;
-    private static final double possibilitiesScale = 1.5;
+    private static final double possibilitiesScale = 2;
 
 
     static final double blockSelectedBorderWidth = 1;

@@ -11,6 +11,7 @@ public class Main extends Application {
     private static final KeyCombination switchMode = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
     private static final KeyCombination savePuzzle = new KeyCodeCombination(KeyCode.Q, KeyCombination.CONTROL_DOWN);
     private static final KeyCombination loadPuzzle = new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN);
+
     private PuzzleUserView puzzleUserView;
 
     public static void main(String[] args) {
@@ -22,9 +23,9 @@ public class Main extends Application {
     public void start(@NotNull Stage primaryStage) {
 
         ScrollPane scrollPane = new ScrollPane();
-        new Style(60);
-        int maxNumber = 7;
-        int startNumber = 0;
+        new Style(40);
+        int maxNumber = 19;
+        int startNumber = 1;
         puzzleUserView = new PuzzleUserView(maxNumber, startNumber);
         scrollPane.setContent(puzzleUserView.getFrame());
         scrollPane.addEventHandler(KeyEvent.KEY_RELEASED, event -> {

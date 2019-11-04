@@ -4,8 +4,8 @@ import org.jetbrains.annotations.Contract;
 class PuzzleData {
     final int numberOfBlocks;
     private final PuzzleBlockData[][] puzzleBlockData;
-    private final int maxNumber;
-    private final int startNumber;
+    final int maxNumber;
+    final int startNumber;
     @Contract(pure = true)
     PuzzleData(int maxNumber, int startNumber) {
         this.startNumber = startNumber;
@@ -35,19 +35,20 @@ class PuzzleData {
     Integer getSolution(int column, int row){
         return puzzleBlockData[column][row].getSolution();
     }
+
     boolean togglePossibility(int column, int row, int possibility) {
         if (possibility <= maxNumber && possibility >= startNumber) {
-            puzzleBlockData[column][row].togglePossibilities(possibility);
+            puzzleBlockData[column][row].togglePossibilities(possibility-startNumber);
             return true;
         } else return false;
     }
 
-    void resetPossibility(int column, int row, int posibility) {
-        puzzleBlockData[column][row].resetPossibilities(posibility);
+    void resetPossibility(int column, int row, int possibility) {
+        puzzleBlockData[column][row].resetPossibilities(possibility-startNumber);
     }
 
     boolean getPossibility(int column, int row, int value) {
-        return puzzleBlockData[column][row].getPossibilities()[value];
+        return puzzleBlockData[column][row].getPossibilities()[value-startNumber];
     }
 
     void setFormulaNumber(int column, int row, Integer number) {
@@ -90,7 +91,5 @@ class PuzzleData {
             return new BlockPosition(column,row);
         }
         return getParent(column,row);
-    }
-    void exportData(){
     }
 }
