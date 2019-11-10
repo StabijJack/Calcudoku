@@ -1,6 +1,10 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Spinner;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
@@ -17,17 +21,23 @@ import java.io.Reader;
 
 
 class PuzzleUserView {
+    private final Scene puzzleScene;
+    private final ScrollPane puzzleScrollPane = new ScrollPane();
     private PuzzleData puzzleData;
-    private final PuzzleBlockView[][] puzzleBlockView;
+    private PuzzleBlockView[][] puzzleBlockView;
     private int currentRow = 0;
     private int currentColumn = 0;
     private BlockPosition currentBlockPosition = new BlockPosition(currentColumn, currentRow);
     private boolean playMode;
-    private final TextField communicationTextField = new TextField();
+    private final Label communicationLabel = new Label();
+    private final Label playModeLabel = new Label();
 
+    PuzzleUserView() {
+        buildPuzzle(2,1);
+        puzzleScene = new Scene(puzzleScrollPane);
+    }
 
-
-    PuzzleUserView(int maxNumber, int startNumber) {
+    void buildPuzzle(int maxNumber, int startNumber){
         puzzleData = new PuzzleData(maxNumber, startNumber);
         puzzleBlockView = new PuzzleBlockView[puzzleData.numberOfBlocks][puzzleData.numberOfBlocks];
         for (int column = 0; column < puzzleData.numberOfBlocks; column++) {
@@ -37,28 +47,90 @@ class PuzzleUserView {
         }
         puzzleBlockView[0][0].setSelected(true);
         playMode = true;
+
+        puzzleScrollPane.setContent(getFrame());
     }
 
+    Scene getScene(){
+        return puzzleScene;
+    }
     @NotNull GridPane getFrame() {
         GridPane puzzleFrame = new GridPane();
-        puzzleFrame.add(communicationTextField, 0, puzzleData.numberOfBlocks + 1, puzzleData.numberOfBlocks, 1);
+        //noinspection Convert2MethodRef
+        puzzleFrame.setOnMouseClicked(e -> manageMouseEvent(e));
         for (int column = 0; column < puzzleData.numberOfBlocks; column++) {
             for (int row = 0; row < puzzleData.numberOfBlocks; row++) {
                 puzzleFrame.add(puzzleBlockView[column][row].getBlock(), column, row);
             }
         }
-        return puzzleFrame;
+        GridPane windowsFrame = new GridPane();
+        //noinspection Convert2MethodRef
+        windowsFrame.setOnKeyReleased(e -> manageKeyEvent(e));
+        windowsFrame.add(puzzleFrame,0,0,puzzleData.numberOfBlocks,puzzleData.numberOfBlocks);
+        windowsFrame.add(communicationLabel, 0, puzzleData.numberOfBlocks + 1, puzzleData.numberOfBlocks,1);
+
+        windowsFrame.add(playModeLabel,puzzleData.numberOfBlocks + 1, 0);
+        togglePlayMode();
+
+        Button createModifyPuzzle = new Button("Toggle Play Mode");
+        createModifyPuzzle.setOnMouseClicked(e -> togglePlayMode());
+        windowsFrame.add(createModifyPuzzle,puzzleData.numberOfBlocks + 2, 0);
+
+        Label startNumberLabel = new Label("StartNumber");
+        windowsFrame.add(startNumberLabel,puzzleData.numberOfBlocks + 1,1);
+        Spinner<Integer> startNumber = new Spinner<>(0,1,puzzleData.startNumber);
+        windowsFrame.add(startNumber,puzzleData.numberOfBlocks + 2,1);
+
+        Label maxNumberLabel = new Label("MaxNumber");
+        windowsFrame.add(maxNumberLabel,puzzleData.numberOfBlocks + 1, 2);
+        Spinner<Integer> maxNumber = new Spinner<>(2,19,puzzleData.maxNumber);
+        windowsFrame.add(maxNumber,puzzleData.numberOfBlocks + 2, 2);
+
+        Button newPuzzle = new Button("New Puzzle");
+        windowsFrame.add(newPuzzle,puzzleData.numberOfBlocks + 2, 3);
+        newPuzzle.setOnMouseClicked(mouseEvent -> {
+            buildPuzzle(maxNumber.getValue(), startNumber.getValue());
+        });
+
+        Button savePuzzle = new Button("Save Puzzle");
+        savePuzzle.setOnMouseClicked(mouseEvent -> {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            try (FileWriter writer = new FileWriter("src/puzzleData.json")) {
+                gson.toJson(puzzleData, writer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        windowsFrame.add(savePuzzle,puzzleData.numberOfBlocks + 1, 4);
+
+        Button loadPuzzle = new Button("Load Puzzle");
+        loadPuzzle.setOnMouseClicked(mouseEvent -> {
+            Gson gson = new Gson();
+            try (Reader reader = new FileReader("src/PuzzleData.json")) {
+                puzzleData = gson.fromJson(reader, PuzzleData.class);
+                setPuzzleDataOnView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        windowsFrame.add(loadPuzzle,puzzleData.numberOfBlocks + 2, 4);
+
+
+        return windowsFrame;
     }
 
-    boolean isPlayMode() {
+    @Contract(pure = true)
+    private boolean isPlayMode() {
         return playMode;
     }
 
-    void togglePlayMode() {
+    private void togglePlayMode() {
         playMode = !playMode;
+        if(playMode) playModeLabel.setText("Play Mode");
+        else playModeLabel.setText("create Modify Mode");
     }
 
-    void manageKeyEvent(@NotNull KeyEvent event) {
+    private void manageKeyEvent(@NotNull KeyEvent event) {
         KeyCode keyCode = event.getCode();
         if (keyCode.isNavigationKey()) {
             manageCursorKeys(keyCode);
@@ -182,11 +254,11 @@ class PuzzleUserView {
         setFormula(currentColumn,currentRow);
     }
 
-    void manageMouseEvent(MouseEvent mouseEvent) {
+    private void manageMouseEvent(MouseEvent mouseEvent) {
         BlockPosition mousePoint = getMousePosition(mouseEvent);
         if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
             if(mouseEvent.getClickCount() == 2){
-                communicationTextField.setText(puzzleBlockView[mousePoint.getColumn()][mousePoint.getRow()].getPossibilities());
+                communicationLabel.setText(puzzleBlockView[mousePoint.getColumn()][mousePoint.getRow()].getPossibilities());
             }
             else {
                 if (mouseEvent.isShiftDown())
@@ -244,24 +316,6 @@ class PuzzleUserView {
         if(column >= puzzleData.numberOfBlocks) column = puzzleData.numberOfBlocks - 1;
         return new BlockPosition(column, row);
 
-    }
-
-    void manageSavePuzzle(){
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter("src/puzzleData.json")) {
-            gson.toJson(puzzleData, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    void manageLoadPuzzle(){
-        Gson gson = new Gson();
-        try (Reader reader = new FileReader("src/PuzzleData.json")) {
-            puzzleData = gson.fromJson(reader, PuzzleData.class);
-            setPuzzleDataOnView();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     private void setPuzzleDataOnView() {
