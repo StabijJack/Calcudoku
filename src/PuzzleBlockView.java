@@ -74,6 +74,7 @@ class PuzzleBlockView {
         if (selected) {
             blockSelectBorder.setBackground(Style.blockSelectedBackground);
             blockSelectBorder.setBorder(Style.blockSelectedBorder);
+            blockSelectBorder.requestFocus();
         } else {
             blockSelectBorder.setBackground(Style.blockNotSelectedBackground);
             blockSelectBorder.setBorder(Style.blockNotSelectedBorder);

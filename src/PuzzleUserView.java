@@ -11,13 +11,13 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
+import java.nio.file.Paths;
 
 
 class PuzzleUserView {
@@ -35,10 +35,16 @@ class PuzzleUserView {
     PuzzleUserView() {
         buildPuzzle(2,1);
         puzzleScene = new Scene(puzzleScrollPane);
+        puzzleScene.addEventFilter(KeyEvent.KEY_RELEASED, e -> manageKeyEvent(e));
     }
 
-    void buildPuzzle(int maxNumber, int startNumber){
+    private void buildPuzzle(int maxNumber, int startNumber){
         puzzleData = new PuzzleData(maxNumber, startNumber);
+        buildPuzzleView();
+    }
+    private void buildPuzzleView(){
+        currentRow = 0;
+        currentColumn = 0;
         puzzleBlockView = new PuzzleBlockView[puzzleData.numberOfBlocks][puzzleData.numberOfBlocks];
         for (int column = 0; column < puzzleData.numberOfBlocks; column++) {
             for (int row = 0; row < puzzleData.numberOfBlocks; row++) {
@@ -49,12 +55,14 @@ class PuzzleUserView {
         playMode = true;
 
         puzzleScrollPane.setContent(getFrame());
+
     }
 
     Scene getScene(){
         return puzzleScene;
     }
-    @NotNull GridPane getFrame() {
+    @NotNull
+    private GridPane getFrame() {
         GridPane puzzleFrame = new GridPane();
         //noinspection Convert2MethodRef
         puzzleFrame.setOnMouseClicked(e -> manageMouseEvent(e));
@@ -65,7 +73,7 @@ class PuzzleUserView {
         }
         GridPane windowsFrame = new GridPane();
         //noinspection Convert2MethodRef
-        windowsFrame.setOnKeyReleased(e -> manageKeyEvent(e));
+//        windowsFrame.setOnKeyReleased(e -> manageKeyEvent(e)); key management on scene level
         windowsFrame.add(puzzleFrame,0,0,puzzleData.numberOfBlocks,puzzleData.numberOfBlocks);
         windowsFrame.add(communicationLabel, 0, puzzleData.numberOfBlocks + 1, puzzleData.numberOfBlocks,1);
 
@@ -88,14 +96,18 @@ class PuzzleUserView {
 
         Button newPuzzle = new Button("New Puzzle");
         windowsFrame.add(newPuzzle,puzzleData.numberOfBlocks + 2, 3);
-        newPuzzle.setOnMouseClicked(mouseEvent -> {
-            buildPuzzle(maxNumber.getValue(), startNumber.getValue());
-        });
+        newPuzzle.setOnMouseClicked(mouseEvent -> buildPuzzle(maxNumber.getValue(), startNumber.getValue()));
 
         Button savePuzzle = new Button("Save Puzzle");
         savePuzzle.setOnMouseClicked(mouseEvent -> {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            try (FileWriter writer = new FileWriter("src/puzzleData.json")) {
+            FileChooser loadPuzzleFieChooser = new FileChooser();
+            loadPuzzleFieChooser.setInitialDirectory(Paths.get("./src").toFile());
+            loadPuzzleFieChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("JSON Files", "*.JSON"));
+            File savePuzzleFile = loadPuzzleFieChooser.showOpenDialog(new Stage());
+
+            try (FileWriter writer = new FileWriter(savePuzzleFile)) {
                 gson.toJson(puzzleData, writer);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -105,9 +117,16 @@ class PuzzleUserView {
 
         Button loadPuzzle = new Button("Load Puzzle");
         loadPuzzle.setOnMouseClicked(mouseEvent -> {
+            FileChooser loadPuzzleFieChooser = new FileChooser();
+            loadPuzzleFieChooser.setInitialDirectory(Paths.get("./src").toFile());
+            loadPuzzleFieChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("JSON Files", "*.JSON"));
+            File loadPuzzleFile = loadPuzzleFieChooser.showOpenDialog(new Stage());
+
             Gson gson = new Gson();
-            try (Reader reader = new FileReader("src/PuzzleData.json")) {
+            try (Reader reader = new FileReader(loadPuzzleFile)) {
                 puzzleData = gson.fromJson(reader, PuzzleData.class);
+                buildPuzzleView();
                 setPuzzleDataOnView();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -330,6 +349,9 @@ class PuzzleUserView {
         checkSolutionUniqueOnColumnAndRow();
         puzzleBlockView[currentColumn][currentRow].setSelected(false);
         puzzleBlockView[0][0].setSelected(true);
+        if (!isPlayMode()){
+            togglePlayMode();
+        };
     }
 
     private void setFormula(int column, int row) {
