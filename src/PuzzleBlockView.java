@@ -100,11 +100,6 @@ class PuzzleBlockView {
         else solution.setTextFill(Style.solutionFontColor);
     }
 
-    void setPossibilities(String possibility) {
-        possibilities.setText(possibility);
-        resetVisibilities();
-    }
-
     void setFormula(String s) {
         formula.setText(s);
         resetVisibilities();
@@ -148,5 +143,10 @@ class PuzzleBlockView {
 
     public String getPossibilities() {
         return possibilities.getText();
+    }
+
+    void setPossibilities(String possibility) {
+        possibilities.setText(possibility);
+        resetVisibilities();
     }
 }

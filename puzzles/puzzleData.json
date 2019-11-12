@@ -863,5 +863,6 @@
     ]
   ],
   "maxNumber": 7,
-  "startNumber": 0
+  "startNumber": 0,
+  "puzzleName" : "eerstepuzzel"
 }

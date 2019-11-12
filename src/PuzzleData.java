@@ -2,20 +2,27 @@ import org.jetbrains.annotations.Contract;
 
 
 class PuzzleData {
+
+    String puzzleName;
+    final int startNumber;
+    final int maxNumber;
     final int numberOfBlocks;
     private final PuzzleBlockData[][] puzzleBlockData;
-    final int maxNumber;
-    final int startNumber;
     @Contract(pure = true)
-    PuzzleData(int maxNumber, int startNumber) {
+    PuzzleData(int maxNumber, int startNumber, String puzzleName) {
         this.startNumber = startNumber;
         this.maxNumber = maxNumber;
+        this.puzzleName = puzzleName;
         this.numberOfBlocks = maxNumber + 1 - startNumber;
         this.puzzleBlockData = new PuzzleBlockData[numberOfBlocks][numberOfBlocks];
         for (int i = 0; i < numberOfBlocks; i++)
             for (int j = 0; j < numberOfBlocks; j++) {
                 this.puzzleBlockData[i][j] = new PuzzleBlockData(maxNumber, startNumber);
             }
+    }
+
+    public void setPuzzleName(String puzzleName) {
+        this.puzzleName = puzzleName;
     }
 
     boolean setSolution(int column, int row, Integer solution) {

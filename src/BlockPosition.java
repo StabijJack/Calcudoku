@@ -19,11 +19,12 @@ class BlockPosition {
         return row;
     }
 
-    public boolean areNeighbors(@NotNull BlockPosition blockPosition){
+    public boolean areNeighbors(@NotNull BlockPosition blockPosition) {
         if (Math.abs(this.column - blockPosition.column) <= 1 & this.row == blockPosition.row) return true;
         return Math.abs(this.row - blockPosition.row) <= 1 & this.column == blockPosition.column;
     }
-    boolean isEqual(@NotNull BlockPosition blockPosition){
+
+    boolean isEqual(@NotNull BlockPosition blockPosition) {
         return column == blockPosition.column & row == blockPosition.row;
     }
 }
