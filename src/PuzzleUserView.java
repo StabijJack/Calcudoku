@@ -58,6 +58,7 @@ class PuzzleUserView {
             }
         }
         puzzleBlockView[0][0].setSelected(true);
+        fillCommunicatieWithFormula();
         playMode = true;
 
         puzzleScrollPane.setContent(getFrame());
@@ -224,6 +225,7 @@ class PuzzleUserView {
         currentColumn = (currentColumn + puzzleData.numberOfBlocks) % puzzleData.numberOfBlocks;
         currentBlockPosition = new BlockPosition(currentColumn, currentRow);
         puzzleBlockView[currentColumn][currentRow].setSelected(true);
+        fillCommunicatieWithFormula();
 
     }
 
@@ -343,8 +345,20 @@ class PuzzleUserView {
         currentRow = mousePosition.getRow();
         currentBlockPosition = new BlockPosition(currentColumn, currentRow);
         puzzleBlockView[currentColumn][currentRow].setSelected(true);
+        fillCommunicatieWithFormula();
     }
 
+    private void fillCommunicatieWithFormula() {
+        BlockPosition currentBlock;
+        if (puzzleData.getFormulaNumber(currentColumn,currentRow) != null)
+            communicationLabel.setText(puzzleData.getFormulaNumber(currentColumn, currentRow) + puzzleData.getFormulaOperator(currentColumn, currentRow).name);
+        else {
+            currentBlock= puzzleData.getParent(currentColumn,currentRow);
+            if (currentBlock != null)
+                communicationLabel.setText(puzzleData.getFormulaNumber(puzzleData.getParent(currentColumn,currentRow).getColumn(), puzzleData.getParent(currentColumn,currentRow).getRow()) +
+                    puzzleData.getFormulaOperator(puzzleData.getParent(currentColumn,currentRow).getColumn(), puzzleData.getParent(currentColumn,currentRow).getRow()).name);
+        }
+    }
     @NotNull
     @Contract("_ -> new")
     private BlockPosition getMousePosition(MouseEvent m) {
@@ -375,6 +389,7 @@ class PuzzleUserView {
         checkSolutionUniqueOnColumnAndRow();
         puzzleBlockView[currentColumn][currentRow].setSelected(false);
         puzzleBlockView[0][0].setSelected(true);
+        fillCommunicatieWithFormula();
         if (!isPlayMode()) {
             togglePlayMode();
         }
