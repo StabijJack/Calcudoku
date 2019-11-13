@@ -50,20 +50,8 @@ class PuzzleBlockData {
         }
     }
 
-    String getFormulaOperator() {
-        switch (formulaOperator) {
-            case ADD:
-                return "+";
-            case SUBTRACT:
-                return "-";
-            case MULTIPLY:
-                return "*";
-            case DIVIDE:
-                return "/";
-            case NONE:
-            default:
-                return "";
-        }
+    operators getFormulaOperator() {
+        return formulaOperator;
     }
 
     void setFormulaOperator(operators formulaOperator) {

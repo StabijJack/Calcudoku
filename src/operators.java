@@ -1,1 +1,0 @@
-enum operators {NONE, ADD, SUBTRACT, MULTIPLY, DIVIDE}

@@ -1,4 +1,10 @@
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 
 class PuzzleData {
@@ -78,7 +84,7 @@ class PuzzleData {
         return puzzleBlockData[column][row].getFormulaNumber();
     }
 
-    String getFormulaOperator(int column, int row) {
+    operators getFormulaOperator(int column, int row) {
         return puzzleBlockData[column][row].getFormulaOperator();
     }
 
@@ -89,6 +95,7 @@ class PuzzleData {
     void setParent(int column, int row, BlockPosition parent){
         puzzleBlockData[column][row].setParent(parent);
     }
+
     BlockPosition getParent(int column, int row){
         return puzzleBlockData[column][row].getParent();
     }
@@ -98,5 +105,69 @@ class PuzzleData {
             return new BlockPosition(column,row);
         }
         return getParent(column,row);
+    }
+
+    boolean isFormulaSolutionFilled(@NotNull BlockPosition parent){
+        if (puzzleBlockData[parent.getColumn()][parent.getRow()].getSolution() == null) return false;
+        for (PuzzleBlockData[] blockDataRow : puzzleBlockData) {
+            for (PuzzleBlockData blockData : blockDataRow) {
+                if (blockData.getParent() != null)
+                    if (blockData.getParent().isEqual(parent) && blockData.getSolution() == null) return false;
+            }
+        }
+        return true;
+    }
+
+    ArrayList<Integer> getFormulaSolutions(@NotNull BlockPosition parent){
+        ArrayList<Integer> solutions = new ArrayList<>();
+        solutions.add(puzzleBlockData[parent.getColumn()][parent.getRow()].getSolution());
+        for (PuzzleBlockData[] blockDataRow : puzzleBlockData) {
+            for (PuzzleBlockData blockData : blockDataRow) {
+                BlockPosition bp = blockData.getParent();
+                if (bp != null && bp.isEqual(parent)) solutions.add(blockData.getSolution());
+            }
+        }
+        return solutions;
+    }
+
+    formulaResult checkFormulaResult(BlockPosition parent){
+        if (!isFormulaSolutionFilled(parent)) return formulaResult.UNDECIDED;
+        ArrayList<Integer> formulaValues = getFormulaSolutions(parent);
+        switch (puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaOperator()) {
+            case NONE:
+                if (formulaValues.size() == 1 && formulaValues.get(0)
+                        == puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaNumber())  return formulaResult.CORRECT;
+                break;
+            case ADD:
+                if (formulaValues.stream().mapToInt(value -> value).sum()
+                        == puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaNumber()) return formulaResult.CORRECT;
+                break;
+            case MULTIPLY:
+                if (formulaValues.stream().mapToInt(v -> v).reduce(1, (a, b) -> a * b)
+                        == puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaNumber()) return formulaResult.CORRECT;
+                break;
+            case SUBTRACT:
+                Collections.sort(formulaValues,Collections.reverseOrder());
+                if (formulaValues.stream().mapToInt(v -> v).reduce(formulaValues.get(0)*2, (a, b) -> a - b)
+                        == puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaNumber()) return formulaResult.CORRECT;
+                break;
+            case DIVIDE:
+                Collections.sort(formulaValues);
+                if (formulaValues.get(0) == 0 && puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaNumber() == 0) return formulaResult.CORRECT;
+                Collections.sort(formulaValues,Collections.reverseOrder());
+                if (formulaValues.stream().mapToInt(v -> v).filter(v -> v!=0).reduce(formulaValues.get(0)*formulaValues.get(0), (a, b) -> a / b)
+                        == puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaNumber()) return formulaResult.CORRECT;
+                break;
+        }
+        return formulaResult.WRONG;
+    }
+
+    boolean isFormulaPuzzleReadyToPlay(){
+        for (PuzzleBlockData[] puzzleBlockDataColumn : puzzleBlockData) {
+            for (PuzzleBlockData blockData : puzzleBlockDataColumn) {
+                if (blockData.getFormulaNumber() == null && blockData.getParent() == null ) return false;
+            }
+        }
+        return true;
     }
 }

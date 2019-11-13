@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.*;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -29,7 +30,7 @@ class PuzzleUserView {
     private int currentRow = 0;
     private int currentColumn = 0;
     private BlockPosition currentBlockPosition = new BlockPosition(currentColumn, currentRow);
-    private boolean playMode;
+    private boolean playMode = false;
     private final TextField puzzleNameTextField = new TextField();
     private final File puzzleDirectory;
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd_HH-mm-ss");
@@ -137,6 +138,13 @@ class PuzzleUserView {
         });
         windowsFrame.add(loadPuzzle, puzzleData.numberOfBlocks + 2, 4);
 
+        Button testButton = new Button("Test Button");
+        testButton.setOnMouseClicked(mouseEvent -> {
+            formulaResult test = puzzleData.checkFormulaResult(new BlockPosition(currentColumn,currentRow));
+            System.out.println(test);
+        });
+        windowsFrame.add(testButton, puzzleData.numberOfBlocks + 2, 5);
+
 
         return windowsFrame;
     }
@@ -148,8 +156,17 @@ class PuzzleUserView {
 
     private void togglePlayMode() {
         playMode = !playMode;
+        if (!puzzleData.isFormulaPuzzleReadyToPlay() && playMode) {
+            Dialog message = new Dialog();
+            message.setTitle("Nog Niet Klaar");
+            message.setHeaderText("De formules zijn nog niet dekkend");
+            message.getDialogPane().getButtonTypes().add(new ButtonType("oke"));
+            message.showAndWait();
+            playMode = false;
+        }
         if (playMode) playModeLabel.setText("Play Mode");
         else playModeLabel.setText("create Modify Mode");
+
     }
 
     private void manageKeyEvent(@NotNull KeyEvent event) {
@@ -276,6 +293,7 @@ class PuzzleUserView {
         puzzleData.setFormulaNumber(currentColumn, currentRow, null);
         puzzleData.setFormulaOperator(currentColumn, currentRow, operators.NONE);
         setFormula(currentColumn, currentRow);
+        setFormulaBorders();
     }
 
     private void manageMouseEvent(MouseEvent mouseEvent) {
@@ -302,7 +320,7 @@ class PuzzleUserView {
                     if (puzzleData.getParent(column - 1, row) == currentBlockPosition)
                         puzzleData.setParent(column, row, currentBlockPosition);
                 }
-                if (column < puzzleData.numberOfBlocks) {
+                if (column < puzzleData.numberOfBlocks-1) {
                     if (puzzleData.getParent(column + 1, row) == currentBlockPosition)
                         puzzleData.setParent(column, row, currentBlockPosition);
                 }
@@ -310,7 +328,7 @@ class PuzzleUserView {
                     if (puzzleData.getParent(column, row - 1) == currentBlockPosition)
                         puzzleData.setParent(column, row, currentBlockPosition);
                 }
-                if (row < puzzleData.numberOfBlocks) {
+                if (row < puzzleData.numberOfBlocks-1) {
                     if (puzzleData.getParent(column, row + 1) == currentBlockPosition)
                         puzzleData.setParent(column, row, currentBlockPosition);
                 }
@@ -364,7 +382,7 @@ class PuzzleUserView {
 
     private void setFormula(int column, int row) {
         if (puzzleData.getFormulaNumber(column, row) != null)
-            puzzleBlockView[column][row].setFormula(puzzleData.getFormulaNumber(column, row) + puzzleData.getFormulaOperator(column, row));
+            puzzleBlockView[column][row].setFormula(puzzleData.getFormulaNumber(column, row) + puzzleData.getFormulaOperator(column, row).name);
         else
             puzzleBlockView[column][row].setFormula("");
     }
@@ -454,9 +472,9 @@ class PuzzleUserView {
                     }
                 }
             }
-            puzzleBlockView[column][puzzleData.numberOfBlocks - 1].setBlockTopBorderColor(r);
+            puzzleBlockView[column][puzzleData.numberOfBlocks - 1].setBlockBottomBorderColor(r);
             if (puzzleData.getFormulaParent(column, puzzleData.numberOfBlocks - 1) != null) {
-                puzzleBlockView[column][puzzleData.numberOfBlocks - 1].setBlockTopBorderColor(c);
+                puzzleBlockView[column][puzzleData.numberOfBlocks - 1].setBlockBottomBorderColor(c);
             }
         }
         for (int row = 0; row < puzzleData.numberOfBlocks; row++) {
