@@ -59,6 +59,15 @@ class PuzzleData {
     boolean getPossibility(int column, int row, int value) {
         return puzzleBlockData[column][row].getPossibilities()[value-startNumber];
     }
+    String getPossibilityToString( int column, int row){
+        StringBuilder s = new StringBuilder();
+        for (int possibility = startNumber; possibility <= maxNumber; possibility++) {
+            if (getPossibility(column, row, possibility))
+                s.append(" ").append(possibility);
+        }
+        return s.toString();
+
+    }
 
     void setFormulaNumber(int column, int row, Integer number) {
         BlockPosition blockPosition = new BlockPosition(column, row);

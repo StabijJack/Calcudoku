@@ -155,12 +155,8 @@ class PuzzleBlockView {
                 bs.getRadii(), bs.getWidths(), bs.getInsets())));
     }
 
-    public String getPossibilities() {
-        return possibilities.getText();
-    }
 
     void setPossibilities(String possibility) {
         possibilities.setText(possibility);
         resetVisibilities();
-    }
-}
+    }}

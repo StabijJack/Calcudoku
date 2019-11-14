@@ -141,8 +141,8 @@ class PuzzleUserView {
 
         Button testButton = new Button("Test Button");
         testButton.setOnMouseClicked(mouseEvent -> {
-            formulaResult test = puzzleData.checkFormulaResult(currentColumn,currentRow);
-            System.out.println(test);
+
+            System.out.println("not in use");
         });
         windowsFrame.add(testButton, puzzleData.numberOfBlocks + 2, 5);
 
@@ -315,13 +315,9 @@ class PuzzleUserView {
     private void manageMouseEvent(MouseEvent mouseEvent) {
         BlockPosition mousePoint = getMousePosition(mouseEvent);
         if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
-            if (mouseEvent.getClickCount() == 2) {
-                communicationLabel.setText(puzzleBlockView[mousePoint.getColumn()][mousePoint.getRow()].getPossibilities());
-            } else {
-                if (mouseEvent.isShiftDown())
-                    manageMouseFormulaSelect(mousePoint);
-                else manageMouseMoveSelect(mousePoint);
-            }
+            if (mouseEvent.isShiftDown())
+                manageMouseFormulaSelect(mousePoint);
+            else manageMouseMoveSelect(mousePoint);
         }
     }
 
@@ -364,6 +360,7 @@ class PuzzleUserView {
 
     private void fillCommunicatieWithFormula() {
         BlockPosition currentFormulaBlock;
+        communicationLabel.setText("");
         if (puzzleData.getFormulaNumber(currentColumn,currentRow) != null)
             communicationLabel.setText(puzzleData.getFormulaNumber(currentColumn, currentRow) + puzzleData.getFormulaOperator(currentColumn, currentRow).name);
         else {
@@ -372,6 +369,7 @@ class PuzzleUserView {
                 communicationLabel.setText(puzzleData.getFormulaNumber(currentFormulaBlock.getColumn(), currentFormulaBlock.getRow()) +
                     puzzleData.getFormulaOperator(currentFormulaBlock.getColumn(), currentFormulaBlock.getRow()).name);
         }
+        communicationLabel.setText(communicationLabel.getText() + " Pos " + puzzleData.getPossibilityToString(currentColumn, currentRow));
     }
     @NotNull
     @Contract("_ -> new")
@@ -397,6 +395,9 @@ class PuzzleUserView {
                 setFormula(column, row);
                 setPossibilities(column, row);
                 setSolution(column, row);
+                if (puzzleData.getFormulaNumber(column,row) != null){
+                    setFormulaStyle(column,row);
+                }
             }
         }
         setFormulaBorders();
@@ -417,12 +418,8 @@ class PuzzleUserView {
     }
 
     private void setPossibilities(int column, int row) {
-        StringBuilder s = new StringBuilder();
-        for (int possibility = puzzleData.startNumber; possibility <= puzzleData.maxNumber; possibility++) {
-            if (puzzleData.getPossibility(column, row, possibility))
-                s.append(" ").append(possibility);
-        }
-        puzzleBlockView[column][row].setPossibilities(s.toString());
+        puzzleBlockView[column][row].setPossibilities(puzzleData.getPossibilityToString(column, row));
+        fillCommunicatieWithFormula();
     }
 
     private void setSolution(int column, int row) {
