@@ -1,5 +1,6 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.internal.$Gson$Preconditions;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -16,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.*;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -141,7 +141,7 @@ class PuzzleUserView {
 
         Button testButton = new Button("Test Button");
         testButton.setOnMouseClicked(mouseEvent -> {
-            formulaResult test = puzzleData.checkFormulaResult(new BlockPosition(currentColumn,currentRow));
+            formulaResult test = puzzleData.checkFormulaResult(currentColumn,currentRow);
             System.out.println(test);
         });
         windowsFrame.add(testButton, puzzleData.numberOfBlocks + 2, 5);
@@ -154,13 +154,12 @@ class PuzzleUserView {
     private boolean isPlayMode() {
         return playMode;
     }
-
     private void togglePlayMode() {
         playMode = !playMode;
         if (!puzzleData.isFormulaPuzzleReadyToPlay() && playMode) {
             Dialog message = new Dialog();
-            message.setTitle("Nog Niet Klaar");
-            message.setHeaderText("De formules zijn nog niet dekkend");
+            message.setTitle("Formulas not finished!");
+            message.setHeaderText("Not every cell in Formula");
             message.getDialogPane().getButtonTypes().add(new ButtonType("oke"));
             message.showAndWait();
             playMode = false;
@@ -247,8 +246,21 @@ class PuzzleUserView {
             if (puzzleData.setSolution(currentColumn, currentRow, value)) {
                 puzzleBlockView[currentColumn][currentRow].setSolution(value);
                 checkSolutionUniqueOnColumnAndRow();
+                setFormulaStyle(currentColumn,currentRow);
             }
         }
+    }
+
+    private void setFormulaStyle(int column, int row) {
+        int c,r;
+        c = column;
+        r = row;
+        BlockPosition parent = puzzleData.getParent(column,row);
+        if (parent != null){
+            c = parent.getColumn();
+            r = parent.getRow();
+        }
+        puzzleBlockView[c][r].setFormulaStyle(puzzleData.checkFormulaResult(c, r));
     }
 
     private void manageClearBlock() {
@@ -261,6 +273,8 @@ class PuzzleUserView {
             puzzleData.setSolution(currentColumn, currentRow, null);
             setSolution(currentColumn, currentRow);
             checkSolutionUniqueOnColumnAndRow();
+            setFormulaStyle(currentColumn,currentRow);
+
         }
     }
 
@@ -349,14 +363,14 @@ class PuzzleUserView {
     }
 
     private void fillCommunicatieWithFormula() {
-        BlockPosition currentBlock;
+        BlockPosition currentFormulaBlock;
         if (puzzleData.getFormulaNumber(currentColumn,currentRow) != null)
             communicationLabel.setText(puzzleData.getFormulaNumber(currentColumn, currentRow) + puzzleData.getFormulaOperator(currentColumn, currentRow).name);
         else {
-            currentBlock= puzzleData.getParent(currentColumn,currentRow);
-            if (currentBlock != null)
-                communicationLabel.setText(puzzleData.getFormulaNumber(puzzleData.getParent(currentColumn,currentRow).getColumn(), puzzleData.getParent(currentColumn,currentRow).getRow()) +
-                    puzzleData.getFormulaOperator(puzzleData.getParent(currentColumn,currentRow).getColumn(), puzzleData.getParent(currentColumn,currentRow).getRow()).name);
+            currentFormulaBlock= puzzleData.getParent(currentColumn,currentRow);
+            if (currentFormulaBlock != null)
+                communicationLabel.setText(puzzleData.getFormulaNumber(currentFormulaBlock.getColumn(), currentFormulaBlock.getRow()) +
+                    puzzleData.getFormulaOperator(currentFormulaBlock.getColumn(), currentFormulaBlock.getRow()).name);
         }
     }
     @NotNull

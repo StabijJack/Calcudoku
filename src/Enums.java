@@ -1,5 +1,5 @@
 enum operators {NONE(""), ADD("+"), SUBTRACT("-"), MULTIPLY("*"), DIVIDE("/");
-    String name;
+    final String name;
     operators(String s) {
         name=s;
     }

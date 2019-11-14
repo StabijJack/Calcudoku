@@ -1,6 +1,7 @@
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import org.jetbrains.annotations.NotNull;
 
 class PuzzleBlockView {
     private BorderPane blockSelectBorder;
@@ -94,7 +95,7 @@ class PuzzleBlockView {
         resetVisibilities();
     }
 
-    void SetSolutionError(Boolean error) {
+    void SetSolutionError(@NotNull Boolean error) {
         if (error)
             solution.setTextFill(Style.solutionErrorFontColor);
         else solution.setTextFill(Style.solutionFontColor);
@@ -103,6 +104,19 @@ class PuzzleBlockView {
     void setFormula(String s) {
         formula.setText(s);
         resetVisibilities();
+    }
+    void setFormulaStyle(@NotNull formulaResult formulaResult){
+        switch (formulaResult){
+            case UNDECIDED:
+                formula.setTextFill((Style.formulaFontColorUNDICIDED));
+                break;
+            case CORRECT:
+                formula.setTextFill((Style.formulaFontColorCorrect));
+                break;
+            case WRONG:
+                formula.setTextFill((Style.formulaFontColorWRONG));
+                break;
+        }
     }
 
     void setBlockTopBorderColor(Color color) {

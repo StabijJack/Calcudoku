@@ -2,9 +2,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 
 class PuzzleData {
@@ -55,11 +53,9 @@ class PuzzleData {
             return true;
         } else return false;
     }
-
     void resetPossibility(int column, int row, int possibility) {
         puzzleBlockData[column][row].resetPossibilities(possibility-startNumber);
     }
-
     boolean getPossibility(int column, int row, int value) {
         return puzzleBlockData[column][row].getPossibilities()[value-startNumber];
     }
@@ -79,7 +75,6 @@ class PuzzleData {
         }
         puzzleBlockData[column][row].setFormulaNumber(number);
     }
-
     Integer getFormulaNumber(int column, int row) {
         return puzzleBlockData[column][row].getFormulaNumber();
     }
@@ -87,9 +82,12 @@ class PuzzleData {
     operators getFormulaOperator(int column, int row) {
         return puzzleBlockData[column][row].getFormulaOperator();
     }
-
     void setFormulaOperator(int column, int row, operators operator) {
         puzzleBlockData[column][row].setFormulaOperator(operator);
+    }
+
+    void setParent(int column, int row, int parentColumn, int parentRow){
+        setParent(column, row, new BlockPosition(parentColumn,parentRow));
     }
 
     void setParent(int column, int row, BlockPosition parent){
@@ -107,7 +105,7 @@ class PuzzleData {
         return getParent(column,row);
     }
 
-    boolean isFormulaSolutionFilled(@NotNull BlockPosition parent){
+    private boolean isFormulaSolutionFilled(@NotNull BlockPosition parent){
         if (puzzleBlockData[parent.getColumn()][parent.getRow()].getSolution() == null) return false;
         for (PuzzleBlockData[] blockDataRow : puzzleBlockData) {
             for (PuzzleBlockData blockData : blockDataRow) {
@@ -118,7 +116,8 @@ class PuzzleData {
         return true;
     }
 
-    ArrayList<Integer> getFormulaSolutions(@NotNull BlockPosition parent){
+    @NotNull
+    private ArrayList<Integer> getFormulaSolutions(@NotNull BlockPosition parent){
         ArrayList<Integer> solutions = new ArrayList<>();
         solutions.add(puzzleBlockData[parent.getColumn()][parent.getRow()].getSolution());
         for (PuzzleBlockData[] blockDataRow : puzzleBlockData) {
@@ -130,6 +129,9 @@ class PuzzleData {
         return solutions;
     }
 
+    formulaResult checkFormulaResult(int parentColumn, int parentRow){
+        return checkFormulaResult(new BlockPosition(parentColumn,parentRow));
+    }
     formulaResult checkFormulaResult(BlockPosition parent){
         if (!isFormulaSolutionFilled(parent)) return formulaResult.UNDECIDED;
         ArrayList<Integer> formulaValues = getFormulaSolutions(parent);
@@ -147,14 +149,14 @@ class PuzzleData {
                         == puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaNumber()) return formulaResult.CORRECT;
                 break;
             case SUBTRACT:
-                Collections.sort(formulaValues,Collections.reverseOrder());
+                formulaValues.sort(Collections.reverseOrder());
                 if (formulaValues.stream().mapToInt(v -> v).reduce(formulaValues.get(0)*2, (a, b) -> a - b)
                         == puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaNumber()) return formulaResult.CORRECT;
                 break;
             case DIVIDE:
                 Collections.sort(formulaValues);
                 if (formulaValues.get(0) == 0 && puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaNumber() == 0) return formulaResult.CORRECT;
-                Collections.sort(formulaValues,Collections.reverseOrder());
+                formulaValues.sort(Collections.reverseOrder());
                 if (formulaValues.stream().mapToInt(v -> v).filter(v -> v!=0).reduce(formulaValues.get(0)*formulaValues.get(0), (a, b) -> a / b)
                         == puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaNumber()) return formulaResult.CORRECT;
                 break;

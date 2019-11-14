@@ -1,6 +1,6 @@
 class PuzzleBlockData {
-    private final boolean[] possibilities;
     private Integer solution;
+    private final boolean[] possibilities;
     private Integer formulaNumber;
     private operators formulaOperator;
     private BlockPosition parent;
@@ -15,7 +15,6 @@ class PuzzleBlockData {
     Integer getSolution() {
         return solution;
     }
-
     void setSolution(Integer solution) {
         this.solution = solution;
     }
@@ -23,11 +22,9 @@ class PuzzleBlockData {
     boolean[] getPossibilities() {
         return possibilities;
     }
-
     void resetPossibilities(int possibility) {
         possibilities[possibility] = false;
     }
-
     void togglePossibilities(int possibility) {
         this.possibilities[possibility] = !this.possibilities[possibility];
     }
@@ -35,7 +32,6 @@ class PuzzleBlockData {
     Integer getFormulaNumber() {
         return formulaNumber;
     }
-
     void setFormulaNumber(Integer number) {
         if (parent == null) {
             if (number == null) {
@@ -53,7 +49,6 @@ class PuzzleBlockData {
     operators getFormulaOperator() {
         return formulaOperator;
     }
-
     void setFormulaOperator(operators formulaOperator) {
         this.formulaOperator = formulaOperator;
     }
@@ -61,7 +56,6 @@ class PuzzleBlockData {
     BlockPosition getParent() {
         return parent;
     }
-
     void setParent(BlockPosition parent) {
         this.parent = parent;
     }

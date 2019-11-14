@@ -33,6 +33,9 @@ class Style {
 
     private static final FontWeight formulaFontWeight = FontWeight.BOLD;
     static final boolean formulaUnderline = true;
+    static final Color formulaFontColorUNDICIDED = Color.BLACK;
+    static final Color formulaFontColorCorrect = Color.YELLOW;
+    static final Color formulaFontColorWRONG = Color.RED;
 
     private static final FontWeight possibilitiesFontWeight = FontWeight.NORMAL;
     static final boolean possibilitiesTextWrap = true;
