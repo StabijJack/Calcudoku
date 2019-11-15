@@ -33,7 +33,7 @@ class PuzzleUserView {
     private boolean playMode = false;
     private final TextField puzzleNameTextField = new TextField();
     private final File puzzleDirectory;
-    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd_HH-mm-ss");
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
     PuzzleUserView() {
         puzzleDirectory = Paths.get("./puzzles").toAbsolutePath().toFile();
