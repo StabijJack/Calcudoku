@@ -1,5 +1,5 @@
 {
-  "puzzleName": "19 Chalance",
+  "puzzleName": "19 Challenge",
   "startNumber": 1,
   "maxNumber": 19,
   "numberOfBlocks": 19,
@@ -15,13 +15,13 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -40,13 +40,13 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -325,11 +325,11 @@
       },
       {
         "possibilities": [
-          true,
           false,
-          true,
           false,
-          true,
+          false,
+          false,
+          false,
           false,
           false,
           false,
@@ -487,12 +487,12 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -507,9 +507,7 @@
     ],
     [
       {
-        "solution": 11,
         "possibilities": [
-          true,
           false,
           false,
           false,
@@ -519,7 +517,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -533,9 +532,7 @@
         "formulaOperator": "MULTIPLY"
       },
       {
-        "solution": 1,
         "possibilities": [
-          true,
           false,
           false,
           false,
@@ -545,7 +542,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -599,7 +597,6 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -607,7 +604,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false
         ],
@@ -624,7 +622,6 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -632,7 +629,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false
         ],
@@ -645,10 +643,10 @@
       {
         "possibilities": [
           false,
-          true,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -670,10 +668,10 @@
       {
         "possibilities": [
           false,
-          true,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -830,9 +828,6 @@
         "possibilities": [
           false,
           false,
-          true,
-          false,
-          true,
           false,
           false,
           false,
@@ -842,7 +837,10 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
+          false,
+          false,
           false,
           false,
           false,
@@ -999,12 +997,12 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -1181,13 +1179,11 @@
         }
       },
       {
-        "solution": 19,
         "possibilities": [
           false,
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -1201,19 +1197,18 @@
           false,
           false,
           false,
-          true
+          false,
+          false
         ],
         "formulaNumber": 95,
         "formulaOperator": "MULTIPLY"
       },
       {
-        "solution": 5,
         "possibilities": [
           false,
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -1227,7 +1222,8 @@
           false,
           false,
           false,
-          true
+          false,
+          false
         ],
         "formulaOperator": "NONE",
         "parent": {
@@ -1504,7 +1500,6 @@
         }
       },
       {
-        "solution": 4,
         "possibilities": [
           false,
           false,
@@ -1614,7 +1609,6 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -1626,7 +1620,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false
@@ -1636,11 +1631,11 @@
       },
       {
         "possibilities": [
-          true,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -1661,11 +1656,11 @@
       },
       {
         "possibilities": [
-          true,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -1994,7 +1989,6 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -2003,7 +1997,8 @@
           false,
           false,
           false,
-          true
+          false,
+          false
         ],
         "formulaNumber": 190,
         "formulaOperator": "MULTIPLY"
@@ -2019,7 +2014,6 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -2028,7 +2022,8 @@
           false,
           false,
           false,
-          true
+          false,
+          false
         ],
         "formulaOperator": "NONE",
         "parent": {
@@ -2124,7 +2119,6 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -2136,7 +2130,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false
@@ -2148,7 +2143,6 @@
         }
       },
       {
-        "solution": 12,
         "possibilities": [
           false,
           false,
@@ -2334,12 +2328,12 @@
       },
       {
         "possibilities": [
-          true,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -2422,10 +2416,10 @@
           false,
           false,
           false,
-          true,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -2447,10 +2441,10 @@
           false,
           false,
           false,
-          true,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -2517,13 +2511,11 @@
         }
       },
       {
-        "solution": 5,
         "possibilities": [
           false,
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -2531,7 +2523,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -2545,7 +2538,6 @@
     ],
     [
       {
-        "solution": 5,
         "possibilities": [
           false,
           false,
@@ -2741,13 +2733,13 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -2766,13 +2758,13 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -2840,12 +2832,12 @@
       },
       {
         "possibilities": [
-          true,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -2895,7 +2887,6 @@
         }
       },
       {
-        "solution": 7,
         "possibilities": [
           false,
           false,
@@ -2931,12 +2922,12 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -2956,12 +2947,12 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -3027,13 +3018,11 @@
         }
       },
       {
-        "solution": 13,
         "possibilities": [
           false,
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -3041,7 +3030,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -3059,13 +3049,13 @@
     [
       {
         "possibilities": [
-          true,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -3086,7 +3076,6 @@
         "possibilities": [
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -3100,7 +3089,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false
         ],
@@ -3419,11 +3409,11 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
-          true
+          false,
+          false
         ],
         "formulaNumber": 285,
         "formulaOperator": "MULTIPLY"
@@ -3444,11 +3434,11 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
-          true
+          false,
+          false
         ],
         "formulaOperator": "NONE",
         "parent": {
@@ -3459,7 +3449,6 @@
       {
         "possibilities": [
           false,
-          true,
           false,
           false,
           false,
@@ -3470,7 +3459,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -3484,7 +3474,6 @@
       {
         "possibilities": [
           false,
-          true,
           false,
           false,
           false,
@@ -3495,7 +3484,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -3566,13 +3556,13 @@
     [
       {
         "possibilities": [
-          true,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -3596,7 +3586,6 @@
         "possibilities": [
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -3610,7 +3599,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false
         ],
@@ -3674,7 +3664,6 @@
         }
       },
       {
-        "solution": 4,
         "possibilities": [
           false,
           false,
@@ -4049,7 +4038,6 @@
         }
       },
       {
-        "solution": 2,
         "possibilities": [
           false,
           false,
@@ -4077,7 +4065,6 @@
     ],
     [
       {
-        "solution": 4,
         "possibilities": [
           false,
           false,
@@ -4103,7 +4090,6 @@
         "formulaOperator": "NONE"
       },
       {
-        "solution": 11,
         "possibilities": [
           false,
           false,
@@ -4157,7 +4143,6 @@
         "possibilities": [
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -4172,7 +4157,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false
         ],
         "formulaNumber": 54,
@@ -4182,7 +4168,6 @@
         "possibilities": [
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -4197,7 +4182,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false
         ],
         "formulaOperator": "NONE",
@@ -4531,7 +4517,6 @@
         }
       },
       {
-        "solution": 6,
         "possibilities": [
           false,
           false,
@@ -4557,7 +4542,6 @@
         "formulaOperator": "MULTIPLY"
       },
       {
-        "solution": 17,
         "possibilities": [
           false,
           false,
@@ -4574,7 +4558,7 @@
           false,
           false,
           false,
-          true,
+          false,
           false,
           false,
           false
@@ -4724,13 +4708,13 @@
       {
         "possibilities": [
           false,
-          true,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -4749,13 +4733,13 @@
       {
         "possibilities": [
           false,
-          true,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -4810,11 +4794,11 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -4835,11 +4819,11 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -4900,10 +4884,10 @@
           false,
           false,
           false,
-          true,
           false,
           false,
-          true
+          false,
+          false
         ],
         "formulaNumber": 304,
         "formulaOperator": "MULTIPLY"
@@ -4925,10 +4909,10 @@
           false,
           false,
           false,
-          true,
           false,
           false,
-          true
+          false,
+          false
         ],
         "formulaOperator": "NONE",
         "parent": {
@@ -4938,11 +4922,11 @@
       },
       {
         "possibilities": [
-          true,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -4963,11 +4947,11 @@
       },
       {
         "possibilities": [
-          true,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -5131,7 +5115,6 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -5139,7 +5122,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false
@@ -5155,14 +5139,14 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -5180,14 +5164,14 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -5569,7 +5553,6 @@
         }
       },
       {
-        "solution": 6,
         "possibilities": [
           false,
           false,
@@ -5633,7 +5616,6 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -5641,7 +5623,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false
@@ -5896,7 +5879,6 @@
         }
       },
       {
-        "solution": 2,
         "possibilities": [
           false,
           false,
@@ -6191,7 +6173,6 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -6201,7 +6182,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -6216,7 +6198,6 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -6226,7 +6207,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -6239,7 +6221,6 @@
         }
       },
       {
-        "solution": 3,
         "possibilities": [
           false,
           false,
@@ -6346,7 +6327,6 @@
         }
       },
       {
-        "solution": 4,
         "possibilities": [
           false,
           false,
@@ -6590,7 +6570,6 @@
         }
       },
       {
-        "solution": 16,
         "possibilities": [
           false,
           false,
@@ -7266,14 +7245,14 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -7291,14 +7270,14 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -7587,8 +7566,8 @@
           false,
           false,
           false,
-          true,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -7612,8 +7591,8 @@
           false,
           false,
           false,
-          true,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -7799,19 +7778,19 @@
           false,
           false,
           false,
-          true,
-          false,
-          false,
-          false,
-          false,
-          true,
           false,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
           false,
           false
         ],
@@ -7829,14 +7808,14 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false
         ],
@@ -7852,19 +7831,19 @@
           false,
           false,
           false,
-          true,
-          false,
-          false,
-          false,
-          false,
-          true,
           false,
           false,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
           false,
           false
         ],
@@ -7875,7 +7854,6 @@
         }
       },
       {
-        "solution": 16,
         "possibilities": [
           false,
           false,
@@ -7902,7 +7880,6 @@
       },
       {
         "possibilities": [
-          true,
           false,
           false,
           false,
@@ -7912,7 +7889,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -8324,7 +8302,6 @@
         }
       },
       {
-        "solution": 6,
         "possibilities": [
           false,
           false,
@@ -8359,7 +8336,6 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -8367,7 +8343,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false
         ],
@@ -8384,7 +8361,6 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -8392,7 +8368,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false
         ],
@@ -8404,7 +8381,6 @@
       },
       {
         "possibilities": [
-          true,
           false,
           false,
           false,
@@ -8414,7 +8390,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -8436,7 +8413,6 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -8444,7 +8420,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -8461,7 +8438,6 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
@@ -8469,7 +8445,8 @@
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -8494,8 +8471,8 @@
           false,
           false,
           false,
-          true,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -8785,7 +8762,6 @@
         "formulaOperator": "MULTIPLY"
       },
       {
-        "solution": 9,
         "possibilities": [
           false,
           false,
@@ -8811,7 +8787,6 @@
         "formulaOperator": "MULTIPLY"
       },
       {
-        "solution": 3,
         "possibilities": [
           false,
           false,
@@ -8893,7 +8868,6 @@
         }
       },
       {
-        "solution": 12,
         "possibilities": [
           false,
           false,
@@ -8919,7 +8893,6 @@
         "formulaOperator": "NONE"
       },
       {
-        "solution": 7,
         "possibilities": [
           false,
           false,
@@ -9008,8 +8981,8 @@
           false,
           false,
           false,
-          true,
-          true,
+          false,
+          false,
           false,
           false,
           false,
@@ -9135,7 +9108,6 @@
         }
       },
       {
-        "solution": 15,
         "possibilities": [
           false,
           false,
@@ -9325,7 +9297,6 @@
         }
       },
       {
-        "solution": 6,
         "possibilities": [
           false,
           false,
@@ -9351,7 +9322,6 @@
         "formulaOperator": "MULTIPLY"
       },
       {
-        "solution": 19,
         "possibilities": [
           false,
           false,
@@ -9393,12 +9363,12 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false
         ],
         "formulaNumber": 234,
@@ -9418,12 +9388,12 @@
           false,
           false,
           false,
-          true,
           false,
           false,
           false,
           false,
-          true,
+          false,
+          false,
           false
         ],
         "formulaOperator": "NONE",
@@ -9433,7 +9403,6 @@
         }
       },
       {
-        "solution": 15,
         "possibilities": [
           false,
           false,

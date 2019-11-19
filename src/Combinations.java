@@ -2,13 +2,15 @@ import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 class Combinations {
     private final int startNumber;
     private final int endNumber;
     private final int lengthOfCombination;
-    private final int maxOccurensOfNumbers;
-    ArrayList<int[]> combinations;
+    private final int maxOccurrenceOfNumbers;
+    private ArrayList<ArrayList<Integer>> combinations;
     private int[] possibleNumbers;
     private int[] combinationPositions;
 
@@ -16,15 +18,15 @@ class Combinations {
         this.startNumber = startNumber;
         this.endNumber = endNumber;
         this.lengthOfCombination = lengthOfCombination;
-        this.maxOccurensOfNumbers = 1;
+        this.maxOccurrenceOfNumbers = 1;
         createCombinations();
     }
 
-    public Combinations(int startNumber, int endNumber, int lengthOfCombination, int maxOccurensOfNumbers) {
+    public Combinations(int startNumber, int endNumber, int lengthOfCombination, int maxOccurrenceOfNumbers) {
         this.startNumber = startNumber;
         this.endNumber = endNumber;
         this.lengthOfCombination = lengthOfCombination;
-        this.maxOccurensOfNumbers = maxOccurensOfNumbers;
+        this.maxOccurrenceOfNumbers = maxOccurrenceOfNumbers;
         createCombinations();
     }
 
@@ -33,17 +35,18 @@ class Combinations {
         createPossibleNumbers();
         initCombinationPositionProgress();
         do {
-            int[] combination = new int[lengthOfCombination];
+            ArrayList<Integer> combination = new ArrayList<>();
             for (int i = 0; i < lengthOfCombination; i++) {
-                combination[i] = possibleNumbers[combinationPositions[i]];
+                combination.add(possibleNumbers[combinationPositions[i]]);
             }
-            Arrays.sort(combination);
-            if (maxDubbleNumbersIsOke(combination) && combinationIsUnique(combination)) {
+            combination.sort(Collections.reverseOrder());
+            if (maxOccurrenceOfNumbersIsOke(combination) && combinationIsUnique(combination)) {
                 combinations.add(combination);
             }
             getNextCombinationPosition();
         }
         while (!endCombinationPositionProgress());
+        combinations.sort(compareByAllElements());
     }
 
     private void createPossibleNumbers() {
@@ -56,9 +59,6 @@ class Combinations {
 
     private void initCombinationPositionProgress() {
         combinationPositions = new int[lengthOfCombination];
-        for (int progress : combinationPositions) {
-            progress = 0;
-        }
     }
 
     private void getNextCombinationPosition() {
@@ -76,27 +76,27 @@ class Combinations {
         return combinationPositions[0] >= possibleNumbers.length;
     }
 
-    private boolean maxDubbleNumbersIsOke(int[] newCombination) {
+    private boolean maxOccurrenceOfNumbersIsOke(ArrayList<Integer> newCombination) {
         for (int possibleNumber : possibleNumbers) {
-            int occurensOfNumber = 0;
-            for (int i : newCombination) {
-                if (i == possibleNumber) occurensOfNumber += 1;
-                if (occurensOfNumber > maxOccurensOfNumbers) return false;
+            int occurrenceOfNumber = 0;
+            for (Integer i : newCombination) {
+                if (i == possibleNumber) occurrenceOfNumber += 1;
+                if (occurrenceOfNumber > maxOccurrenceOfNumbers) return false;
             }
         }
         return true;
     }
 
-    private boolean combinationIsUnique(int[] newCombination) {
-        for (int[] combination : combinations) {
+    private boolean combinationIsUnique(ArrayList newCombination) {
+        for (ArrayList combination : combinations) {
             boolean matches = true;
             for (int i = 0; i < lengthOfCombination; i++) {
-                if (combination[i] != newCombination[i]) {
+                if (combination.get(i) != newCombination.get(i)) {
                     matches = false;
                     break;
                 }
             }
-            if (matches == true) return false;
+            if (matches) return false;
         }
         return true;
     }
@@ -112,16 +112,16 @@ class Combinations {
         s.append("LengthOfCombination = ");
         s.append(lengthOfCombination);
         s.append(System.getProperty("line.separator"));
-        s.append("maxOccurensOfNumbers= ");
-        s.append(maxOccurensOfNumbers);
+        s.append("maxOccurrenceOfNumbers= ");
+        s.append(maxOccurrenceOfNumbers);
         s.append(System.getProperty("line.separator"));
         s.append("PossibleNumbers     = ");
         s.append(Arrays.toString(possibleNumbers));
         s.append(System.getProperty("line.separator"));
         s.append("Combinations        = ");
         s.append(System.getProperty("line.separator"));
-        for (int[] combination : combinations) {
-            s.append(Arrays.toString(combination));
+        for (ArrayList<Integer> combination : combinations) {
+            s.append(combination.toString());
             s.append(System.getProperty("line.separator"));
         }
         return s.toString();
@@ -131,7 +131,30 @@ class Combinations {
         return possibleNumbers;
     }
 
-    public ArrayList<int[]> getCombinations() {
+    public ArrayList<ArrayList<Integer>> getCombinations() {
         return combinations;
     }
+
+    private Comparator<ArrayList<Integer>> compareByAllElements() {
+        return (s1, s2) -> {
+            for (int i = 0; i < s1.size(); i++) {
+                if (!s1.get(i).equals(s2.get(i)))
+                    return s1.get(i).compareTo(s2.get(i));
+            }
+            return s1.get(0).compareTo(s2.get(0));
+        };
+    }
+//    private Comparator<ArrayList<Integer>> compareByAllElements() { identical as above
+//        return new Comparator<>() {
+//            @Override
+//            public int compare(ArrayList<Integer> s1, ArrayList<Integer> s2) {
+//                for (int i = 0; i < s1.size(); i++) {
+//                    if (!s1.get(i).equals(s2.get(i)))
+//                        return s1.get(i).compareTo(s2.get(i));
+//                }
+//                return s1.get(0).compareTo(s2.get(0));
+//            }
+//        };
+//    }
+
 }

@@ -57,7 +57,7 @@ class PuzzleUserView {
             }
         }
         puzzleBlockView[0][0].setSelected(true);
-        fillCommunicatieWithFormula();
+        fillCommunicationFieldWithFormula();
         playMode = true;
 
         puzzleScrollPane.setContent(getFrame());
@@ -139,10 +139,7 @@ class PuzzleUserView {
         windowsFrame.add(loadPuzzle, puzzleData.numberOfBlocks + 2, 4);
 
         Button testButton = new Button("Test Button");
-        testButton.setOnMouseClicked(mouseEvent -> {
-
-            System.out.println("not in use");
-        });
+        testButton.setOnMouseClicked(mouseEvent -> System.out.println("not in use"));
         windowsFrame.add(testButton, puzzleData.numberOfBlocks + 2, 5);
 
 
@@ -223,7 +220,7 @@ class PuzzleUserView {
         currentColumn = (currentColumn + puzzleData.numberOfBlocks) % puzzleData.numberOfBlocks;
         currentBlockPosition = new BlockPosition(currentColumn, currentRow);
         puzzleBlockView[currentColumn][currentRow].setSelected(true);
-        fillCommunicatieWithFormula();
+        fillCommunicationFieldWithFormula();
 
     }
 
@@ -354,10 +351,10 @@ class PuzzleUserView {
         currentRow = mousePosition.getRow();
         currentBlockPosition = new BlockPosition(currentColumn, currentRow);
         puzzleBlockView[currentColumn][currentRow].setSelected(true);
-        fillCommunicatieWithFormula();
+        fillCommunicationFieldWithFormula();
     }
 
-    private void fillCommunicatieWithFormula() {
+    private void fillCommunicationFieldWithFormula() {
         BlockPosition currentFormulaBlock;
         communicationLabel.setText("");
         if (puzzleData.getFormulaNumber(currentColumn,currentRow) != null)
@@ -403,7 +400,7 @@ class PuzzleUserView {
         checkSolutionUniqueOnColumnAndRow();
         puzzleBlockView[currentColumn][currentRow].setSelected(false);
         puzzleBlockView[0][0].setSelected(true);
-        fillCommunicatieWithFormula();
+        fillCommunicationFieldWithFormula();
         if (!isPlayMode()) {
             togglePlayMode();
         }
@@ -418,7 +415,7 @@ class PuzzleUserView {
 
     private void setPossibilities(int column, int row) {
         puzzleBlockView[column][row].setPossibilities(puzzleData.getPossibilityToString(column, row));
-        fillCommunicatieWithFormula();
+        fillCommunicationFieldWithFormula();
     }
 
     private void setSolution(int column, int row) {

@@ -3,6 +3,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 
 class PuzzleData {
@@ -95,9 +96,11 @@ class PuzzleData {
         puzzleBlockData[column][row].setFormulaOperator(operator);
     }
 
-    void setParent(int column, int row, int parentColumn, int parentRow){
-        setParent(column, row, new BlockPosition(parentColumn,parentRow));
-    }
+// --Commented out by Inspection START (19-11-2019 21:04):
+//    void setParent(int column, int row, int parentColumn, int parentRow){
+//        setParent(column, row, new BlockPosition(parentColumn,parentRow));
+//    }
+// --Commented out by Inspection STOP (19-11-2019 21:04)
     void setParent(int column, int row, BlockPosition parent){
         puzzleBlockData[column][row].setParent(parent);
     }
@@ -143,8 +146,7 @@ class PuzzleData {
         ArrayList<Integer> formulaValues = getFormulaSolutions(parent);
         switch (puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaOperator()) {
             case NONE:
-                if (formulaValues.size() == 1 && formulaValues.get(0)
-                        == puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaNumber())  return formulaResult.CORRECT;
+                if (formulaValues.size() == 1 && Objects.equals(formulaValues.get(0), puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaNumber()))  return formulaResult.CORRECT;
                 break;
             case ADD:
                 if (formulaValues.stream().mapToInt(value -> value).sum()

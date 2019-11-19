@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 class CombinationsTest {
     @org.junit.jupiter.api.Test
     void createCombinations() {
@@ -24,9 +22,12 @@ class CombinationsTest {
         combinations = new Combinations(1,9,2, 1);
         assert combinations.getPossibleNumbers().length == 9;
         assert combinations.getCombinations().size() == 36;
+        combinations = new Combinations(1,9,3, 1);
+        assert combinations.getPossibleNumbers().length == 9;
+        assert combinations.getCombinations().size() == 84;
         System.out.println(combinations.toString());
 
-        ArrayList a = new Combinations(1,9,3,1).getCombinations();
+//        ArrayList a = new Combinations(1,9,3,1).getCombinations();
 
 
     }
