@@ -56,7 +56,7 @@ class PuzzleData {
     void resetPossibility(int column, int row, int possibility) {
         puzzleBlockData[column][row].resetPossibilities(possibility-startNumber);
     }
-    boolean getPossibility(int column, int row, int value) {
+    private boolean getPossibility(int column, int row, int value) {
         return puzzleBlockData[column][row].getPossibilities()[value-startNumber];
     }
     String getPossibilityToString( int column, int row){
@@ -98,15 +98,12 @@ class PuzzleData {
     void setParent(int column, int row, int parentColumn, int parentRow){
         setParent(column, row, new BlockPosition(parentColumn,parentRow));
     }
-
     void setParent(int column, int row, BlockPosition parent){
         puzzleBlockData[column][row].setParent(parent);
     }
-
     BlockPosition getParent(int column, int row){
         return puzzleBlockData[column][row].getParent();
     }
-
     BlockPosition getFormulaParent(int column, int row){
         if (getFormulaNumber(column,row) != null){
             return new BlockPosition(column,row);
@@ -141,7 +138,7 @@ class PuzzleData {
     formulaResult checkFormulaResult(int parentColumn, int parentRow){
         return checkFormulaResult(new BlockPosition(parentColumn,parentRow));
     }
-    formulaResult checkFormulaResult(BlockPosition parent){
+    private formulaResult checkFormulaResult(BlockPosition parent){
         if (!isFormulaSolutionFilled(parent)) return formulaResult.UNDECIDED;
         ArrayList<Integer> formulaValues = getFormulaSolutions(parent);
         switch (puzzleBlockData[parent.getColumn()][parent.getRow()].getFormulaOperator()) {

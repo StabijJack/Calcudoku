@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Calcudoku:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Calcudoku_jar</output-path>
+    <root id="archive" name="Calcudoku.jar">
+      <element id="module-output" name="Calcudoku" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/16.0.2/annotations-16.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../GSON/gson-2.8.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../GSON/gson-2.8.6-sources.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

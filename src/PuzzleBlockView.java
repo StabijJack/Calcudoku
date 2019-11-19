@@ -105,6 +105,7 @@ class PuzzleBlockView {
         formula.setText(s);
         resetVisibilities();
     }
+
     void setFormulaStyle(@NotNull formulaResult formulaResult){
         switch (formulaResult){
             case UNDECIDED:
@@ -154,7 +155,6 @@ class PuzzleBlockView {
                 bs.getTopStyle(), bs.getRightStyle(), bs.getBottomStyle(), bs.getLeftStyle(),
                 bs.getRadii(), bs.getWidths(), bs.getInsets())));
     }
-
 
     void setPossibilities(String possibility) {
         possibilities.setText(possibility);
