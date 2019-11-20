@@ -1,3 +1,4 @@
+
 import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ class Combinations {
     private final int endNumber;
     private final int lengthOfCombination;
     private final int maxOccurrenceOfNumbers;
-    private ArrayList<ArrayList<Integer>> combinations;
+    protected ArrayList<ArrayList<Integer>> combinations;
     private int[] possibleNumbers;
     private int[] combinationPositions;
 
