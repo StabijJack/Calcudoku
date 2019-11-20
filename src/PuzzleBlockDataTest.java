@@ -1,7 +1,5 @@
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class PuzzleBlockDataTest {
 
     @Test
@@ -20,11 +18,11 @@ class PuzzleBlockDataTest {
     void getPossibilities() {
         PuzzleBlockData pbd = new PuzzleBlockData(5,1);
         pbd.togglePossibilities(4);
-        assert pbd.getPossibilities()[4] == true;
-        assert pbd.getPossibilities()[1] == false;
+        assert pbd.getPossibilities()[4];
+        assert !pbd.getPossibilities()[1];
         pbd.resetPossibilities(4);
-        assert pbd.getPossibilities()[4] == false;
-        assert pbd.getPossibilities()[1] == false;
+        assert !pbd.getPossibilities()[4];
+        assert !pbd.getPossibilities()[1];
     }
 
     @Test

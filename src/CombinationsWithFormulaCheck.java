@@ -1,10 +1,8 @@
-import jdk.dynalink.Operation;
-
 import java.util.ArrayList;
 
-public class CombinationsWithFormulaCheck extends Combinations{
-    private operators formulaOperator;
-    private int formulaNumber;
+class CombinationsWithFormulaCheck extends Combinations{
+    private final operators formulaOperator;
+    private final int formulaNumber;
     public CombinationsWithFormulaCheck(int startNumber, int endNumber, int lengthOfCombination, operators formulaOperator, int formulaNumber) {
         super(startNumber, endNumber, lengthOfCombination);
         this.formulaOperator = formulaOperator;

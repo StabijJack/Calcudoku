@@ -11,7 +11,7 @@ class Combinations {
     private final int endNumber;
     private final int lengthOfCombination;
     private final int maxOccurrenceOfNumbers;
-    protected ArrayList<ArrayList<Integer>> combinations;
+    ArrayList<ArrayList<Integer>> combinations;
     private int[] possibleNumbers;
     private int[] combinationPositions;
 
