@@ -1,23 +1,13 @@
 import java.util.ArrayList;
 
 class CombinationsWithFormulaCheck extends Combinations{
-    private final operators formulaOperator;
-    private final int formulaNumber;
-    public CombinationsWithFormulaCheck(int startNumber, int endNumber, int lengthOfCombination, operators formulaOperator, int formulaNumber) {
-        super(startNumber, endNumber, lengthOfCombination);
-        this.formulaOperator = formulaOperator;
-        this.formulaNumber = formulaNumber;
-        checkCombinations();
+
+    public CombinationsWithFormulaCheck(int startNumber, int endNumber) {
+        super(startNumber, endNumber);
     }
 
-    public CombinationsWithFormulaCheck(int startNumber, int endNumber, int lengthOfCombination, operators formulaOperator, int formulaNumber, int maxOccurrenceOfNumbers) {
-        super(startNumber, endNumber, lengthOfCombination, maxOccurrenceOfNumbers);
-        this.formulaOperator = formulaOperator;
-        this.formulaNumber = formulaNumber;
-        checkCombinations();
-    }
-
-    private void checkCombinations() {
+    void checkCombinations(int lengthOfCombination, operators formulaOperator, int formulaNumber, int maxOccurrenceOfNumbers) {
+        getCombinations(lengthOfCombination,maxOccurrenceOfNumbers);
         for (int i = combinations.size() - 1; i >= 0; i--) {
             ArrayList<Integer> combination = combinations.get(i);
             switch (formulaOperator) {

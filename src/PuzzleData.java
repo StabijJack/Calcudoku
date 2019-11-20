@@ -1,3 +1,4 @@
+import jdk.dynalink.Operation;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,6 +14,7 @@ class PuzzleData {
     final int maxNumber;
     final int numberOfBlocks;
     private final PuzzleBlockData[][] puzzleBlockData;
+
     @Contract(pure = true)
     PuzzleData(int maxNumber, int startNumber, String puzzleName) {
         this.startNumber = startNumber;
@@ -38,6 +40,10 @@ class PuzzleData {
         else {
             if ((solution <= maxNumber && solution >= startNumber)) {
                 puzzleBlockData[column][row].setSolution(solution);
+                for (int i = 0; i < numberOfBlocks; i++) {
+                    resetPossibility(column,i,solution);
+                    resetPossibility(i,row,solution);
+                }
                 return true;
             } else {
                 return false;
@@ -179,5 +185,67 @@ class PuzzleData {
             }
         }
         return true;
+    }
+
+    void fillPossibilities(){
+        ArrayList<ArrayList<ArrayList<PuzzleBlockData>>> formulaMemberLists = createFormulaMemberList();
+        CombinationsWithFormulaCheck c = new CombinationsWithFormulaCheck(startNumber, maxNumber);
+        for (int column = 0; column < numberOfBlocks; column++) {
+            for (int row = 0; row < numberOfBlocks; row++) {
+                if (puzzleBlockData[column][row].getFormulaNumber() != null){
+                    c.checkCombinations(formulaMemberLists.get(column).get(row).size(), puzzleBlockData[column][row].getFormulaOperator(), puzzleBlockData[column][row].getFormulaNumber(),1);
+                    ArrayList<ArrayList<Integer>> combinations = c.getCombinations();
+                    for (ArrayList<Integer> combination : combinations) {
+                        for (Integer integer : combination) {
+                            for (PuzzleBlockData formuleBlock : formulaMemberLists.get(column).get(row)) {
+                                formuleBlock.setPossibilities(integer - startNumber);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private ArrayList<ArrayList<ArrayList<PuzzleBlockData>>> createFormulaMemberList(){
+        ArrayList<ArrayList<ArrayList<PuzzleBlockData>>> formulaMemberLists;
+        formulaMemberLists = new ArrayList<>();
+        for (int column = 0; column < numberOfBlocks; column++) {
+            formulaMemberLists.add(new ArrayList<>());
+            for (int row = 0; row < numberOfBlocks; row++) {
+                formulaMemberLists.get(column).add(new ArrayList<PuzzleBlockData>());
+            }
+        }
+        for (int column = 0; column < numberOfBlocks; column++) {
+            for (int row = 0; row < numberOfBlocks; row++) {
+                BlockPosition parent = puzzleBlockData[column][row].getParent();
+                if (parent != null){
+                    formulaMemberLists.get(parent.getColumn()).get(parent.getRow()).add(puzzleBlockData[column][row]);
+                }
+                else{
+                    formulaMemberLists.get(column).get(row).add(puzzleBlockData[column][row]);
+                }
+            }
+        }
+        return formulaMemberLists;
+    }
+
+    public void fillSelectionIf1Possibilitie() {
+        for (int column = 0; column < numberOfBlocks; column++) {
+            for (int row = 0; row < numberOfBlocks; row++) {
+                int count = 0;
+                Integer number = 0;
+                boolean[] possibilities = puzzleBlockData[column][row].getPossibilities();
+                for (int i = 0; i < possibilities.length; i++) {
+                    if (possibilities[i]){
+                        count++;
+                        number = i + startNumber;
+                    }
+                }
+                if (count == 1){
+                    setSolution(column,row,number);
+                }
+            }
+        }
     }
 }

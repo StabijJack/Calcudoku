@@ -25,6 +25,9 @@ class PuzzleBlockData {
     void resetPossibilities(int possibility) {
         possibilities[possibility] = false;
     }
+    void setPossibilities(int possibility) {
+        possibilities[possibility] = true;
+    }
     void togglePossibilities(int possibility) {
         this.possibilities[possibility] = !this.possibilities[possibility];
     }

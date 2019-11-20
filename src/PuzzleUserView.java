@@ -138,10 +138,19 @@ class PuzzleUserView {
         });
         windowsFrame.add(loadPuzzle, puzzleData.numberOfBlocks + 2, 4);
 
-        Button testButton = new Button("Test Button");
-        testButton.setOnMouseClicked(mouseEvent -> System.out.println("not in use"));
-        windowsFrame.add(testButton, puzzleData.numberOfBlocks + 2, 5);
+        Button fillPossibilitiesButton = new Button("Fill All Possibilities");
+        fillPossibilitiesButton.setOnMouseClicked(mouseEvent ->{
+            puzzleData.fillPossibilities();
+            setPuzzleDataOnView();
+        });
+        windowsFrame.add(fillPossibilitiesButton, puzzleData.numberOfBlocks + 2, 5);
 
+        Button testButton = new Button("Fill If 1 Possibilities");
+        testButton.setOnMouseClicked(mouseEvent ->{
+            puzzleData.fillSelectionIf1Possibilitie();
+            setPuzzleDataOnView();
+        });
+        windowsFrame.add(testButton, puzzleData.numberOfBlocks + 2, 6);
 
         return windowsFrame;
     }
@@ -239,10 +248,11 @@ class PuzzleUserView {
                 setPossibilities(currentColumn, currentRow);
             }
         } else {
-            if (puzzleData.setSolution(currentColumn, currentRow, value)) {
-                puzzleBlockView[currentColumn][currentRow].setSolution(value);
-                checkSolutionUniqueOnColumnAndRow();
-                setFormulaStyle(currentColumn,currentRow);
+            if (puzzleData.setSolution(currentColumn, currentRow, value)) {;
+                setPuzzleDataOnView();
+//                puzzleBlockView[currentColumn][currentRow].setSolution(value);
+//                checkSolutionUniqueOnColumnAndRow();
+//                setFormulaStyle(currentColumn,currentRow);
             }
         }
     }

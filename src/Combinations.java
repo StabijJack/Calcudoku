@@ -1,53 +1,49 @@
 
 import org.jetbrains.annotations.Contract;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 class Combinations {
     private final int startNumber;
     private final int endNumber;
-    private final int lengthOfCombination;
-    private final int maxOccurrenceOfNumbers;
+    private Integer lengthOfCombination;
+    private Integer maxOccurrenceOfNumbers;
     ArrayList<ArrayList<Integer>> combinations;
     private int[] possibleNumbers;
     private int[] combinationPositions;
+    private final HashMap<String,ArrayList<ArrayList<Integer>>> savedCombinations = new HashMap<>();
 
-    public Combinations(int startNumber, int endNumber, int lengthOfCombination) {
+    public Combinations(int startNumber, int endNumber) {
         this.startNumber = startNumber;
         this.endNumber = endNumber;
-        this.lengthOfCombination = lengthOfCombination;
-        this.maxOccurrenceOfNumbers = 1;
-        createCombinations();
     }
 
-    public Combinations(int startNumber, int endNumber, int lengthOfCombination, int maxOccurrenceOfNumbers) {
-        this.startNumber = startNumber;
-        this.endNumber = endNumber;
+    ArrayList<ArrayList<Integer>> getCombinations(int lengthOfCombination, int maxOccurrenceOfNumbers) {
         this.lengthOfCombination = lengthOfCombination;
         this.maxOccurrenceOfNumbers = maxOccurrenceOfNumbers;
-        createCombinations();
-    }
-
-    private void createCombinations() {
-        combinations = new ArrayList<>();
-        createPossibleNumbers();
-        initCombinationPositionProgress();
-        do {
-            ArrayList<Integer> combination = new ArrayList<>();
-            for (int i = 0; i < lengthOfCombination; i++) {
-                combination.add(possibleNumbers[combinationPositions[i]]);
-            }
-            combination.sort(Collections.reverseOrder());
-            if (maxOccurrenceOfNumbersIsOke(combination) && combinationIsUnique(combination)) {
-                combinations.add(combination);
-            }
-            getNextCombinationPosition();
+        if (savedCombinations.get(this.lengthOfCombination.toString() + "_" + this.maxOccurrenceOfNumbers.toString()) != null){
+            combinations = (ArrayList<ArrayList<Integer>>) savedCombinations.get(this.lengthOfCombination.toString() + "_" + this.maxOccurrenceOfNumbers.toString()).clone();
         }
-        while (!endCombinationPositionProgress());
-        combinations.sort(compareByAllElements());
+        else {
+            combinations = new ArrayList<>();
+            createPossibleNumbers();
+            initCombinationPositionProgress();
+            do {
+                ArrayList<Integer> combination = new ArrayList<>();
+                for (int i = 0; i < lengthOfCombination; i++) {
+                    combination.add(possibleNumbers[combinationPositions[i]]);
+                }
+                combination.sort(Collections.reverseOrder());
+                if (maxOccurrenceOfNumbersIsOke(combination))
+                    if(combinationIsUnique(combination))
+                        combinations.add(combination);
+                getNextCombinationPosition();
+            }
+            while (!endCombinationPositionProgress());
+            combinations.sort(compareByAllElements());
+            savedCombinations.put(this.lengthOfCombination.toString() + "_" + this.maxOccurrenceOfNumbers.toString() , (ArrayList<ArrayList<Integer>>) combinations.clone());
+        }
+        return combinations;
     }
 
     private void createPossibleNumbers() {
