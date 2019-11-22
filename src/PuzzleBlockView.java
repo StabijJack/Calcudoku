@@ -95,7 +95,7 @@ class PuzzleBlockView {
         resetVisibilities();
     }
 
-    void SetSolutionError(@NotNull Boolean error) {
+    void setSolutionError(@NotNull Boolean error) {
         if (error)
             solution.setTextFill(Style.solutionErrorFontColor);
         else solution.setTextFill(Style.solutionFontColor);

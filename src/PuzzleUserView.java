@@ -29,6 +29,7 @@ class PuzzleUserView {
     private int currentRow = 0;
     private int currentColumn = 0;
     private BlockPosition currentBlockPosition = new BlockPosition(currentColumn, currentRow);
+    private PuzzleBlockView currentPuzzleBlockView;
     private boolean playMode = false;
     private final TextField puzzleNameTextField = new TextField();
     private final File puzzleDirectory;
@@ -48,18 +49,15 @@ class PuzzleUserView {
     }
 
     private void buildPuzzleView() {
-        currentRow = 0;
-        currentColumn = 0;
         puzzleBlockView = new PuzzleBlockView[puzzleData.numberOfBlocks][puzzleData.numberOfBlocks];
         for (int column = 0; column < puzzleData.numberOfBlocks; column++) {
             for (int row = 0; row < puzzleData.numberOfBlocks; row++) {
                 puzzleBlockView[column][row] = new PuzzleBlockView();
             }
         }
-        puzzleBlockView[0][0].setSelected(true);
-        fillCommunicationFieldWithFormula();
+        currentPuzzleBlockView = puzzleBlockView[0][0];//moveSelection expects a valid puzzleBlockView
+        moveSelection(new BlockPosition(0,0));
         playMode = true;
-
         puzzleScrollPane.setContent(getFrame());
 
     }
@@ -145,12 +143,20 @@ class PuzzleUserView {
         });
         windowsFrame.add(fillPossibilitiesButton, puzzleData.numberOfBlocks + 2, 5);
 
-        Button testButton = new Button("Fill If 1 Possibilities");
-        testButton.setOnMouseClicked(mouseEvent ->{
-            puzzleData.fillSelectionIf1Possibilitie();
+        Button fillSolutionIf1Possibility = new Button("Fill Solution If 1 Possibility");
+        fillSolutionIf1Possibility.setOnMouseClicked(mouseEvent ->{
+            puzzleData.fillSelectionIf1Possibility();
             setPuzzleDataOnView();
         });
-        windowsFrame.add(testButton, puzzleData.numberOfBlocks + 2, 6);
+        windowsFrame.add(fillSolutionIf1Possibility, puzzleData.numberOfBlocks + 2, 6);
+
+        Button find2BlocksWithSamePossibilitiesOnOneRowOrColumn = new Button("find 2 Blocks With Same Possibilities On One Row Or Column");
+        find2BlocksWithSamePossibilitiesOnOneRowOrColumn.setOnMouseClicked(mouseEvent ->{
+            BlockPosition block =  puzzleData.find2BlocksWithSamePossibilitiesOnOneRowOrColumn();
+            moveSelection(block);
+            setPuzzleDataOnView();
+        });
+        windowsFrame.add(find2BlocksWithSamePossibilitiesOnOneRowOrColumn, puzzleData.numberOfBlocks + 2, 7);
 
         return windowsFrame;
     }
@@ -197,39 +203,36 @@ class PuzzleUserView {
     }
 
     private void manageCursorKeys(@NotNull KeyCode keyCode) {
-        puzzleBlockView[currentColumn][currentRow].setSelected(false);
+        int newColumn = currentColumn;
+        int newRow = currentRow;
         switch (keyCode) {
             case DOWN:
-                ++currentRow;
+                ++newRow;
                 break;
             case UP:
-                --currentRow;
+                --newRow;
                 break;
             case RIGHT:
-                ++currentColumn;
+                ++newColumn;
                 break;
             case LEFT:
-                --currentColumn;
+                --newColumn;
                 break;
             case HOME:
-                currentColumn = 0;
+                newColumn = 0;
                 break;
             case END:
-                currentColumn = puzzleData.numberOfBlocks - 1;
+                newColumn = puzzleData.numberOfBlocks - 1;
                 break;
             case PAGE_UP:
-                currentRow = 0;
+                newRow = 0;
                 break;
             case PAGE_DOWN:
-                currentRow = puzzleData.numberOfBlocks - 1;
+                newRow = puzzleData.numberOfBlocks - 1;
                 break;
         }
-
-        currentRow = (currentRow + puzzleData.numberOfBlocks) % puzzleData.numberOfBlocks;
-        currentColumn = (currentColumn + puzzleData.numberOfBlocks) % puzzleData.numberOfBlocks;
-        currentBlockPosition = new BlockPosition(currentColumn, currentRow);
-        puzzleBlockView[currentColumn][currentRow].setSelected(true);
-        fillCommunicationFieldWithFormula();
+        BlockPosition newPosition = new BlockPosition((newColumn + puzzleData.numberOfBlocks) % puzzleData.numberOfBlocks,(newRow + puzzleData.numberOfBlocks) % puzzleData.numberOfBlocks);
+        moveSelection(newPosition);
 
     }
 
@@ -250,9 +253,6 @@ class PuzzleUserView {
         } else {
             if (puzzleData.setSolution(currentColumn, currentRow, value)) {;
                 setPuzzleDataOnView();
-//                puzzleBlockView[currentColumn][currentRow].setSolution(value);
-//                checkSolutionUniqueOnColumnAndRow();
-//                setFormulaStyle(currentColumn,currentRow);
             }
         }
     }
@@ -323,7 +323,7 @@ class PuzzleUserView {
         if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) {
             if (mouseEvent.isShiftDown())
                 manageMouseFormulaSelect(mousePoint);
-            else manageMouseMoveSelect(mousePoint);
+            else moveSelection(mousePoint);
         }
     }
 
@@ -353,15 +353,6 @@ class PuzzleUserView {
             }
             setFormulaBorders();
         }
-    }
-
-    private void manageMouseMoveSelect(@NotNull BlockPosition mousePosition) {
-        puzzleBlockView[currentColumn][currentRow].setSelected(false);
-        currentColumn = mousePosition.getColumn();
-        currentRow = mousePosition.getRow();
-        currentBlockPosition = new BlockPosition(currentColumn, currentRow);
-        puzzleBlockView[currentColumn][currentRow].setSelected(true);
-        fillCommunicationFieldWithFormula();
     }
 
     private void fillCommunicationFieldWithFormula() {
@@ -408,9 +399,6 @@ class PuzzleUserView {
         }
         setFormulaBorders();
         checkSolutionUniqueOnColumnAndRow();
-        puzzleBlockView[currentColumn][currentRow].setSelected(false);
-        puzzleBlockView[0][0].setSelected(true);
-        fillCommunicationFieldWithFormula();
         if (!isPlayMode()) {
             togglePlayMode();
         }
@@ -432,39 +420,17 @@ class PuzzleUserView {
         puzzleBlockView[column][row].setSolution(puzzleData.getSolution(column, row));
     }
 
+    private void setSolutionError(int column, int row){
+        puzzleBlockView[column][row].setSolutionError(puzzleData.isSolutionError(column, row));
+    }
+
     private void checkSolutionUniqueOnColumnAndRow() {
+        puzzleData.isSolutionUniqueOnColumnAndRow();
         for (int column = 0; column < puzzleData.numberOfBlocks; column++) {
-            for (int row = 0; row < puzzleData.numberOfBlocks; row++) {
-                puzzleBlockView[column][row].SetSolutionError(false);
-            }
-        }
-        for (int targetColumn = 0; targetColumn < puzzleData.numberOfBlocks; targetColumn++) {
-            for (int targetRow = 0; targetRow < puzzleData.numberOfBlocks; targetRow++) {
-                Integer targetValue = puzzleData.getSolution(targetColumn, targetRow);
-                if (targetValue != null) {
-                    for (int column = 0; column < targetColumn; column++) {
-                        if (puzzleData.getSolution(column, targetRow) != null)
-                            if (puzzleData.getSolution(column, targetRow).intValue() == targetValue)
-                                puzzleBlockView[column][targetRow].SetSolutionError(true);
-                    }
-                    for (int column = targetColumn + 1; column < puzzleData.numberOfBlocks; column++) {
-                        if (puzzleData.getSolution(column, targetRow) != null)
-                            if (puzzleData.getSolution(column, targetRow).intValue() == targetValue)
-                                puzzleBlockView[column][targetRow].SetSolutionError(true);
-                    }
-                    for (int row = 0; row < targetRow; row++) {
-                        if (puzzleData.getSolution(targetColumn, row) != null)
-                            if (puzzleData.getSolution(targetColumn, row).intValue() == targetValue)
-                                puzzleBlockView[targetColumn][row].SetSolutionError(true);
-                    }
-                    for (int row = targetRow + 1; row < puzzleData.numberOfBlocks; row++) {
-                        if (puzzleData.getSolution(targetColumn, row) != null)
-                            if (puzzleData.getSolution(targetColumn, row).intValue() == targetValue)
-                                puzzleBlockView[targetColumn][row].SetSolutionError(true);
-                    }
+                for (int row = 0; row < puzzleData.numberOfBlocks; row++) {
+                    setSolutionError(column,row);
                 }
             }
-        }
     }
 
     private void setFormulaBorders() {
@@ -547,6 +513,16 @@ class PuzzleUserView {
                 puzzleBlockView[puzzleData.numberOfBlocks - 1][row].setBlockRightBorderColor(c);
             }
         }
+    }
+
+    private void moveSelection(@NotNull BlockPosition newPosition){
+        currentPuzzleBlockView.setSelected(false);
+        currentColumn = newPosition.getColumn();
+        currentRow = newPosition.getRow();
+        currentBlockPosition = new BlockPosition(currentColumn, currentRow);
+        currentPuzzleBlockView = puzzleBlockView[currentColumn][currentRow];
+        currentPuzzleBlockView.setSelected(true);
+        fillCommunicationFieldWithFormula();
     }
 
 }

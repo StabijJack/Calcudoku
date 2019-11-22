@@ -1,15 +1,20 @@
+import org.jetbrains.annotations.Contract;
+
 class PuzzleBlockData {
     private Integer solution;
     private final boolean[] possibilities;
     private Integer formulaNumber;
     private operators formulaOperator;
     private BlockPosition parent;
+    private boolean solutionError;
 
+    @Contract(pure = true)
     PuzzleBlockData(int maxNumber, int startNumber) {
         solution = null;
         possibilities = new boolean[maxNumber + 1 - startNumber];
         formulaNumber = null;
         formulaOperator = operators.NONE;
+        solutionError = false;
     }
 
     Integer getSolution() {
@@ -30,6 +35,21 @@ class PuzzleBlockData {
     }
     void togglePossibilities(int possibility) {
         this.possibilities[possibility] = !this.possibilities[possibility];
+    }
+    @Contract(pure = true)
+    int getNumberOfPossibilities(){
+        int number = 0 ;
+        for (boolean possibility : possibilities) {
+            if (possibility) number++;
+        }
+        return number;
+    }
+    boolean arePossibilitiesEqual(PuzzleBlockData other){
+        for (int i = 0; i < possibilities.length; i++) {
+            if (this.possibilities[i] != other.possibilities[i])
+                return false;
+        }
+        return true;
     }
 
     Integer getFormulaNumber() {
@@ -63,4 +83,11 @@ class PuzzleBlockData {
         this.parent = parent;
     }
 
+    public boolean isSolutionError() {
+        return solutionError;
+    }
+
+    public void setSolutionError(boolean solutionError) {
+        this.solutionError = solutionError;
+    }
 }

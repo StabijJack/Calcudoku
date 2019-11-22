@@ -102,11 +102,13 @@ class PuzzleData {
         puzzleBlockData[column][row].setFormulaOperator(operator);
     }
 
-// --Commented out by Inspection START (19-11-2019 21:04):
-//    void setParent(int column, int row, int parentColumn, int parentRow){
-//        setParent(column, row, new BlockPosition(parentColumn,parentRow));
+    boolean isSolutionError(int column, int row){
+        return puzzleBlockData[column][row].isSolutionError();
+    }
+//    void setSolutionError(int column, int row, boolean solutionError){
+//        puzzleBlockData[column][row].setSolutionError(solutionError);
 //    }
-// --Commented out by Inspection STOP (19-11-2019 21:04)
+
     void setParent(int column, int row, BlockPosition parent){
         puzzleBlockData[column][row].setParent(parent);
     }
@@ -207,6 +209,28 @@ class PuzzleData {
         }
     }
 
+    void isSolutionUniqueOnColumnAndRow(){
+        for (PuzzleBlockData[] puzzleBlockColumn : puzzleBlockData) {
+            for (PuzzleBlockData blockData : puzzleBlockColumn) {
+                blockData.setSolutionError(false);
+            }
+        }
+        for (int column = 0; column < numberOfBlocks; column++) {
+            PuzzleBlockDataGroup group = new PuzzleBlockDataGroup();
+            for (int row = 0; row < numberOfBlocks; row++) {
+                group.addPuzzleBlockData(puzzleBlockData[column][row]);
+            }
+            group.allUnique();
+        }
+        for (int row = 0; row < numberOfBlocks; row++) {
+            PuzzleBlockDataGroup group = new PuzzleBlockDataGroup();
+            for (int column = 0; column < numberOfBlocks; column++) {
+                group.addPuzzleBlockData(puzzleBlockData[column][row]);
+            }
+            group.allUnique();
+        }
+    }
+
     private ArrayList<ArrayList<ArrayList<PuzzleBlockData>>> createFormulaMemberList(){
         ArrayList<ArrayList<ArrayList<PuzzleBlockData>>> formulaMemberLists;
         formulaMemberLists = new ArrayList<>();
@@ -230,7 +254,7 @@ class PuzzleData {
         return formulaMemberLists;
     }
 
-    public void fillSelectionIf1Possibilitie() {
+    public void fillSelectionIf1Possibility() {
         for (int column = 0; column < numberOfBlocks; column++) {
             for (int row = 0; row < numberOfBlocks; row++) {
                 int count = 0;
@@ -248,4 +272,34 @@ class PuzzleData {
             }
         }
     }
+
+    public BlockPosition find2BlocksWithSamePossibilitiesOnOneRowOrColumn() {
+        //columns
+        for (int column = 0; column < numberOfBlocks; column++) {
+            BlockPosition firstBlock;
+            for (int row = 0; row < numberOfBlocks - 1; row++) {//until -1 else no compare
+                if (puzzleBlockData[column][row].getNumberOfPossibilities() == 2){
+                    firstBlock = new BlockPosition(column,row);
+                    BlockPosition secondBlock;
+                    for (int rowSecond = row + 1; rowSecond < numberOfBlocks; rowSecond++) {
+                        if (puzzleBlockData[column][rowSecond].getNumberOfPossibilities() == 2){
+                            secondBlock = new BlockPosition(column, rowSecond);
+                            if (puzzleBlockData[column][row].arePossibilitiesEqual(puzzleBlockData[column][rowSecond]))
+                                return secondBlock;
+                        }
+                    }
+                }
+            }
+        }
+        for (int row = 0; row < numberOfBlocks; row++) {
+            BlockPosition firstBlock;
+            for (int column = 0; column < numberOfBlocks; column++) {
+                if (puzzleBlockData[column][row].getNumberOfPossibilities() == 2){
+                    return new BlockPosition(column,row);
+                }
+            }
+        }
+        return new BlockPosition(1,1);
+    }
+
 }
