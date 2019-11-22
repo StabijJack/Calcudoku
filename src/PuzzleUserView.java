@@ -152,8 +152,7 @@ class PuzzleUserView {
 
         Button find2BlocksWithSamePossibilitiesOnOneRowOrColumn = new Button("find 2 Blocks With Same Possibilities On One Row Or Column");
         find2BlocksWithSamePossibilitiesOnOneRowOrColumn.setOnMouseClicked(mouseEvent ->{
-            BlockPosition block =  puzzleData.find2BlocksWithSamePossibilitiesOnOneRowOrColumn();
-            moveSelection(block);
+            puzzleData.find2BlocksWithSamePossibilitiesOnOneRowOrColumn();
             setPuzzleDataOnView();
         });
         windowsFrame.add(find2BlocksWithSamePossibilitiesOnOneRowOrColumn, puzzleData.numberOfBlocks + 2, 7);
@@ -251,7 +250,7 @@ class PuzzleUserView {
                 setPossibilities(currentColumn, currentRow);
             }
         } else {
-            if (puzzleData.setSolution(currentColumn, currentRow, value)) {;
+            if (puzzleData.setSolution(currentColumn, currentRow, value)) {
                 setPuzzleDataOnView();
             }
         }

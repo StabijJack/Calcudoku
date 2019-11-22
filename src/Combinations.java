@@ -18,7 +18,7 @@ class Combinations {
         this.endNumber = endNumber;
     }
 
-    ArrayList<ArrayList<Integer>> getCombinations(int lengthOfCombination, int maxOccurrenceOfNumbers) {
+    void createCombinations(int lengthOfCombination, int maxOccurrenceOfNumbers) {
         this.lengthOfCombination = lengthOfCombination;
         this.maxOccurrenceOfNumbers = maxOccurrenceOfNumbers;
         if (savedCombinations.get(this.lengthOfCombination.toString() + "_" + this.maxOccurrenceOfNumbers.toString()) != null){
@@ -43,7 +43,6 @@ class Combinations {
             combinations.sort(compareByAllElements());
             savedCombinations.put(this.lengthOfCombination.toString() + "_" + this.maxOccurrenceOfNumbers.toString() , (ArrayList<ArrayList<Integer>>) combinations.clone());
         }
-        return combinations;
     }
 
     private void createPossibleNumbers() {

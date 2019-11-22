@@ -7,7 +7,7 @@ class CombinationsWithFormulaCheck extends Combinations{
     }
 
     void checkCombinations(int lengthOfCombination, operators formulaOperator, int formulaNumber, int maxOccurrenceOfNumbers) {
-        getCombinations(lengthOfCombination,maxOccurrenceOfNumbers);
+        createCombinations(lengthOfCombination,maxOccurrenceOfNumbers);
         for (int i = combinations.size() - 1; i >= 0; i--) {
             ArrayList<Integer> combination = combinations.get(i);
             switch (formulaOperator) {

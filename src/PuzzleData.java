@@ -1,4 +1,3 @@
-import jdk.dynalink.Operation;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -105,9 +104,6 @@ class PuzzleData {
     boolean isSolutionError(int column, int row){
         return puzzleBlockData[column][row].isSolutionError();
     }
-//    void setSolutionError(int column, int row, boolean solutionError){
-//        puzzleBlockData[column][row].setSolutionError(solutionError);
-//    }
 
     void setParent(int column, int row, BlockPosition parent){
         puzzleBlockData[column][row].setParent(parent);
@@ -199,8 +195,8 @@ class PuzzleData {
                     ArrayList<ArrayList<Integer>> combinations = c.getCombinations();
                     for (ArrayList<Integer> combination : combinations) {
                         for (Integer integer : combination) {
-                            for (PuzzleBlockData formuleBlock : formulaMemberLists.get(column).get(row)) {
-                                formuleBlock.setPossibilities(integer - startNumber);
+                            for (PuzzleBlockData formulaBlock : formulaMemberLists.get(column).get(row)) {
+                                formulaBlock.setPossibilities(integer - startNumber);
                             }
                         }
                     }
@@ -231,13 +227,14 @@ class PuzzleData {
         }
     }
 
+    @NotNull
     private ArrayList<ArrayList<ArrayList<PuzzleBlockData>>> createFormulaMemberList(){
         ArrayList<ArrayList<ArrayList<PuzzleBlockData>>> formulaMemberLists;
         formulaMemberLists = new ArrayList<>();
         for (int column = 0; column < numberOfBlocks; column++) {
             formulaMemberLists.add(new ArrayList<>());
             for (int row = 0; row < numberOfBlocks; row++) {
-                formulaMemberLists.get(column).add(new ArrayList<PuzzleBlockData>());
+                formulaMemberLists.get(column).add(new ArrayList<>());
             }
         }
         for (int column = 0; column < numberOfBlocks; column++) {
@@ -258,7 +255,7 @@ class PuzzleData {
         for (int column = 0; column < numberOfBlocks; column++) {
             for (int row = 0; row < numberOfBlocks; row++) {
                 int count = 0;
-                Integer number = 0;
+                int number = 0;
                 boolean[] possibilities = puzzleBlockData[column][row].getPossibilities();
                 for (int i = 0; i < possibilities.length; i++) {
                     if (possibilities[i]){
@@ -273,33 +270,21 @@ class PuzzleData {
         }
     }
 
-    public BlockPosition find2BlocksWithSamePossibilitiesOnOneRowOrColumn() {
-        //columns
+    public void find2BlocksWithSamePossibilitiesOnOneRowOrColumn() {
         for (int column = 0; column < numberOfBlocks; column++) {
-            BlockPosition firstBlock;
-            for (int row = 0; row < numberOfBlocks - 1; row++) {//until -1 else no compare
-                if (puzzleBlockData[column][row].getNumberOfPossibilities() == 2){
-                    firstBlock = new BlockPosition(column,row);
-                    BlockPosition secondBlock;
-                    for (int rowSecond = row + 1; rowSecond < numberOfBlocks; rowSecond++) {
-                        if (puzzleBlockData[column][rowSecond].getNumberOfPossibilities() == 2){
-                            secondBlock = new BlockPosition(column, rowSecond);
-                            if (puzzleBlockData[column][row].arePossibilitiesEqual(puzzleBlockData[column][rowSecond]))
-                                return secondBlock;
-                        }
-                    }
-                }
+            PuzzleBlockDataGroup group = new PuzzleBlockDataGroup();
+            for (int row = 0; row < numberOfBlocks; row++) {
+                group.addPuzzleBlockData(puzzleBlockData[column][row]);
             }
+            group.find2BlocksWithSamePossibilities();
         }
         for (int row = 0; row < numberOfBlocks; row++) {
-            BlockPosition firstBlock;
+            PuzzleBlockDataGroup group = new PuzzleBlockDataGroup();
             for (int column = 0; column < numberOfBlocks; column++) {
-                if (puzzleBlockData[column][row].getNumberOfPossibilities() == 2){
-                    return new BlockPosition(column,row);
-                }
+                group.addPuzzleBlockData(puzzleBlockData[column][row]);
             }
+            group.find2BlocksWithSamePossibilities();
         }
-        return new BlockPosition(1,1);
     }
 
 }

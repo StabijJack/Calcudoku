@@ -5,7 +5,8 @@ class CombinationsWithFormulaCheckTest {
     void test(){
 
         CombinationsWithFormulaCheck a = new CombinationsWithFormulaCheck(0,2);
-        a.checkCombinations(2,operators.NONE,1,1);
+        int maxOccurrenceOfNumbers = 1;
+        a.checkCombinations(2,operators.NONE,1,maxOccurrenceOfNumbers);
         assert a.getCombinations().size() == 1;
         a.checkCombinations(2,operators.ADD,1,1);
         assert a.getCombinations().size() == 1;
