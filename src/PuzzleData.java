@@ -276,15 +276,31 @@ class PuzzleData {
             for (int row = 0; row < numberOfBlocks; row++) {
                 group.addPuzzleBlockData(puzzleBlockData[column][row]);
             }
-            group.find2BlocksWithSamePossibilities();
+            group.findNumberOfEqualsBlocksWithSamePossibilities(2);
         }
         for (int row = 0; row < numberOfBlocks; row++) {
             PuzzleBlockDataGroup group = new PuzzleBlockDataGroup();
             for (int column = 0; column < numberOfBlocks; column++) {
                 group.addPuzzleBlockData(puzzleBlockData[column][row]);
             }
-            group.find2BlocksWithSamePossibilities();
+            group.findNumberOfEqualsBlocksWithSamePossibilities(2);
         }
     }
 
+    public void find3BlocksWithSamePossibilitiesOnOneRowOrColumn() {
+        for (int column = 0; column < numberOfBlocks; column++) {
+            PuzzleBlockDataGroup group = new PuzzleBlockDataGroup();
+            for (int row = 0; row < numberOfBlocks; row++) {
+                group.addPuzzleBlockData(puzzleBlockData[column][row]);
+            }
+            group.findNumberOfEqualsBlocksWithSamePossibilities(3);
+        }
+        for (int row = 0; row < numberOfBlocks; row++) {
+            PuzzleBlockDataGroup group = new PuzzleBlockDataGroup();
+            for (int column = 0; column < numberOfBlocks; column++) {
+                group.addPuzzleBlockData(puzzleBlockData[column][row]);
+            }
+            group.findNumberOfEqualsBlocksWithSamePossibilities(3);
+        }
+    }
 }

@@ -70,4 +70,19 @@ class PuzzleBlockDataTest {
     void setParent() {
 //        getParent();
     }
+
+    @Test
+    void arePossibilitiesAllFalse() {
+        PuzzleBlockData pbd = new PuzzleBlockData(5,1);
+        assert pbd.arePossibilitiesAllFalse();
+
+    }
+    @Test
+    void arePossibilitiesEqual(){
+        PuzzleBlockData pbd1 = new PuzzleBlockData(5,1);
+        PuzzleBlockData pbd2 = new PuzzleBlockData(5,1);
+        assert pbd1.arePossibilitiesEqual(pbd2);
+        pbd1.togglePossibilities(1);
+        assert !pbd1.arePossibilitiesEqual(pbd2);
+    }
 }

@@ -68,4 +68,44 @@ class PuzzleBlockDataGroup {
             }
         }
     }
+
+    public void findNumberOfEqualsBlocksWithSamePossibilities(int nEquals) {
+        ArrayList<PuzzleBlockData> puzzleBlockDatas = new ArrayList<>();
+        group.removeIf(PuzzleBlockData::arePossibilitiesAllFalse);
+        boolean found = true;
+        while(found){
+            found = false;
+            for (int i = 0; i < group.size() - (nEquals - 1); i++) {//stop before nEquals becomes impossible
+                puzzleBlockDatas = new ArrayList<>();
+                if (group.get(i).getNumberOfPossibilities() == nEquals) {
+                    puzzleBlockDatas.add(group.get(i));
+                    for (int iSecond = i + 1; iSecond < group.size(); iSecond++) {
+                        if (group.get(iSecond).getNumberOfPossibilities() == nEquals) {
+                            if (group.get(i).arePossibilitiesEqual(group.get(iSecond))) {
+                                puzzleBlockDatas.add(group.get(iSecond));
+                            }
+                        }
+                    }
+                }
+                if (puzzleBlockDatas.size() == nEquals) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found){
+                PuzzleBlockData foundCombination = puzzleBlockDatas.get(0);
+                for (PuzzleBlockData puzzleBlockData : puzzleBlockDatas) {
+                    group.remove(puzzleBlockData);
+                }
+                boolean[] block = foundCombination.getPossibilities();
+                for (PuzzleBlockData puzzleBlockData : group) {
+                    for (int i = 0; i < block.length; i++) {
+                        if (block[i]){
+                            puzzleBlockData.resetPossibilities(i);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

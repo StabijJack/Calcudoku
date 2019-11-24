@@ -157,6 +157,13 @@ class PuzzleUserView {
         });
         windowsFrame.add(find2BlocksWithSamePossibilitiesOnOneRowOrColumn, puzzleData.numberOfBlocks + 2, 7);
 
+        Button find3BlocksWithSamePossibilitiesOnOneRowOrColumn = new Button("find 3 Blocks With Same Possibilities On One Row Or Column");
+        find3BlocksWithSamePossibilitiesOnOneRowOrColumn.setOnMouseClicked(mouseEvent ->{
+            puzzleData.find3BlocksWithSamePossibilitiesOnOneRowOrColumn();
+            setPuzzleDataOnView();
+        });
+        windowsFrame.add(find3BlocksWithSamePossibilitiesOnOneRowOrColumn, puzzleData.numberOfBlocks + 2, 8);
+
         return windowsFrame;
     }
 

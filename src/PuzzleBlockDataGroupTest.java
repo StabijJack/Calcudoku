@@ -107,4 +107,86 @@ class PuzzleBlockDataGroupTest {
         assert p5.getPossibilities()[3];
         assert g.group.size()==2;
     }
+
+    @Test
+    void findNumberOfEqualsBlocksWithSamePossibilities() {
+        PuzzleBlockDataGroup  g = new PuzzleBlockDataGroup();
+        g.addPuzzleBlockData(p0);
+        g.addPuzzleBlockData(p1);
+        g.addPuzzleBlockData(p2);
+        p0.setPossibilities(1);
+        p0.setPossibilities(2);
+        p1.setPossibilities(1);
+        p1.setPossibilities(2);
+        p2.setPossibilities(3);
+        p2.setPossibilities(2);
+        g.findNumberOfEqualsBlocksWithSamePossibilities(2);
+
+        assert p0.getPossibilities()[1];
+        assert p0.getPossibilities()[2];
+        assert p1.getPossibilities()[1];
+        assert p1.getPossibilities()[2];
+        assert p2.getPossibilities()[3];
+        assert !p2.getPossibilities()[2];
+        assert g.group.size()==1;
+        g = new PuzzleBlockDataGroup();
+        g.addPuzzleBlockData(p0);
+        g.addPuzzleBlockData(p1);
+        g.addPuzzleBlockData(p2);
+        g.addPuzzleBlockData(p3);
+        g.addPuzzleBlockData(p4);
+        g.addPuzzleBlockData(p5);
+        p0.setPossibilities(1);
+        p0.setPossibilities(2);
+        p1.setPossibilities(1);
+        p1.setPossibilities(2);
+        p2.setPossibilities(3);
+        p2.setPossibilities(2);
+        p3.setPossibilities(4);
+        p3.setPossibilities(3);
+        p4.setPossibilities(3);
+        p4.setPossibilities(5);
+        p5.setPossibilities(4);
+        p5.setPossibilities(3);
+        g.findNumberOfEqualsBlocksWithSamePossibilities(2);
+        assert p0.getPossibilities()[1];
+        assert p0.getPossibilities()[2];
+        assert p1.getPossibilities()[1];
+        assert p1.getPossibilities()[2];
+        assert !p2.getPossibilities()[3];
+        assert !p2.getPossibilities()[2];
+        assert p3.getPossibilities()[4];
+        assert p3.getPossibilities()[3];
+        assert p4.getPossibilities()[5];
+        assert !p4.getPossibilities()[3];
+        assert p5.getPossibilities()[4];
+        assert p5.getPossibilities()[3];
+        assert g.group.size()==2;
+
+        g = new PuzzleBlockDataGroup();
+        g.addPuzzleBlockData(p0);
+        g.addPuzzleBlockData(p1);
+        g.addPuzzleBlockData(p2);
+        g.addPuzzleBlockData(p3);
+        p0.setPossibilities(0);
+        p1.setPossibilities(0);
+        p2.setPossibilities(0);
+        p0.setPossibilities(1);
+        p1.setPossibilities(1);
+        p2.setPossibilities(1);
+        p0.setPossibilities(2);
+        p1.setPossibilities(2);
+        p2.setPossibilities(2);
+        p3.setPossibilities(0);
+        p3.setPossibilities(1);
+        p3.setPossibilities(2);
+        p3.setPossibilities(3);
+        g.findNumberOfEqualsBlocksWithSamePossibilities(3);
+        assert g.group.size()==1;
+        assert !p3.getPossibilities()[0];
+        assert !p3.getPossibilities()[1];
+        assert !p3.getPossibilities()[2];
+        assert p3.getPossibilities()[3];
+
+    }
 }

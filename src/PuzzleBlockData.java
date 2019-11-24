@@ -2,12 +2,18 @@ import org.jetbrains.annotations.Contract;
 
 class PuzzleBlockData {
     private Integer solution;
-    private final boolean[] possibilities;
+    private boolean[] possibilities;
     private Integer formulaNumber;
     private operators formulaOperator;
     private BlockPosition parent;
     private boolean solutionError;
 
+// --Commented out by Inspection START (24-11-2019 17:20):
+//    @Contract(pure = true)
+//    PuzzleBlockData(){
+//        new PuzzleBlockData(1,1);
+//    }
+// --Commented out by Inspection STOP (24-11-2019 17:20)
     @Contract(pure = true)
     PuzzleBlockData(int maxNumber, int startNumber) {
         solution = null;
@@ -50,6 +56,14 @@ class PuzzleBlockData {
                 return false;
         }
         return true;
+    }
+    boolean arePossibilitiesAllFalse(){
+        for (boolean possibility : possibilities) {
+            if (possibility)
+                return false;
+        }
+        return true;
+
     }
 
     Integer getFormulaNumber() {
