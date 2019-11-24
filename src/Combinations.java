@@ -1,5 +1,6 @@
 
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -13,7 +14,7 @@ class Combinations {
     private int[] combinationPositions;
     private final HashMap<String,ArrayList<ArrayList<Integer>>> savedCombinations = new HashMap<>();
 
-    public Combinations(int startNumber, int endNumber) {
+    Combinations(int startNumber, int endNumber) {
         this.startNumber = startNumber;
         this.endNumber = endNumber;
     }
@@ -22,7 +23,7 @@ class Combinations {
         this.lengthOfCombination = lengthOfCombination;
         this.maxOccurrenceOfNumbers = maxOccurrenceOfNumbers;
         if (savedCombinations.get(this.lengthOfCombination.toString() + "_" + this.maxOccurrenceOfNumbers.toString()) != null){
-            combinations = (ArrayList<ArrayList<Integer>>) savedCombinations.get(this.lengthOfCombination.toString() + "_" + this.maxOccurrenceOfNumbers.toString()).clone();
+            combinations = new ArrayList<>(savedCombinations.get(this.lengthOfCombination.toString() + "_" + this.maxOccurrenceOfNumbers.toString()));
         }
         else {
             combinations = new ArrayList<>();
@@ -41,7 +42,7 @@ class Combinations {
             }
             while (!endCombinationPositionProgress());
             combinations.sort(compareByAllElements());
-            savedCombinations.put(this.lengthOfCombination.toString() + "_" + this.maxOccurrenceOfNumbers.toString() , (ArrayList<ArrayList<Integer>>) combinations.clone());
+            savedCombinations.put(this.lengthOfCombination.toString() + "_" + this.maxOccurrenceOfNumbers.toString() , combinations);
         }
     }
 
@@ -72,6 +73,7 @@ class Combinations {
         return combinationPositions[0] >= possibleNumbers.length;
     }
 
+    @Contract(pure = true)
     private boolean maxOccurrenceOfNumbersIsOke(ArrayList<Integer> newCombination) {
         for (int possibleNumber : possibleNumbers) {
             int occurrenceOfNumber = 0;
@@ -123,14 +125,16 @@ class Combinations {
         return s.toString();
     }
 
-    public int[] getPossibleNumbers() {
+    int[] getPossibleNumbers() {
         return possibleNumbers;
     }
 
-    public ArrayList<ArrayList<Integer>> getCombinations() {
+    ArrayList<ArrayList<Integer>> getCombinations() {
         return combinations;
     }
 
+    @NotNull
+    @Contract(pure = true)
     private Comparator<ArrayList<Integer>> compareByAllElements() {
         return (s1, s2) -> {
             for (int i = 0; i < s1.size(); i++) {
@@ -152,5 +156,4 @@ class Combinations {
 //            }
 //        };
 //    }
-
 }
