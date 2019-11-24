@@ -7,7 +7,7 @@ class PuzzleBlockDataGroup {
     final ArrayList<PuzzleBlockData> group;
 
     @Contract(pure = true)
-    public PuzzleBlockDataGroup() {
+    PuzzleBlockDataGroup() {
         group = new ArrayList<>();
     }
 
@@ -33,7 +33,7 @@ class PuzzleBlockDataGroup {
         return allUnique;
     }
 
-    public void find2BlocksWithSamePossibilities() {
+    void find2BlocksWithSamePossibilities() {
         PuzzleBlockData firstBlock =new PuzzleBlockData(1,1);
         PuzzleBlockData secondBlock = new PuzzleBlockData(1,1);
         boolean found = true;
@@ -69,32 +69,32 @@ class PuzzleBlockDataGroup {
         }
     }
 
-    public void findNumberOfEqualsBlocksWithSamePossibilities(int nEquals) {
-        ArrayList<PuzzleBlockData> puzzleBlockDatas = new ArrayList<>();
+    void findNumberOfEqualsBlocksWithSamePossibilities(int nEquals) {
+        ArrayList<PuzzleBlockData> puzzleBlocks = new ArrayList<>();
         group.removeIf(PuzzleBlockData::arePossibilitiesAllFalse);
         boolean found = true;
         while(found){
             found = false;
             for (int i = 0; i < group.size() - (nEquals - 1); i++) {//stop before nEquals becomes impossible
-                puzzleBlockDatas = new ArrayList<>();
+                puzzleBlocks = new ArrayList<>();
                 if (group.get(i).getNumberOfPossibilities() == nEquals) {
-                    puzzleBlockDatas.add(group.get(i));
+                    puzzleBlocks.add(group.get(i));
                     for (int iSecond = i + 1; iSecond < group.size(); iSecond++) {
                         if (group.get(iSecond).getNumberOfPossibilities() == nEquals) {
                             if (group.get(i).arePossibilitiesEqual(group.get(iSecond))) {
-                                puzzleBlockDatas.add(group.get(iSecond));
+                                puzzleBlocks.add(group.get(iSecond));
                             }
                         }
                     }
                 }
-                if (puzzleBlockDatas.size() == nEquals) {
+                if (puzzleBlocks.size() == nEquals) {
                     found = true;
                     break;
                 }
             }
             if (found){
-                PuzzleBlockData foundCombination = puzzleBlockDatas.get(0);
-                for (PuzzleBlockData puzzleBlockData : puzzleBlockDatas) {
+                PuzzleBlockData foundCombination = puzzleBlocks.get(0);
+                for (PuzzleBlockData puzzleBlockData : puzzleBlocks) {
                     group.remove(puzzleBlockData);
                 }
                 boolean[] block = foundCombination.getPossibilities();

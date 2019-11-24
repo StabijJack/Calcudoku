@@ -2,7 +2,7 @@ import org.jetbrains.annotations.Contract;
 
 class PuzzleBlockData {
     private Integer solution;
-    private boolean[] possibilities;
+    private final boolean[] possibilities;
     private Integer formulaNumber;
     private operators formulaOperator;
     private BlockPosition parent;
@@ -97,11 +97,11 @@ class PuzzleBlockData {
         this.parent = parent;
     }
 
-    public boolean isSolutionError() {
+    boolean isSolutionError() {
         return solutionError;
     }
 
-    public void setSolutionError(boolean solutionError) {
+    void setSolutionError(boolean solutionError) {
         this.solutionError = solutionError;
     }
 }
