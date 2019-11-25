@@ -14,7 +14,7 @@ class PuzzleBlockDataGroupTest {
         g.addPuzzleBlockData(p0);
         g.addPuzzleBlockData(p1);
         g.addPuzzleBlockData(p2);
-        assert g.group.size() == 3;
+        assert g.size() == 3;
     }
 
     @Test
@@ -26,7 +26,7 @@ class PuzzleBlockDataGroupTest {
         p0.setSolution(1);
         p1.setSolution(1);
         assert !g.allUnique();
-        assert g.group.size() == 2;
+        assert g.size() == 2;
         assert p0.isSolutionError();
         assert p1.isSolutionError();
         g.addPuzzleBlockData(p2);
@@ -35,7 +35,7 @@ class PuzzleBlockDataGroupTest {
         p1.setSolutionError(false);
         p2.setSolutionError(false);
         assert !g.allUnique();
-        assert g.group.size() == 3;
+        assert g.size() == 3;
         assert p0.isSolutionError();
         assert p1.isSolutionError();
         assert !p2.isSolutionError();
@@ -44,7 +44,7 @@ class PuzzleBlockDataGroupTest {
         p2.setSolutionError(false);
         p1.setSolution(3);
         assert g.allUnique();
-        assert g.group.size() == 3;
+        assert g.size() == 3;
         assert !p0.isSolutionError();
         assert !p1.isSolutionError();
         assert !p2.isSolutionError();
@@ -64,7 +64,7 @@ class PuzzleBlockDataGroupTest {
         p1.setPossibilities(2);
         p2.setPossibilities(3);
         p2.setPossibilities(2);
-        g.find2BlocksWithSamePossibilities();
+        g.findNumberOfEqualsBlocksWithSamePossibilities(2);
 
         assert p0.getPossibilities()[1];
         assert p0.getPossibilities()[2];
@@ -72,7 +72,7 @@ class PuzzleBlockDataGroupTest {
         assert p1.getPossibilities()[2];
         assert p2.getPossibilities()[3];
         assert !p2.getPossibilities()[2];
-        assert g.group.size()==1;
+        assert g.size()==1;
         g = new PuzzleBlockDataGroup();
         g.addPuzzleBlockData(p0);
         g.addPuzzleBlockData(p1);
@@ -92,7 +92,7 @@ class PuzzleBlockDataGroupTest {
         p4.setPossibilities(5);
         p5.setPossibilities(4);
         p5.setPossibilities(3);
-        g.find2BlocksWithSamePossibilities();
+        g.findNumberOfEqualsBlocksWithSamePossibilities(2);
         assert p0.getPossibilities()[1];
         assert p0.getPossibilities()[2];
         assert p1.getPossibilities()[1];
@@ -105,7 +105,7 @@ class PuzzleBlockDataGroupTest {
         assert !p4.getPossibilities()[3];
         assert p5.getPossibilities()[4];
         assert p5.getPossibilities()[3];
-        assert g.group.size()==2;
+        assert g.size()==2;
     }
 
     @Test
@@ -128,7 +128,7 @@ class PuzzleBlockDataGroupTest {
         assert p1.getPossibilities()[2];
         assert p2.getPossibilities()[3];
         assert !p2.getPossibilities()[2];
-        assert g.group.size()==1;
+        assert g.size()==1;
         g = new PuzzleBlockDataGroup();
         g.addPuzzleBlockData(p0);
         g.addPuzzleBlockData(p1);
@@ -161,7 +161,7 @@ class PuzzleBlockDataGroupTest {
         assert !p4.getPossibilities()[3];
         assert p5.getPossibilities()[4];
         assert p5.getPossibilities()[3];
-        assert g.group.size()==2;
+        assert g.size()==2;
 
         g = new PuzzleBlockDataGroup();
         g.addPuzzleBlockData(p0);
@@ -182,7 +182,7 @@ class PuzzleBlockDataGroupTest {
         p3.setPossibilities(2);
         p3.setPossibilities(3);
         g.findNumberOfEqualsBlocksWithSamePossibilities(3);
-        assert g.group.size()==1;
+        assert g.size()==1;
         assert !p3.getPossibilities()[0];
         assert !p3.getPossibilities()[1];
         assert !p3.getPossibilities()[2];

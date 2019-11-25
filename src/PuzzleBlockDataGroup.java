@@ -14,7 +14,9 @@ class PuzzleBlockDataGroup {
     void addPuzzleBlockData(PuzzleBlockData puzzleBlockData) {
         group.add(puzzleBlockData);
     }
-
+    int size(){
+        return group.size();
+    }
     boolean allUnique() {
         boolean allUnique = true;
         group.removeIf(puzzleBlockData -> puzzleBlockData.getSolution() == null);
@@ -31,42 +33,6 @@ class PuzzleBlockDataGroup {
         }
 
         return allUnique;
-    }
-
-    void find2BlocksWithSamePossibilities() {
-        PuzzleBlockData firstBlock =new PuzzleBlockData(1,1);
-        PuzzleBlockData secondBlock = new PuzzleBlockData(1,1);
-        boolean found = true;
-        while(found){
-            found = false;
-            for (int i = 0; i < group.size() - 1; i++) {//until -1 else no compare
-                if (group.get(i).getNumberOfPossibilities() == 2) {
-                    firstBlock = group.get(i);
-                    for (int iSecond = i + 1; iSecond < group.size(); iSecond++) {
-                        if (group.get(iSecond).getNumberOfPossibilities() == 2) {
-                            secondBlock = group.get(iSecond);
-                            if (group.get(i).arePossibilitiesEqual(group.get(iSecond))) {
-                                found = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (found) break;
-                }
-            }
-            if (found){
-                group.remove(firstBlock);
-                group.remove(secondBlock);
-                boolean[] block = firstBlock.getPossibilities();
-                for (PuzzleBlockData puzzleBlockData : group) {
-                    for (int i = 0; i < block.length; i++) {
-                        if (block[i]){
-                            puzzleBlockData.resetPossibilities(i);
-                        }
-                    }
-                }
-            }
-        }
     }
 
     void findNumberOfEqualsBlocksWithSamePossibilities(int nEquals) {
